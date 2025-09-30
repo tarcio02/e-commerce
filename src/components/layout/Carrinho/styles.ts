@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-export const StylesCarrinho = styled.div<{$aberto: boolean}>`
+export const StylesCarrinho = styled.div<{ $aberto: boolean }>`
   // Propiedades para definir o efeito do elemento aparecer e sumir da tela
   position: fixed;
   top: 0;
@@ -27,17 +27,17 @@ export const Top = styled.div`
 `
 
 export const BtnFechar = styled.button`
-border: none;
-background-color: transparent;
-cursor: pointer;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 
-img{
-  width: 24px;
-}
+  img {
+    width: 24px;
+  }
 `
 
 export const Body = styled.div`
-  background-color:white;
+  background-color: white;
   height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -60,9 +60,9 @@ export const Container = styled.div`
 `
 
 export const SubTotal = styled.div`
-display: flex;
-justify-content: space-between;
-margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
 `
 
 export const BtnFinalizar = styled.div`
@@ -70,7 +70,7 @@ export const BtnFinalizar = styled.div`
   font-weight: bold;
   color: white;
   letter-spacing: 1px;
-  background-color:#ffa801;
+  background-color: #ffa801;
   font-size: 16px;
   padding: 16px;
   border-radius: 24px;

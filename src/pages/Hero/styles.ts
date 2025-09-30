@@ -1,11 +1,10 @@
-import styled from "styled-components";
-import hero from "../../assets/images/massas-sdf.webp"
-import { theme } from "../../styles/theme";
+import styled from 'styled-components'
+import hero from '../../assets/images/massas-sdf.webp'
+import { theme } from '../../styles/theme'
 
-export const StylesHero = styled.div`
-`
+export const StylesHero = styled.div``
 
-export const HeroContainer =  styled.div`
+export const HeroContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,7 +32,7 @@ export const HeroContainer =  styled.div`
   }
 `
 
-export const Container = styled.div` 
+export const Container = styled.div`
   margin-top: 70px;
   position: relative;
   display: flex;
@@ -43,7 +42,7 @@ export const Container = styled.div`
   width: 100%;
   color: white;
   gap: 16px;
-  `
+`
 
 export const Titulo = styled.h1`
   font-weight: bold;
@@ -68,7 +67,7 @@ export const IconParagrafo = styled.div`
   justify-content: center;
   gap: 8px;
 
-  img{
+  img {
     width: 24px;
   }
 `
@@ -86,7 +85,7 @@ export const Button = styled.button`
   color: white;
   border-radius: 24px;
 
-  img{
+  img {
     width: 28px;
   }
 

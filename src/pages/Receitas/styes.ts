@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { theme } from "../../styles/theme";
+import styled from 'styled-components'
+import { theme } from '../../styles/theme'
 
 export const StylesReceitas = styled.div`
   padding: ${theme.spaces.paddingMobile};
@@ -16,12 +16,8 @@ export const Titulo = styled.h3`
 
 export const Container = styled.div`
   display: flex;
-  /* flex-direction: column; */
   justify-content: center;
-  gap: 16px;
-
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-
+  align-items: center;
+  flex-direction: column;
+border: 1px solid red;
 `

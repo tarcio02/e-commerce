@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-export const StylesShippingBar= styled.div`
+export const StylesShippingBar = styled.div`
   /* display: grid;
   gap: 6px; */
   width: 100%;
@@ -9,13 +9,13 @@ export const StylesShippingBar= styled.div`
 export const Track = styled.div`
   position: relative;
   width: 100%;
-  height: 24px;             
-  background: #ffa801;    
+  height: 24px;
+  background: #ffa801;
   border-radius: 999px;
   overflow: hidden;
 `
 
-export const Fill = styled.div<{$progressPct: number}>`
+export const Fill = styled.div<{ $progressPct: number }>`
   position: absolute;
   height: 100%;
   top: 0;
@@ -37,5 +37,5 @@ export const Label = styled.div`
   color: #fff;
   white-space: nowrap;
   pointer-events: none;
-  z-index: 2; 
+  z-index: 2;
 `

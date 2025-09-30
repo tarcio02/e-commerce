@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { theme } from "../../styles/theme";
+import styled from 'styled-components'
+import { theme } from '../../styles/theme'
 
-import industria from "../../assets/images/industria.png"
+import industria from '../../assets/images/industria.png'
 
 export const StylesSobre = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ export const StylesSobre = styled.div`
   }
 `
 
-export const Container = styled.div` 
+export const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -45,7 +45,7 @@ export const Container = styled.div`
   @media (min-width: 601px) {
     width: 592px;
   }
-  `
+`
 
 export const Titulo = styled.h3`
   font-size: 24px;

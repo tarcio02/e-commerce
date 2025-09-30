@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Ofertas = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ export const Oferta = styled.div`
   align-items: center;
   gap: 8px;
 
-  img{
+  img {
     width: 16px;
   }
 `

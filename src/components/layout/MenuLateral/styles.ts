@@ -33,7 +33,7 @@ export const Lista = styled.ul`
     color: white;
     font-weight: bold;
 
-    img{
+    img {
       width: 28px;
     }
 
@@ -48,9 +48,8 @@ export const btn = styled.button`
   background-color: transparent;
   border: none;
   width: 100%;
-  
-  img{
+
+  img {
     width: 24px;
   }
 `
-

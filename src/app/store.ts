@@ -24,7 +24,7 @@ const cartSlice = createSlice({
   reducers: {
     addItem: (state, action: PayloadAction<CartItem>) => {
       const incoming = action.payload
-      const existing = state.items.find(i => i.id === incoming.id)
+      const existing = state.items.find((i) => i.id === incoming.id)
       if (existing) {
         existing.qty = (existing.qty ?? 1) + 1
       } else {
@@ -32,9 +32,9 @@ const cartSlice = createSlice({
       }
     },
     removeItem: (state, action: PayloadAction<{ id: string }>) => {
-      state.items = state.items.filter(i => i.id !== action.payload.id)
+      state.items = state.items.filter((i) => i.id !== action.payload.id)
     },
-    clearCart: state => {
+    clearCart: (state) => {
       state.items = []
     },
     increaseQuantity: (state, action) => {
@@ -45,17 +45,18 @@ const cartSlice = createSlice({
     },
     decreaseQuantity: (state, action) => {
       const item = state.items.find((i) => i.id === action.payload)
-      if(item && item.qty > 1) {
+      if (item && item.qty > 1) {
         item.qty -= 1
       }
     },
   },
 })
 
-export const { addItem, removeItem, clearCart, decreaseQuantity, increaseQuantity } = cartSlice.actions
+export const { addItem, removeItem, clearCart, decreaseQuantity, increaseQuantity } =
+  cartSlice.actions
 
 const saveToLocalStorage = (state: RootState) => {
-  try{
+  try {
     const serialized = JSON.stringify(state.cart.items)
     localStorage.setItem('cart', serialized)
   } catch (e) {
@@ -64,10 +65,10 @@ const saveToLocalStorage = (state: RootState) => {
 }
 
 const loadFromLocalStorage = () => {
-  try{
+  try {
     const serialized = localStorage.getItem('cart')
     if (serialized === null) return undefined
-    return { cart: { items: JSON.parse(serialized) }}
+    return { cart: { items: JSON.parse(serialized) } }
   } catch (e) {
     console.warn('Não foi possível carregar do localStorage', e)
     return undefined
@@ -78,7 +79,7 @@ export const store = configureStore({
   reducer: {
     cart: cartSlice.reducer,
   },
-  preloadedState: loadFromLocalStorage()
+  preloadedState: loadFromLocalStorage(),
 })
 
 store.subscribe(() => saveToLocalStorage(store.getState()))
@@ -98,8 +99,8 @@ export const selectCartSubtotal = (s: RootState) => {
     return sum + preco * qty
   }, 0)
 
-  return  formatPrice(total)
-} 
+  return formatPrice(total)
+}
 
 export const selectCartCount = (s: RootState) =>
   s.cart.items.reduce((sum, i) => sum + (i.qty ?? 1), 0)

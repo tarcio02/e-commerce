@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const StylesForm = styled.div`
-text-align: center;
-background-color: rgb(168, 7, 7);
-height: auto;
-padding-bottom: 80px;
+  text-align: center;
+  background-color: rgb(168, 7, 7);
+  height: auto;
+  padding-bottom: 80px;
 `
 
 export const Top = styled.div`
@@ -26,7 +26,7 @@ export const Form = styled.form`
   margin: 0 auto;
   margin-top: 80px;
 
-  input{
+  input {
     width: 100%;
     height: 48px;
     border-radius: 20px;
@@ -35,7 +35,7 @@ export const Form = styled.form`
     font-size: 18px;
     font-weight: bold;
 
-    &::placeholder{
+    &::placeholder {
       color: rgba(0, 0, 0, 0.5);
     }
   }
@@ -55,4 +55,3 @@ export const Button = styled.div`
   color: white;
   border-radius: 20px;
 `
-

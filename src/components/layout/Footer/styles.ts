@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { theme } from "../../../styles/theme";
+import styled from 'styled-components'
+import { theme } from '../../../styles/theme'
 
 export const StylesFooter = styled.div`
   padding: ${theme.spaces.paddingMobile};
@@ -8,7 +8,7 @@ export const StylesFooter = styled.div`
 export const Section = styled.div`
   margin-bottom: 32px;
 
-  h3{
+  h3 {
     font-size: 20px;
     color: #4f4f4f;
   }
@@ -29,19 +29,19 @@ export const Bandeira = styled.div`
   align-items: center;
   padding: 8px;
 
-  img{
+  img {
     width: 40px;
     height: auto;
   }
 `
 
-export const Social = styled.a` 
+export const Social = styled.a`
   height: 40px;
   display: flex;
   align-items: center;
   padding: 8px;
 
-  img{
+  img {
     width: 40px;
     height: auto;
   }
@@ -53,14 +53,12 @@ export const Links = styled.div`
   gap: 16px;
   margin-bottom: 32px;
 
-  a{
+  a {
     font-weight: bold;
     color: #4f4f4f;
     text-decoration: none;
   }
 `
-
-
 
 export const Copy = styled.div`
   display: flex;
@@ -71,17 +69,17 @@ export const Copy = styled.div`
   border-top: 1px solid gray;
   padding-top: 8px;
 
-  a{
+  a {
     color: black;
   }
 
-  .top{
+  .top {
     display: flex;
     justify-content: space-between;
     width: 100%;
   }
 
-  .center{
+  .center {
     text-align: center;
   }
 `
