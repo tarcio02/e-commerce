@@ -3,6 +3,18 @@ import { theme } from '../../../styles/theme'
 
 export const StylesFooter = styled.div`
   padding: ${theme.spaces.paddingMobile};
+
+  @media (min-width: 601px) {
+    padding: ${theme.spaces.paddingDesktop};
+  }
+`
+
+export const Flex = styled.div`
+
+@media (min-width: 601px) {
+  display: flex;
+  justify-content: space-between;
+}
 `
 
 export const Section = styled.div`
@@ -17,20 +29,19 @@ export const Section = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 70%;
   gap: 8px;
   margin-top: 16px;
+
 `
 
 export const Bandeira = styled.div`
-  border: 1px solid gray;
-  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
-  padding: 8px;
+  padding: 4px;
 
   img {
-    width: 40px;
+    width: 32px;
     height: auto;
   }
 `
@@ -42,7 +53,7 @@ export const Social = styled.a`
   padding: 8px;
 
   img {
-    width: 40px;
+    width: 32px;
     height: auto;
   }
 `

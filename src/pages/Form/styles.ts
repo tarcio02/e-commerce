@@ -23,6 +23,7 @@ export const Form = styled.form`
   align-items: center;
   gap: 24px;
   width: 70%;
+  max-width: 600px;
   margin: 0 auto;
   margin-top: 80px;
 
@@ -34,6 +35,7 @@ export const Form = styled.form`
     padding: 16px;
     font-size: 18px;
     font-weight: bold;
+    outline: none;
 
     &::placeholder {
       color: rgba(0, 0, 0, 0.5);
@@ -54,4 +56,15 @@ export const Button = styled.div`
   font-size: 16px;
   color: white;
   border-radius: 20px;
+  cursor: pointer;
+
+  transform: translateZ(0);
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 220ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:hover {
+    transform: scale(1.06);
+  }
 `

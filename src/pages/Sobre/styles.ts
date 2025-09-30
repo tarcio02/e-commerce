@@ -48,7 +48,7 @@ export const Container = styled.div`
 `
 
 export const Titulo = styled.h3`
-  font-size: 24px;
+  font-size: 28px;
   font-family: serif;
   letter-spacing: 1px;
   color: white;
@@ -66,11 +66,22 @@ export const Button = styled.button`
   justify-content: center;
   align-items: center;
   padding: 12px 20px;
-  font-size: 20px;
+  font-size: 18px;
   gap: 8px;
   font-weight: bold;
   background-color: rgba(255, 255, 255, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.6);
   color: white;
   border-radius: 24px;
+    cursor: pointer;
+
+  transform: translateZ(0);
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 220ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:hover {
+    transform: scale(1.06);
+  }
 `

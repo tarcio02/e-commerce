@@ -13,8 +13,9 @@ export const StylesQualidade = styled.div`
 `
 
 export const Iamge = styled.div`
-  width: 100%;
+  width: 70%;
   height: auto;
+  margin: 0 auto;
 
   img {
     object-fit: cover;
@@ -23,7 +24,8 @@ export const Iamge = styled.div`
   }
 
   @media (min-width: 601px) {
-    max-width: 400px;
+    max-width: 360px;
+    margin: 0;
   }
 `
 
@@ -62,7 +64,7 @@ export const Button = styled.button`
   padding: 12px 32px;
   border-radius: 20px;
   border: none;
-  font-size: 20px;
+  font-size: 18px;
   color: white;
   background-color: rgb(168, 7, 7);
 

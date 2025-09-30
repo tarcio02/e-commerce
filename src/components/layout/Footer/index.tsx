@@ -13,49 +13,50 @@ import email from '../../../assets/icons/email-icon.png'
 const Footer = () => {
   return (
     <S.StylesFooter>
-      <S.Links>
-        <a href="#">Sobre</a>
-        <a href="#">Produtos</a>
-        <a href="#">Entregas</a>
-        <a href="#">Políticas da empresa</a>
-      </S.Links>
-      <S.Section>
-        <h3>Formas de Pagamento:</h3>
-        <S.Container>
-          <S.Bandeira>
-            <img src={pix} alt="Ícone do pix" />
-          </S.Bandeira>
-          <S.Bandeira>
-            <img src={visa} alt="Ícone da visa" />
-          </S.Bandeira>
-          <S.Bandeira>
-            <img src={master} alt="Ícone da mastercard" />
-          </S.Bandeira>
-          <S.Bandeira>
-            <img src={elo} alt="ícone da elo" />
-          </S.Bandeira>
-          <S.Bandeira>
-            <img src={amex} alt="ícone da american express" />
-          </S.Bandeira>
-          <S.Bandeira>
-            <img src={hiper} alt="ícone do hipercard" />
-          </S.Bandeira>
-        </S.Container>
-      </S.Section>
-      <S.Section>
-        <h3>Nossas Redes:</h3>
-        <S.Container>
-          <S.Social>
-            <img src={whatsapp} alt="Ícone de whatsapp" />
-          </S.Social>
-          <S.Social>
-            <img src={intagram} alt="Ícone de instagram" />
-          </S.Social>
-          <S.Social>
-            <img src={email} alt="Ícone de email" />
-          </S.Social>
-        </S.Container>
-      </S.Section>
+      <S.Flex>
+        <S.Links>
+          <a href="#">Sobre</a>
+          <a href="#">Produtos</a>
+          <a href="#">Receitas</a>
+        </S.Links>
+        <S.Section>
+          <h3>Formas de Pagamento:</h3>
+          <S.Container>
+            <S.Bandeira>
+              <img src={pix} alt="Ícone do pix" />
+            </S.Bandeira>
+            <S.Bandeira>
+              <img src={visa} alt="Ícone da visa" />
+            </S.Bandeira>
+            <S.Bandeira>
+              <img src={master} alt="Ícone da mastercard" />
+            </S.Bandeira>
+            <S.Bandeira>
+              <img src={elo} alt="ícone da elo" />
+            </S.Bandeira>
+            <S.Bandeira>
+              <img src={amex} alt="ícone da american express" />
+            </S.Bandeira>
+            <S.Bandeira>
+              <img src={hiper} alt="ícone do hipercard" />
+            </S.Bandeira>
+          </S.Container>
+        </S.Section>
+        <S.Section>
+          <h3>Nossas Redes:</h3>
+          <S.Container>
+            <S.Social>
+              <img src={whatsapp} alt="Ícone de whatsapp" />
+            </S.Social>
+            <S.Social>
+              <img src={intagram} alt="Ícone de instagram" />
+            </S.Social>
+            <S.Social>
+              <img src={email} alt="Ícone de email" />
+            </S.Social>
+          </S.Container>
+        </S.Section>
+      </S.Flex>
       <S.Copy>
         <div className="top">
           <a href="#">Termos de uso</a>

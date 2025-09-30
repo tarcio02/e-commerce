@@ -5,11 +5,11 @@ export const StylesCardReceita = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: start;
+  overflow: hidden;
   font-size: 16px;
   background-color: #f7f1e3;
   border: 1px solid #f7f1e3;
   border-radius: 16px;
-  overflow: hidden;
   width: 100%;
 `
 

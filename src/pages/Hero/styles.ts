@@ -76,14 +76,25 @@ export const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 16px 24px;
-  font-size: 20px;
+  padding: 16px;
+  font-size: 16px;
   gap: 8px;
   font-weight: bold;
   background-color: rgba(255, 255, 255, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.6);
   color: white;
   border-radius: 24px;
+  cursor: pointer;
+
+  transform: translateZ(0);
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 220ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:hover {
+    transform: scale(1.06);
+  }
 
   img {
     width: 28px;

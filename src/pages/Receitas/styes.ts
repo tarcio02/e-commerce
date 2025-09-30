@@ -16,8 +16,13 @@ export const Titulo = styled.h3`
 
 export const Container = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-border: 1px solid red;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  @media (min-width: 601px){
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
 `
