@@ -6,7 +6,7 @@ export const StylesHeader = styled.div`
   z-index: 999;
 `
 
-export const Container = styled.div<{ $downScroll: boolean }>`
+export const Container = styled.div<{ $downScroll: boolean, $isRoute: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,11 +14,11 @@ export const Container = styled.div<{ $downScroll: boolean }>`
   width: 100%;
   height: 92px;
 
-  position: fixed;
+  position: ${({ $isRoute }) => ($isRoute ? '' : 'fixed')};
   left: 0;
   right: 0;
   top: ${({ $downScroll }) => ($downScroll ? '0' : '18px')};
-  background-color: ${({ $downScroll }) => ($downScroll ? 'rgb(168, 7, 7)' : 'transparent')};
+  background-color: ${({ $downScroll, $isRoute }) => ($downScroll || $isRoute ? 'rgb(168, 7, 7)' : 'transparent')};
 
   transition:
     top 220ms cubic-bezier(0.22, 0.61, 0.36, 1),

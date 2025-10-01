@@ -5,7 +5,7 @@ import Receitas from './Receitas'
 import Qualidades from './Qualidades'
 import Form from './Form'
 
-import raviole from '../assets/icons/ravioli.png'
+import raviole from '../assets/images/ravioli.png'
 import preparo from '../assets/images/preparo-pastel.png'
 
 const Home = () => {

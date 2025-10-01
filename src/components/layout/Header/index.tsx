@@ -1,3 +1,6 @@
+import { useLocation } from 'react-router-dom'
+import { useMemo } from 'react'
+
 import * as S from './styles'
 
 import MenuNav from '../MenuNav'
@@ -6,18 +9,23 @@ import MenuHamburguer from '../../ui/MenuHamburguer'
 import carrinho from '../../../assets/icons/carrinho-icon.png'
 import logo from '../../../assets/images/logo-sdf.png'
 import perfil from '../../../assets/icons/perfil-icon.png'
+import Ofertas from '../Ofertas'
 
 type TypeProps = {
   menuAberto: boolean
   toogleHeader: () => void
   toggleMenu: () => void
-  downScroll: boolean
+  stateHeader: boolean
 }
 
-const Header = ({ menuAberto, toogleHeader, toggleMenu, downScroll }: TypeProps) => {
+const Header = ({ menuAberto, toogleHeader, toggleMenu, stateHeader }: TypeProps) => {
+  const location = useLocation()
+  const isNotRoot = useMemo(() => location.pathname !== '/', [location.pathname])
+
   return (
     <S.StylesHeader>
-      <S.Container $downScroll={downScroll}>
+      <Ofertas />
+      <S.Container $downScroll={stateHeader} $isRoute={isNotRoot}>
         <MenuNav />
         <MenuHamburguer menuAberto={menuAberto} toggleMenu={toggleMenu} />
         <S.Logo>
