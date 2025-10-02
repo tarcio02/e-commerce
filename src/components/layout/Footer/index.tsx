@@ -46,13 +46,21 @@ const Footer = () => {
         <S.Section>
           <h3>Nossas Redes:</h3>
           <S.Container>
-            <S.Social>
+            <S.Social rel="noopener noreferrer" target="_blank" href="https://wa.me/+557788451284">
               <img src={whatsapp} alt="Ícone de whatsapp" />
             </S.Social>
-            <S.Social>
+            <S.Social
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://www.instagram.com/massas_sabordafeiravca/"
+            >
               <img src={intagram} alt="Ícone de instagram" />
             </S.Social>
-            <S.Social>
+            <S.Social
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=sabordafeiraoficial@gmail.com"
+            >
               <img src={email} alt="Ícone de email" />
             </S.Social>
           </S.Container>
@@ -64,7 +72,7 @@ const Footer = () => {
           <Link to="/politicas-de-privacidade">Políticas de privacidade</Link>
         </div>
         <div className="center">
-          <p>&copy; Massas Sabor da Feira - Todos os direitos reservados.</p>
+          <p>&copy; 2025 - Massas Sabor da Feira - Todos os direitos reservados.</p>
           <p>Vitória da Conquista - BA</p>
         </div>
       </S.Copy>
