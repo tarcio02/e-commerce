@@ -15,7 +15,7 @@ const ShippingBar = ({ total }: FreeShipingBarProps) => {
   const remaining = Math.max(0, THRESHOLD - total)
 
   const label =
-    remaining > 0
+    total >= THRESHOLD
       ? `Faltam ${formatBRL(remaining)} para frete grátis`
       : `Frete grátis desbloaqueado`
 

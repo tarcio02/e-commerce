@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { theme } from '../../../styles/theme'
 
 export const StylesHeader = styled.div`
@@ -17,7 +17,7 @@ export const Container = styled.div<{ $downScroll: boolean, $isRoute: boolean }>
   position: ${({ $isRoute }) => ($isRoute ? '' : 'fixed')};
   left: 0;
   right: 0;
-  top: ${({ $downScroll }) => ($downScroll ? '0' : '18px')};
+  top: ${({ $downScroll }) => ($downScroll ? '0' : '32px')};
   background-color: ${({ $downScroll, $isRoute }) => ($downScroll || $isRoute ? 'rgb(168, 7, 7)' : 'transparent')};
 
   transition:
@@ -25,9 +25,17 @@ export const Container = styled.div<{ $downScroll: boolean, $isRoute: boolean }>
     background-color 240ms ease;
   will-change: top, background-color;
 
-  /* @media (prefers-reduced-motion: reduce) {
+  ${({ $isRoute }) =>
+  $isRoute &&
+  css`
+    @media (prefers-reduced-motion: reduce) {
     transition: none;
-  } */
+    }
+  `}
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 
   @media (min-width: 601px) {
     padding: 0 80px;

@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import hero from '../../assets/images/massas-sdf.webp'
 import { theme } from '../../styles/theme'
+import { Link } from 'react-router-dom'
 
 export const StylesHero = styled.div``
 
@@ -72,7 +73,7 @@ export const IconParagrafo = styled.div`
   }
 `
 
-export const Button = styled.button`
+export const Button = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,6 +85,7 @@ export const Button = styled.button`
   border: 1px solid rgba(255, 255, 255, 0.6);
   color: white;
   border-radius: 24px;
+  text-decoration: none;
   cursor: pointer;
 
   transform: translateZ(0);

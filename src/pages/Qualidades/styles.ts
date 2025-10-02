@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { theme } from '../../styles/theme'
+import { Link } from 'react-router-dom'
 
 export const StylesQualidade = styled.div`
   padding: ${theme.spaces.paddingMobile};
@@ -60,13 +61,14 @@ export const Paragrafo = styled.p`
   font-size: 18px;
 `
 
-export const Button = styled.button`
+export const Button = styled(Link)`
   padding: 12px 32px;
   border-radius: 20px;
   border: none;
   font-size: 18px;
   color: white;
   background-color: rgb(168, 7, 7);
+  text-decoration: none;
 
   cursor: pointer;
 

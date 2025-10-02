@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { theme } from '../../styles/theme'
 
 import industria from '../../assets/images/industria.png'
+import { Link } from 'react-router-dom'
 
 export const StylesSobre = styled.div`
   display: flex;
@@ -61,7 +62,7 @@ export const Paragrafo = styled.div`
   color: white;
 `
 
-export const Button = styled.button`
+export const Button = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,7 +74,8 @@ export const Button = styled.button`
   border: 1px solid rgba(255, 255, 255, 0.6);
   color: white;
   border-radius: 24px;
-    cursor: pointer;
+  text-decoration: none;
+  cursor: pointer;
 
   transform: translateZ(0);
   transition:

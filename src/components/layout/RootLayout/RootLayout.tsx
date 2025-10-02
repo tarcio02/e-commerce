@@ -13,13 +13,28 @@ const RootLayout = () => {
   const [carrinhoAberto, setCarrinhoAberto] = useState(false)
   const [stateHeader, setStateHeader] = useState(false)
 
-  const menuToggle = () => {
-    setMenuAberto((prev) => !prev)
+const toggleUi = (tipo: 'menu'  | 'carrinho') => {
+  if (tipo === 'menu') {
+    setMenuAberto((prev) => {
+      const novoEstado = !prev
+      if (novoEstado) setCarrinhoAberto(false)
+      return novoEstado
+    })
   }
 
-  const carrinhoToggle = () => {
-    setCarrinhoAberto((prev) => !prev)
+  if (tipo === 'carrinho') {
+    setCarrinhoAberto((prev) => {
+      const novoEstado = !prev
+      if (novoEstado) setMenuAberto(false)
+      return novoEstado
+    })
   }
+}
+
+const fecharTudo = () => {
+  setMenuAberto(false)
+  setCarrinhoAberto(false)
+}
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -58,14 +73,14 @@ const RootLayout = () => {
       {/* <Ofertas /> */}
       <Header
         menuAberto={menuAberto}
-        toggleMenu={menuToggle}
+        toggleMenu={() => toggleUi('menu')}
         stateHeader={stateHeader}
-        toogleHeader={carrinhoToggle}
+        toogleHeader={() => toggleUi('carrinho')}
       />
-      <MenuLateral aberto={menuAberto} fechar={menuToggle} />
-      <Carrinho fechar={carrinhoToggle} carrinhoAberto={carrinhoAberto} />
+      <MenuLateral aberto={menuAberto} fechar={() => toggleUi('menu')} />
+      <Carrinho fechar={() => toggleUi('carrinho')} carrinhoAberto={carrinhoAberto} />
 
-      <main>
+      <main onClick={fecharTudo}>
         <Outlet />
       </main>
 

@@ -9,7 +9,7 @@ const Sobre = () => {
           Somos uma empresa dedica a fabricar as melhores de massas frescas para pasteis, garantindo
           compromisso e qualidade.
         </S.Paragrafo>
-        <S.Button>Saiba Mais</S.Button>
+        <S.Button to="/sobre">Saiba Mais</S.Button>
       </S.Container>
     </S.StylesSobre>
   )

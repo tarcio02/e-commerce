@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom'
-
 import * as S from './styles'
 
 import localizacao from '../../assets/icons/localizacao-icon.png'
@@ -34,12 +32,10 @@ const Hero = () => {
             <img src={localizacao} alt="ìcone de ocalização" />
             <S.Paragrafo>Vitória da Conquista - BA</S.Paragrafo>
           </S.IconParagrafo>
-          <Link to="/catalogo">
-            <S.Button>
+            <S.Button to="/catalogo">
               Faça um Pedido
               <img src={entregador} alt="Ícone de entregador" />
             </S.Button>
-          </Link>
           <Marquee speed={50}>
             {cards.map((card) => (
               <S.Card>{card}</S.Card>

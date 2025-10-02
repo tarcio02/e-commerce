@@ -6,6 +6,7 @@ import close from '../../../assets/icons/close.png'
 import ShippingBar from '../ShippingBar'
 import raviole from '../../../assets/images/ravioli.png'
 import CardCarrinho from '../CardCarrinho'
+import { formatPrice } from '../../../utils/formatPrice'
 
 type PropCarriho = {
   carrinhoAberto: boolean
@@ -43,10 +44,10 @@ const Carrinho = ({ carrinhoAberto, fechar }: PropCarriho) => {
       </S.Body>
       <S.Bottom>
         <S.Container>
-          <ShippingBar total={Number(subtotal)} />
+          <ShippingBar total={subtotal} />
           <S.SubTotal>
             <h3>Subtotal:</h3>
-            <h3>R$ {subtotal}</h3>
+            <h3>{formatPrice(subtotal)}</h3>
           </S.SubTotal>
         </S.Container>
         <S.Container>

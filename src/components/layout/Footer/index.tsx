@@ -9,15 +9,16 @@ import hiper from '../../../assets/icons/hipercard-icon.png'
 import whatsapp from '../../../assets/icons/whatsapp-icon.png'
 import intagram from '../../../assets/icons/instagram-icon.png'
 import email from '../../../assets/icons/email-icon.png'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
     <S.StylesFooter>
       <S.Flex>
         <S.Links>
-          <a href="#">Sobre</a>
-          <a href="#">Produtos</a>
-          <a href="#">Receitas</a>
+          <S.LinksNav to="/sobre">Sobre</S.LinksNav>
+          <S.LinksNav to="/catalogo">Produtos</S.LinksNav>
+          <S.LinksNav to="/receitas">Receitas</S.LinksNav>
         </S.Links>
         <S.Section>
           <h3>Formas de Pagamento:</h3>
@@ -59,8 +60,8 @@ const Footer = () => {
       </S.Flex>
       <S.Copy>
         <div className="top">
-          <a href="#">Termos de uso</a>
-          <a href="#">Políticas de privacidade</a>
+          <Link to="/termos-de-uso">Termos de uso</Link>
+          <Link to="/politicas-de-privacidade">Políticas de privacidade</Link>
         </div>
         <div className="center">
           <p>&copy; Massas Sabor da Feira - Todos os direitos reservados.</p>

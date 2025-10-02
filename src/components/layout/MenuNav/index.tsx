@@ -3,9 +3,9 @@ import * as S from './styles'
 const MenuNav = () => {
   return (
     <S.StylesMenuNav>
-      <S.Item href="">Produtos</S.Item>
-      <S.Item href="">Receitas</S.Item>
-      <S.Item href="">Quem Somos?</S.Item>
+      <S.Item to="/catalogo">Produtos</S.Item>
+      <S.Item to="/receitas">Receitas</S.Item>
+      <S.Item to="/sobre">Quem Somos?</S.Item>
     </S.StylesMenuNav>
   )
 }

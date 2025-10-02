@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const StylesMenuNav = styled.div`
@@ -11,7 +12,7 @@ export const StylesMenuNav = styled.div`
   }
 `
 
-export const Item = styled.a`
+export const Item = styled(Link)`
   text-decoration: none;
   color: white;
   font-weight: bold;

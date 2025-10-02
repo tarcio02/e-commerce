@@ -14,7 +14,7 @@ const Qualidades = () => {
           Massas crocantes e sequinhas, para a sua melhor experiência e satisfação. Massa fresca
           para atacado e varejo
         </S.Paragrafo>
-        <S.Button>Saiba mais</S.Button>
+        <S.Button to="/qualidade">Saiba mais</S.Button>
       </S.Texto>
     </S.StylesQualidade>
   )

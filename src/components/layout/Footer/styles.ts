@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { theme } from '../../../styles/theme'
+import { Link } from 'react-router-dom'
 
 export const StylesFooter = styled.div`
   padding: ${theme.spaces.paddingMobile};
@@ -63,12 +64,12 @@ export const Links = styled.div`
   flex-direction: column;
   gap: 16px;
   margin-bottom: 32px;
+`
 
-  a {
-    font-weight: bold;
-    color: #4f4f4f;
-    text-decoration: none;
-  }
+export const LinksNav = styled(Link)`
+  font-weight: bold;
+  color: #4f4f4f;
+  text-decoration: none;
 `
 
 export const Copy = styled.div`

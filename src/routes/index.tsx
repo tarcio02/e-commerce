@@ -1,11 +1,11 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
-import RootLayout from '../components/layout/RootLayout/RootLayout'
 import NotFound from '../pages/NotFound'
 
 const Home = lazy(() => import('../pages/Home'))
 const Aviso = lazy(() => import('../pages/Aviso'))
+const RootLayout = lazy(() => import('../components/layout/RootLayout/RootLayout'))
 
 const AppRoutes = () => {
   return (

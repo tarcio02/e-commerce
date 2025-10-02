@@ -21,7 +21,7 @@ const MenuLateral = ({ aberto, fechar }: PropsTypes) => {
         <img src={close} alt="Ícone de fechar" />
       </S.btn>
       <S.Lista>
-        <li
+        <S.LinkNav to="/catalogo"
           className="item"
           onClick={() => {
             fechar()
@@ -29,8 +29,8 @@ const MenuLateral = ({ aberto, fechar }: PropsTypes) => {
         >
           <img src={produtos} alt="ìcone de caixa" />
           Produtos
-        </li>
-        <li
+        </S.LinkNav>
+        <S.LinkNav to="/receitas"
           className="item"
           onClick={() => {
             fechar()
@@ -38,8 +38,8 @@ const MenuLateral = ({ aberto, fechar }: PropsTypes) => {
         >
           <img src={receita} alt="ìcone de receita" />
           Receitas
-        </li>
-        <li
+        </S.LinkNav>
+        <S.LinkNav to="/sobre"
           className="item"
           onClick={() => {
             fechar()
@@ -47,8 +47,8 @@ const MenuLateral = ({ aberto, fechar }: PropsTypes) => {
         >
           <img src={empresa} alt="ìcone de grupo de pessoas" />
           Quem Somos?
-        </li>
-        <li
+        </S.LinkNav>
+        <S.LinkNav to="/politicas-de-privacidade"
           className="item"
           onClick={() => {
             fechar()
@@ -56,8 +56,8 @@ const MenuLateral = ({ aberto, fechar }: PropsTypes) => {
         >
           <img src={politicas} alt="ìcone de políticas" />
           Políticas de Privacidade
-        </li>
-        <li
+        </S.LinkNav>
+        <S.LinkNav to="/termos-de-uso"
           className="item"
           onClick={() => {
             fechar()
@@ -65,8 +65,8 @@ const MenuLateral = ({ aberto, fechar }: PropsTypes) => {
         >
           <img src={termos} alt="ìcone de termos" />
           Termos de Uso
-        </li>
-        <li
+        </S.LinkNav>
+        <S.LinkNav to="/perfil"
           className="item"
           onClick={() => {
             fechar()
@@ -74,7 +74,7 @@ const MenuLateral = ({ aberto, fechar }: PropsTypes) => {
         >
           <img src={perfil} alt="ìcone de usuário" />
           Minha Conta
-        </li>
+        </S.LinkNav>
       </S.Lista>
     </S.Drawer>
   )

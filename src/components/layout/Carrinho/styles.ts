@@ -7,6 +7,7 @@ export const StylesCarrinho = styled.div<{ $aberto: boolean }>`
   right: 0;
   width: 80%;
   height: 100vh;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease-in-out;

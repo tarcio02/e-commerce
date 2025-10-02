@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Drawer = styled.div<{ $aberto: boolean }>`
@@ -24,24 +25,27 @@ export const Lista = styled.ul`
   list-style: none;
   gap: 24px;
   margin-top: 30px;
+`
 
-  .item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 20px;
-    color: white;
-    font-weight: bold;
+export const LinkNav = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
 
-    img {
-      width: 28px;
-    }
+  img {
+    width: 28px;
+  }
 
-    &:active {
-      color: gray;
-    }
+  &:active {
+    color: gray;
   }
 `
+
 export const btn = styled.button`
   display: flex;
   flex-direction: row-reverse;

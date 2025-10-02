@@ -1,7 +1,6 @@
 // app/store.ts
 import { configureStore, createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { type TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import { formatPrice } from '../utils/formatPrice'
 
 type CartItem = {
   id: string
@@ -99,7 +98,7 @@ export const selectCartSubtotal = (s: RootState) => {
     return sum + preco * qty
   }, 0)
 
-  return formatPrice(total)
+  return total
 }
 
 export const selectCartCount = (s: RootState) =>
