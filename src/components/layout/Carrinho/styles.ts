@@ -1,19 +1,23 @@
 import styled from 'styled-components'
 
 export const StylesCarrinho = styled.div<{ $aberto: boolean }>`
-  // Propiedades para definir o efeito do elemento aparecer e sumir da tela
   position: fixed;
-  top: 0;
-  right: 0;
-  width: 80%;
-  height: 100vh;
-  max-width: 400px;
+  right: 0; top: 0; bottom: 0;
+  width: 360px;
+
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease-in-out;
-  transform: ${({ $aberto }) => ($aberto ? 'translateX(0)' : 'translateX(100%)')};
-  z-index: 1009;
-  background-color: white;
+
+  /* altura real da viewport (melhor p/ mobile) */
+  height: 100vh;
+  height: 100svh;   /* browsers novos */
+  height: 100dvh;   /* fallback em alguns cenários */
+
+  background: #fff;
+  box-shadow: -16px 0 48px rgba(0,0,0,.22);
+  transform: translateX(${({ $aberto }) => ($aberto ? '0' : '100%')});
+  transition: transform .24s ease;
+  z-index: 9990;
 `
 
 export const Top = styled.div`
@@ -38,10 +42,15 @@ export const BtnFechar = styled.button`
 `
 
 export const Body = styled.div`
-  background-color: white;
-  height: 100%;
+flex: 1 1 auto;
+  min-height: 0;        /* <- ESSENCIAL em flex para scroll interno */
   overflow-y: auto;
   overscroll-behavior: contain;
+  padding: 8px 12px;
+
+  scrollbar-gutter: stable both-edges;
+  &::-webkit-scrollbar { width: 8px; }
+  &::-webkit-scrollbar-thumb { background: rgba(0,0,0,.24); border-radius: 99px; }
 `
 
 export const Bottom = styled.div`

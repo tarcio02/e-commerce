@@ -10,7 +10,6 @@ export const Wrapper = styled.div<{
   position: fixed;
   left: 50%;
   top: 0;
-  z-index: 9999;
 
   /* Mantemos o elemento SEMPRE montado, e só movemos no eixo Y */
   transform: translate(-50%, ${({ isOpen }) => (isOpen ? 'var(--offset)' : 'calc(-100% - 24px)')});
@@ -25,7 +24,6 @@ export const Wrapper = styled.div<{
   /* offset final em px (ex.: 120px) */
   --offset: ${({ offsetPx }) => `${offsetPx}px`};
 
-  background: #111;
   color: #fff;
   padding: 14px 18px;
   border-radius: 12px;
@@ -33,5 +31,16 @@ export const Wrapper = styled.div<{
   min-width: 280px;
   max-width: min(92vw, 560px);
   will-change: transform, opacity;
+
+  &[data-variant="success"] {
+    background: rgb(22, 163, 74);
+    border-left: 4px solid #16a34a;
+  }
+
+  &[data-variant="warning"] {
+    background: rgb(234, 179, 8);
+    border-left: 4px solid #eab308;
+  }
+
 `;
 

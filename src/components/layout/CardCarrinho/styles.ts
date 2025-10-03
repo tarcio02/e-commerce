@@ -6,10 +6,9 @@ export const StylesCardCarrinho = styled.div`
   align-items: center;
   height: 120px;
   padding: 0 16px;
-  border: 1px solid white;
+  border: 3px solid white;
   background-color: #f5f6fa;
 `
-
 export const Image = styled.div<{ $width: number }>`
   img {
     width: ${({ $width }) => (typeof $width === 'number' ? `${$width}px` : ($width ?? '32px'))};
@@ -22,7 +21,6 @@ export const Container = styled.div`
   justify-content: center;
   align-items: start;
   gap: 4px;
-  /* border: 1px solid red; */
   width: 70px;
 `
 

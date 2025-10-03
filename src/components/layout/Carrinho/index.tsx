@@ -1,4 +1,5 @@
 import { selectCartItems, selectCartSubtotal, useAppSelector } from '../../../app/store'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import * as S from './styles'
 
@@ -18,6 +19,12 @@ const Carrinho = ({ carrinhoAberto, fechar }: PropCarriho) => {
 
   const subtotal = useAppSelector(selectCartSubtotal)
 
+  const itemVariants = {
+    hidden: { opacity: 0, y: -8, scale: 0.98 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.18 } },
+    removed: { opacity: 0, y: 8, scale: 0.98, transition: { duration: 0.18 } },
+  }
+
   return (
     <S.StylesCarrinho $aberto={carrinhoAberto}>
       <S.Top>
@@ -28,16 +35,26 @@ const Carrinho = ({ carrinhoAberto, fechar }: PropCarriho) => {
       </S.Top>
       <S.Body>
         {items.length ? (
-          items.map((item) => (
-            <CardCarrinho
-              key={item.id}
-              id={item.id}
-              image={item.image ?? raviole}
-              nome={item.nome}
-              preco={item.preco}
-              quantidade={item.qty ?? 1}
-            />
-          ))
+          <AnimatePresence initial={false}>
+            {items.map((item) => (
+              <motion.div
+                key={item.id} // importante pra animar remover
+                layout // anima reflow dos cards quando lista muda
+                variants={itemVariants}
+                initial="hidden"
+                animate="visible"
+                exit="removed"
+              >
+                <CardCarrinho
+                  id={item.id}
+                  image={item.image ?? raviole}
+                  nome={item.nome}
+                  preco={item.preco}
+                  quantidade={item.qty ?? 1}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         ) : (
           <p style={{ padding: 16, opacity: 0.7 }}>Seu carrinho está vazio.</p>
         )}

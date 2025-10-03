@@ -12,7 +12,9 @@ import * as S from './styles'
 type ShowOptions = {
   title?: string
   message?: string
-  durationMs?: number // 5000 por padrão
+  durationMs?: number // 3000 por padrão
+  variant?: 'success' | 'warning'
+  productName?: string
 }
 
 export type ModalCartRef = {
@@ -27,6 +29,9 @@ type Props = {
   children?: React.ReactNode
 }
 
+let activeHide: (() => void) | null = null
+let zSeed = 9999
+
 const ModalCart = forwardRef<ModalCartRef, Props>(function ModalCart(
   { offsetPx = 120, enterMs = 300, exitMs = 300, children },
   ref,
@@ -37,8 +42,11 @@ const ModalCart = forwardRef<ModalCartRef, Props>(function ModalCart(
   const [isExiting, setIsExiting] = useState(false)
   const [title, setTitle] = useState<string>()
   const [message, setMessage] = useState<string>()
+  const [variant, setVariant] = useState<'success' | 'warning'>('success')
+  const [addedList, setAddedList] = useState<string[]>([])
+  const [zIndex, setZIndex] = useState<number>(zSeed)
+  const lastTimeRef = useRef(0)
 
-  // 🔧 antes era função simples; agora é memorizada
   const clearHideTimer = useCallback(() => {
     if (hideTimer.current) {
       window.clearTimeout(hideTimer.current)
@@ -49,28 +57,65 @@ const ModalCart = forwardRef<ModalCartRef, Props>(function ModalCart(
   const hide = useCallback(() => {
     clearHideTimer()
     setIsExiting(true)
+
     window.setTimeout(() => {
       setIsOpen(false)
       setIsExiting(false)
+      if (activeHide === hide) activeHide = null
     }, exitMs)
   }, [clearHideTimer, exitMs])
 
   const show = useCallback(
     (opts?: ShowOptions) => {
+      // Fecha qualquer notificação aberta (global)
+      if (activeHide) activeHide()
       clearHideTimer()
-      setTitle(opts?.title)
-      setMessage(opts?.message)
 
+      // z-index do mais recente
+      zSeed += 1
+      setZIndex(zSeed)
+
+      // Define variant/título/mensagem base
+      const nextVariant: 'success' | 'warning' = opts?.variant ?? 'success'
+      setVariant(nextVariant)
+
+      let nextTitle = opts?.title
+      let nextMessage = opts?.message
+
+      // Agrupamento inteligente (sem fila): janela curta
+      const now = Date.now()
+      const isQuick = now - lastTimeRef.current < 1500 // ~1,5s
+      if (nextVariant === 'success') {
+        if (isOpen && variant === 'success' && isQuick && opts?.productName) {
+          const next = Array.from(new Set([...addedList, opts.productName]))
+          setAddedList(next)
+          nextTitle = 'Itens adicionados ao carrinho'
+          nextMessage = next.join(', ')
+        } else {
+          setAddedList(opts?.productName ? [opts.productName] : [])
+        }
+      } else {
+        // "já existe no carrinho" não acumula com sucesso
+        setAddedList([])
+      }
+      lastTimeRef.current = now
+
+      setTitle(nextTitle)
+      setMessage(nextMessage)
+
+      // Abre
       setIsOpen(true)
       setIsExiting(false)
 
-      // agenda o fechamento (default 5000ms)
-      hideTimer.current = window.setTimeout(hide, opts?.durationMs ?? 5000)
+      // Registra este hide como ativo
+      activeHide = hide
+
+      // Autohide
+      hideTimer.current = window.setTimeout(hide, opts?.durationMs ?? 3000)
     },
-    [clearHideTimer, hide],
+    [clearHideTimer, hide, isOpen, variant, addedList],
   )
 
-  // ✅ agora com deps corretas
   useImperativeHandle(ref, () => ({ show, hide }), [show, hide])
 
   useEffect(() => {
@@ -86,6 +131,8 @@ const ModalCart = forwardRef<ModalCartRef, Props>(function ModalCart(
       exitMs={exitMs}
       role="dialog"
       aria-live="polite"
+      data-variant={variant}
+      style={{ zIndex }}
     >
       {children ?? (
         <>

@@ -32,6 +32,7 @@ const CardCatalogo = ({ id, image, nome, descricao, preco }: CardProps) => {
 
       if (exists) {
         modalRef.current?.show({
+          variant: 'warning',
           title: 'Produto já foi adicionado',
           message: 'Este item já está no seu carrinho.',
           durationMs: 3000,
@@ -52,6 +53,8 @@ const CardCatalogo = ({ id, image, nome, descricao, preco }: CardProps) => {
       )
 
       modalRef.current?.show({
+        variant: 'success',
+        productName: nome,
         title: 'Adicionado ao carrinho',
         message: 'Item incluído com sucesso.',
         durationMs: 3000,
