@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { GlobalStyles } from '../../../styles/GlobalStyles'
+import { Overlay } from './styles'
 
 // import Ofertas from '../Ofertas'
 import Header from '../Header'
@@ -13,28 +14,39 @@ const RootLayout = () => {
   const [carrinhoAberto, setCarrinhoAberto] = useState(false)
   const [stateHeader, setStateHeader] = useState(false)
 
-const toggleUi = (tipo: 'menu'  | 'carrinho') => {
-  if (tipo === 'menu') {
-    setMenuAberto((prev) => {
-      const novoEstado = !prev
-      if (novoEstado) setCarrinhoAberto(false)
-      return novoEstado
-    })
+  const toggleUi = (tipo: 'menu' | 'carrinho') => {
+    if (tipo === 'menu') {
+      setMenuAberto((prev) => {
+        const novoEstado = !prev
+        if (novoEstado) setCarrinhoAberto(false)
+        return novoEstado
+      })
+    }
+
+    if (tipo === 'carrinho') {
+      setCarrinhoAberto((prev) => {
+        const novoEstado = !prev
+        if (novoEstado) setMenuAberto(false)
+        return novoEstado
+      })
+    }
   }
 
-  if (tipo === 'carrinho') {
-    setCarrinhoAberto((prev) => {
-      const novoEstado = !prev
-      if (novoEstado) setMenuAberto(false)
-      return novoEstado
-    })
+  const fecharTudo = () => {
+    setMenuAberto(false)
+    setCarrinhoAberto(false)
   }
-}
 
-const fecharTudo = () => {
-  setMenuAberto(false)
-  setCarrinhoAberto(false)
-}
+  const overlayAtivo = menuAberto || carrinhoAberto
+  useEffect(() => {
+    if (overlayAtivo) {
+      const prevOverflow = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = prevOverflow
+      }
+    }
+  }, [overlayAtivo])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -80,7 +92,9 @@ const fecharTudo = () => {
       <MenuLateral aberto={menuAberto} fechar={() => toggleUi('menu')} />
       <Carrinho fechar={() => toggleUi('carrinho')} carrinhoAberto={carrinhoAberto} />
 
-      <main onClick={fecharTudo}>
+      <Overlay $visible={overlayAtivo} onClick={fecharTudo} aria-hidden={!overlayAtivo} />
+
+      <main>
         <Outlet />
       </main>
 

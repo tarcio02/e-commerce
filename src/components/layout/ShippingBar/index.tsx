@@ -16,8 +16,8 @@ const ShippingBar = ({ total }: FreeShipingBarProps) => {
 
   const label =
     total >= THRESHOLD
-      ? `Faltam ${formatBRL(remaining)} para frete grátis`
-      : `Frete grátis desbloaqueado`
+      ? `Frete grátis desbloaqueado`
+      : `Faltam ${formatBRL(remaining)} para frete grátis`
 
   return (
     <S.StylesShippingBar>

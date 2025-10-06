@@ -1,35 +1,29 @@
 import styled from 'styled-components'
 
-export const StylesCarrinho = styled.div<{ $aberto: boolean }>`
+export const StylesCarrinho = styled.aside<{ $aberto: boolean }>`
   position: fixed;
-  right: 0; top: 0; bottom: 0;
-  width: 360px;
-
-  display: flex;
-  flex-direction: column;
-
-  /* altura real da viewport (melhor p/ mobile) */
-  height: 100vh;
-  height: 100svh;   /* browsers novos */
-  height: 100dvh;   /* fallback em alguns cenários */
-
+  inset: 0 0 0 auto;                /* cola na lateral direita */
+  width: min(420px, 100vw);
+  height: 100dvh;                   /* altura travada na viewport (melhor p/ mobile) */
+  transform: translateX(${({ $aberto }) => ($aberto ? '0%' : '100%')});
+  transition: transform .28s ease;
   background: #fff;
-  box-shadow: -16px 0 48px rgba(0,0,0,.22);
-  transform: translateX(${({ $aberto }) => ($aberto ? '0' : '100%')});
-  transition: transform .24s ease;
-  z-index: 9990;
-`
+  z-index: 1000;
+  display: flex;                    /* ⬅️ importante */
+  flex-direction: column;           /* header / body / footer em coluna */
+  box-shadow: -8px 0 24px rgba(0,0,0,.18);
+  overflow: hidden;                 /* impede scroll no container; o Body vai rolar */
+`;
 
-export const Top = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgb(168, 7, 7);
-  height: 60px;
-  padding: 0 16px;
-  color: white;
-  letter-spacing: 1px;
-`
+export const Top = styled.header`
+  flex: 0 0 auto;
+  padding: 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  background: #fff;
+  position: sticky; top: 0;         /* opcional: fixa o topo enquanto lista rola */
+  z-index: 1;
+`;
 
 export const BtnFechar = styled.button`
   border: none;
@@ -42,25 +36,23 @@ export const BtnFechar = styled.button`
 `
 
 export const Body = styled.div`
-flex: 1 1 auto;
-  min-height: 0;        /* <- ESSENCIAL em flex para scroll interno */
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 8px 12px;
+  /* O segredo do scroll: */
+  flex: 1 1 auto;                   /* ocupa o espaço livre */
+  min-height: 0;                    /* 🔑 permite encolher para o overflow funcionar */
+  overflow-y: auto;                 /* cria a barra quando necessário */
+  padding: 12px 16px;               /* ajuste ao seu gosto */
+  overscroll-behavior: contain;     /* evita bounce afetar o fundo */
+  -webkit-overflow-scrolling: touch;
+`;
 
-  scrollbar-gutter: stable both-edges;
-  &::-webkit-scrollbar { width: 8px; }
-  &::-webkit-scrollbar-thumb { background: rgba(0,0,0,.24); border-radius: 99px; }
-`
-
-export const Bottom = styled.div`
-  background-color: rgb(168, 7, 7);
-  padding: 16px;
-  bottom: 0;
-  width: 100%;
-  position: absolute;
-  overflow-y: auto;
-`
+export const Bottom = styled.footer`
+  flex: 0 0 auto;
+  padding: 12px 16px 16px;
+  border-top: 1px solid rgba(0,0,0,.06);
+  background: #fff;
+  /* conforto em iPhone com notch: */
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+`;
 
 export const Container = styled.div`
   display: flex;
