@@ -8,7 +8,7 @@ export const StylesCarrinho = styled.aside<{ $aberto: boolean }>`
   transform: translateX(${({ $aberto }) => ($aberto ? '0%' : '100%')});
   transition: transform .28s ease;
   background: #fff;
-  z-index: 1000;
+  z-index: 1001;
   display: flex;                    /* ⬅️ importante */
   flex-direction: column;           /* header / body / footer em coluna */
   box-shadow: -8px 0 24px rgba(0,0,0,.18);
@@ -20,7 +20,8 @@ export const Top = styled.header`
   padding: 16px;
   display: flex; align-items: center; justify-content: space-between;
   border-bottom: 1px solid rgba(0,0,0,.06);
-  background: #fff;
+  background: rgb(168, 7, 7);
+  color: white;
   position: sticky; top: 0;         /* opcional: fixa o topo enquanto lista rola */
   z-index: 1;
 `;
@@ -49,7 +50,7 @@ export const Bottom = styled.footer`
   flex: 0 0 auto;
   padding: 12px 16px 16px;
   border-top: 1px solid rgba(0,0,0,.06);
-  background: #fff;
+  background: rgb(168, 7, 7);
   /* conforto em iPhone com notch: */
   padding-bottom: calc(16px + env(safe-area-inset-bottom));
 `;

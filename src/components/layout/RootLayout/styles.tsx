@@ -9,6 +9,6 @@ export const Overlay = styled.div<{ $visible: boolean }>`
   transition:
     opacity 0.2s ease,
     visibility 0.2s ease;
-  z-index: 90; /* certifique-se de que Menu/Carrinho tenham z-index > 900 */
+  z-index: 1000;
   pointer-events: ${({ $visible }) => ($visible ? 'auto' : 'none')};
 `

@@ -18,6 +18,8 @@ type CardCarrinhoProps = {
 const CardCarrinho = ({ id, image, nome, preco, quantidade }: CardCarrinhoProps) => {
   const dispatch = useDispatch()
 
+  const maiorQueUm = quantidade > 1
+
   return (
     <S.StylesCardCarrinho>
       <S.Image $width={56}>
@@ -28,17 +30,17 @@ const CardCarrinho = ({ id, image, nome, preco, quantidade }: CardCarrinhoProps)
         <S.Text>{formatPrice(preco)}</S.Text>
       </S.Container>
       <S.Quantidade>
-        <S.Button $trash={false} onClick={() => dispatch(decreaseQuantity(id))}>
+        <S.Button $decrement={maiorQueUm} onClick={() => dispatch(decreaseQuantity(id))}>
           <img src={menos} alt="ìcone de menos" />
         </S.Button>
         <h3>{quantidade}</h3>
-        <S.Button $trash={false} onClick={() => dispatch(increaseQuantity(id))}>
+        <S.Button $decrement={true} onClick={() => dispatch(increaseQuantity(id))}>
           <img src={mais} alt="ícon de mais" />
         </S.Button>
       </S.Quantidade>
-      <S.Button $trash={true} onClick={() => dispatch(removeItem({ id }))}>
+      <S.RemoveItem onClick={() => dispatch(removeItem({ id }))}>
         <img src={lixeira} alt="ìmagem de produto" />
-      </S.Button>
+      </S.RemoveItem>
     </S.StylesCardCarrinho>
   )
 }

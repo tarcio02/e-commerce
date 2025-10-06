@@ -32,25 +32,40 @@ export const Quantidade = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
   padding: 8px 16px;
   border-radius: 20px;
   background-color: rgb(168, 7, 7);
   color: white;
+  width: 120px;
+  height: 40px;
 `
 
-export const Button = styled.button<{ $trash: boolean }>`
+export const Button = styled.button<{ $decrement: boolean }>`
   height: 24px;
   width: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: ${({ $trash }) => ($trash ? 'transparent' : '#ffa801')};
+  background-color: ${({$decrement}) => ($decrement ? '#ffa801' : 'rgba(255, 168, 1, 0.6)')};
   border: none;
   cursor: pointer;
 
   img {
-    width: ${({ $trash }) => ($trash ? '26px' : '12px')};
+    width: 12px;
+  }
+`
+export const RemoveItem = styled.button`
+  height: 24px;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+
+  img {
+    width: 26px;
   }
 `
