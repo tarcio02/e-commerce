@@ -1,5 +1,6 @@
 import { selectCartItems, selectCartSubtotal, useAppSelector } from '../../../app/store'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 
 import * as S from './styles'
 
@@ -15,6 +16,7 @@ type PropCarriho = {
 }
 
 const Carrinho = ({ carrinhoAberto, fechar }: PropCarriho) => {
+  const navigate = useNavigate()
   const items = useAppSelector(selectCartItems)
 
   const subtotal = useAppSelector(selectCartSubtotal)
@@ -68,7 +70,19 @@ const Carrinho = ({ carrinhoAberto, fechar }: PropCarriho) => {
           </S.SubTotal>
         </S.Container>
         <S.Container>
-          <S.BtnFinalizar>Finaliza Compra</S.BtnFinalizar>
+          <S.BtnFinalizar
+            onClick={() => {
+              navigate('/addres', {
+                state: {
+                  cameFromCart: true,
+                  intended: '/addres',
+                },
+              })
+              fechar()
+            }}
+          >
+            Finaliza Compra
+          </S.BtnFinalizar>
         </S.Container>
       </S.Bottom>
     </S.StylesCarrinho>

@@ -1,11 +1,15 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
-import NotFound from '../pages/NotFound'
+import RequireAuth from '../components/auth/RequireAuth'
 
+const NotFound = lazy(() => import('../pages/NotFound'))
 const Home = lazy(() => import('../pages/Home'))
 const Aviso = lazy(() => import('../pages/Aviso'))
 const RootLayout = lazy(() => import('../components/layout/RootLayout/RootLayout'))
+const Login = lazy(() => import('../pages/Login'))
+const Addres = lazy(() => import('../pages/Addres'))
+const Cadastro = lazy(() => import('../pages/Cadastro'))
 
 const AppRoutes = () => {
   return (
@@ -14,6 +18,22 @@ const AppRoutes = () => {
         <Route element={<RootLayout />}>
           {/* Rota principal */}
           <Route path="/" element={<Home />} />
+
+          {/* Rota de login */}
+          <Route path="/login" element={<Login />} />
+
+          {/* Rota de cadastro */}
+          <Route path="/cadastro" element={<Cadastro />} />
+
+          {/* Rota protegida para inserir endereço de entrega */}
+          <Route
+            path="/addres"
+            element={
+              <RequireAuth>
+                <Addres />
+              </RequireAuth>
+            }
+          />
 
           {/* Rota para  Catálogo*/}
           <Route path="/catalogo" element={<Aviso />} />

@@ -1,15 +1,19 @@
 import { Navigate, useLocation } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../../hooks/useAuth'
+import type { JSX } from 'react'
 
-export function RequireAuth({ children }: { children: JSX.Element }) {
+type Props = { children: JSX.Element }
+
+export default function RequireAuth({ children }: Props) {
   const { user, loading } = useAuth()
   const location = useLocation()
 
-  if (loading) return <div>Carregando...</div>
+  if (loading) return <div>Carregando</div>
 
   if (!user) {
-    // manda para /login lembrando de onde veio
-    return <Navigate to="/login" replace state={{ from: location }} />
+    const fallbackState = { intended: '/', cameFromCart: false }
+
+    return <Navigate to="/login" replace state={{ ...(location.state ?? fallbackState) }} />
   }
 
   return children

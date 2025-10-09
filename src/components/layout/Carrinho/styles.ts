@@ -78,4 +78,5 @@ export const BtnFinalizar = styled.div`
   padding: 16px;
   border-radius: 24px;
   margin-top: 24px;
+  cursor: pointer;
 `
