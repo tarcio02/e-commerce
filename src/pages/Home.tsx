@@ -4,41 +4,12 @@ import Sobre from './Sobre'
 import Receitas from './Receitas'
 import Qualidades from './Qualidades'
 import Form from './Form'
+import { useGetProductsQuery } from '../services/products.api'
 
-import raviole from '../assets/images/ravioli.png'
 import preparo from '../assets/images/preparo-pastel.png'
 
 const Home = () => {
-  const itens = [
-    {
-      id: '1',
-      foto: raviole,
-      nome: 'Massa de pastel',
-      descricao: 'Massa de pastel com 500 gramas.',
-      preco: 14.97,
-    },
-    {
-      id: '2',
-      foto: raviole,
-      nome: 'Massa de pastel',
-      descricao: 'Massa de pastel com 500 gramas.',
-      preco: 14.97,
-    },
-    {
-      id: '3',
-      foto: raviole,
-      nome: 'Massa de pastel',
-      descricao: 'Massa de pastel com 500 gramas.',
-      preco: 14.97,
-    },
-    {
-      id: '4',
-      foto: raviole,
-      nome: 'Massa de pastel',
-      descricao: 'Massa de pastel com 500 gramas.',
-      preco: 14.97,
-    },
-  ]
+  const { data: produtos, isLoading, error } = useGetProductsQuery()
 
   const receitas = [
     {
@@ -63,12 +34,15 @@ const Home = () => {
     },
   ]
 
+  if (isLoading) return <p>Carregando...</p>
+  if (error) return <p>Erro: {String(error)}</p>
+
   return (
     <>
       <Hero />
-      <Catalogo data={itens} titulo="Mais vendidos:" />
+      <Catalogo data={produtos ?? []} titulo="Mais vendidos:" />
       <Sobre />
-      <Catalogo data={itens} titulo="Com Frete Grátis:" />
+      <Catalogo data={produtos ?? []} titulo="Com Frete Grátis:" />
       <Receitas data={receitas} titulo="Melhores Receitas" />
       <Qualidades />
       <Form />

@@ -8,8 +8,10 @@ const Home = lazy(() => import('../pages/Home'))
 const Aviso = lazy(() => import('../pages/Aviso'))
 const RootLayout = lazy(() => import('../components/layout/RootLayout/RootLayout'))
 const Login = lazy(() => import('../pages/Login'))
-const Addres = lazy(() => import('../pages/Addres'))
+const AddressSelector = lazy(() => import('../pages/AddressSelector'))
 const Cadastro = lazy(() => import('../pages/Cadastro'))
+const AddressForm = lazy(() => import('../components/layout/AddressForm/Index'))
+const OrderPreview = lazy(() => import('../pages/OrderPreview'))
 
 const AppRoutes = () => {
   return (
@@ -25,12 +27,32 @@ const AppRoutes = () => {
           {/* Rota de cadastro */}
           <Route path="/cadastro" element={<Cadastro />} />
 
-          {/* Rota protegida para inserir endereço de entrega */}
+          {/* Rota protegida para selecionar endereço de entrega */}
           <Route
             path="/addres"
             element={
               <RequireAuth>
-                <Addres />
+                <AddressSelector />
+              </RequireAuth>
+            }
+          />
+
+          {/* Rota protegida de preview do pedido */}
+          <Route
+            path="/preview-pedido"
+            element={
+              <RequireAuth>
+                <OrderPreview />
+              </RequireAuth>
+            }
+          />
+
+          {/* Rota protegida para cadastrar endereço de entrega */}
+          <Route
+            path="/address/novo"
+            element={
+              <RequireAuth>
+                <AddressForm />
               </RequireAuth>
             }
           />

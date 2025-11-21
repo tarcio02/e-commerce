@@ -3,9 +3,9 @@ import * as S from './styles'
 import CardCatalogo from '../CardCatalogo'
 import type React from 'react'
 
-type Itens = {
+export type Itens = {
   id: string
-  foto: string
+  imagem: string
   nome: string
   descricao: string
   preco: number
@@ -25,7 +25,7 @@ const Catalogo: React.FC<ListProps> = ({ data, titulo }) => {
           <CardCatalogo
             key={item.id}
             id={item.id}
-            image={item.foto}
+            image={item.imagem}
             nome={item.nome}
             descricao={item.descricao}
             preco={item.preco}

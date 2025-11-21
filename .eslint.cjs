@@ -14,6 +14,6 @@ module.exports = {
     'prettier', // mantém por último
   ],
   rules: {
-    'react/react-in-jsx-scope': 'off', // React 17+ (Vite) não precisa importar React
+    'react/react-in-jsx-scope': 'off',
   },
 }

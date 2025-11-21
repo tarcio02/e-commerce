@@ -91,7 +91,6 @@ const RootLayout = () => {
       />
       <MenuLateral aberto={menuAberto} fechar={() => toggleUi('menu')} />
       <Carrinho fechar={() => toggleUi('carrinho')} carrinhoAberto={carrinhoAberto} />
-
       <Overlay $visible={overlayAtivo} onClick={fecharTudo} aria-hidden={!overlayAtivo} />
 
       <main>

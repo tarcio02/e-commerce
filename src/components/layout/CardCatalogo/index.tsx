@@ -1,14 +1,12 @@
 import { useRef, useCallback } from 'react'
-import {
-  addItem as addItemAction,
-  useAppDispatch,
-  useAppSelector,
-  selectCartItems,
-} from '../../../app/store'
+import { useDispatch, useSelector } from 'react-redux'
+import type { AppDispatch } from '../../../app/store'
+import { type RootState } from '../../../app/root-reducer'
 import { formatPrice } from '../../../utils/formatPrice'
 import * as S from './styles'
+import ModalCart, { type ModalCartRef } from '../ModalCart'
 
-import ModalCart, { type ModalCartRef } from '../ModalCart/index'
+import { addToCartAndSync } from '../../../features/cart/cart.thunks'
 
 type CardProps = {
   id: string
@@ -19,49 +17,65 @@ type CardProps = {
 }
 
 const CardCatalogo = ({ id, image, nome, descricao, preco }: CardProps) => {
-  const dispatch = useAppDispatch()
-  const items = useAppSelector(selectCartItems)
+  const dispatch = useDispatch<AppDispatch>()
 
-  // Ref para acionar o modal
-  const modalRef = useRef<ModalCartRef>(null)
+  // Itens do carrinho para checar se já existe
+  const items = useSelector((state: RootState) => state.cart.items)
 
-  // Se já existir no carrinho: apenas avisa. Se não existir: adiciona e avisa.
-  const cartUi = useCallback(
-    (idProcurado: string) => {
-      const exists = items.some((item) => String(item.id) === String(idProcurado))
+  // Dois modais: um para sucesso e outro para "já existe"
+  const addedModalRef = useRef<ModalCartRef>(null)
+  const existsModalRef = useRef<ModalCartRef>(null)
 
-      if (exists) {
-        modalRef.current?.show({
-          variant: 'warning',
-          title: 'Produto já foi adicionado',
-          message: 'Este item já está no seu carrinho.',
-          durationMs: 3000,
-        })
-        return
-      }
+  const handleAddToCart = useCallback(async () => {
+    const alreadyInCart = items?.some((it: { id: string }) => it.id === id)
 
-      // Adiciona pela primeira vez
-      dispatch(
-        addItemAction({
+    if (alreadyInCart) {
+      existsModalRef.current?.show({
+        variant: 'warning',
+        title: 'Produto já está no carrinho',
+        message: 'Este item já foi adicionado anteriormente.',
+        durationMs: 2500,
+      })
+      return
+    }
+
+    try {
+      await dispatch(
+        addToCartAndSync({
           id,
-          image,
           nome,
-          descricao,
           preco,
-          qty: 1,
+          imagem: image,
+          quantidade: 1, // sempre acumula +1
         }),
       )
 
-      modalRef.current?.show({
-        variant: 'success',
-        productName: nome,
-        title: 'Adicionado ao carrinho',
-        message: 'Item incluído com sucesso.',
+      if (alreadyInCart) {
+        existsModalRef.current?.show({
+          variant: 'warning',
+          title: 'Produto já foi adicionado',
+          message: 'Esse produto já foi adicionado no seu carrinho',
+          durationMs: 2500,
+        })
+      } else {
+        addedModalRef.current?.show({
+          variant: 'success',
+          productName: nome,
+          title: 'Adicionado ao carrinho',
+          message: 'Item adicionado no carrinho.',
+          durationMs: 3000,
+        })
+      }
+    } catch (err) {
+      addedModalRef.current?.show({
+        variant: 'warning',
+        title: 'Não foi possível adicionar',
+        message: 'Tente novamente em instantes.',
         durationMs: 3000,
       })
-    },
-    [items, dispatch, id, image, nome, descricao, preco],
-  )
+      console.error(err)
+    }
+  }, [dispatch, id, image, nome, preco, items])
 
   return (
     <S.StylesCardCatalogo>
@@ -77,11 +91,14 @@ const CardCatalogo = ({ id, image, nome, descricao, preco }: CardProps) => {
 
         <S.preco>{formatPrice(preco)}</S.preco>
 
-        <S.Button onClick={() => cartUi(id)}>Comprar</S.Button>
+        <S.Button onClick={handleAddToCart}>Adicionar ao carrinho</S.Button>
       </S.Container>
 
-      {/* Modal deslizante para os avisos */}
-      <ModalCart ref={modalRef} offsetPx={120} enterMs={300} exitMs={300} />
+      {/* Modal de sucesso/erro */}
+      <ModalCart ref={addedModalRef} offsetPx={120} enterMs={300} exitMs={300} />
+
+      {/* Modal exclusivo para "já existe" */}
+      <ModalCart ref={existsModalRef} offsetPx={170} enterMs={300} exitMs={300} />
     </S.StylesCardCatalogo>
   )
 }

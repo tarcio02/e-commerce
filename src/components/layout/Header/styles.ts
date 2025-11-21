@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components'
-import { theme } from '../../../styles/theme'
 
 export const StylesHeader = styled.div`
   position: relative;
@@ -10,7 +9,7 @@ export const Container = styled.div<{ $downScroll: boolean, $isRoute: boolean }>
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: ${theme.spaces.paddingMobile};
+  padding: 1.5rem 2rem;
   width: 100%;
   height: 92px;
 
@@ -37,9 +36,6 @@ export const Container = styled.div<{ $downScroll: boolean, $isRoute: boolean }>
     transition: none;
   }
 
-  @media (min-width: 601px) {
-    padding: 0 80px;
-  }
 `
 
 export const Logo = styled.div`

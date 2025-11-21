@@ -19,11 +19,11 @@ const Login = () => {
     intended: string
   }
 
-  const afterLogin = cameFromCart ? '/addres' : intended || '/'
+  const afterLogin = cameFromCart ? '/' : intended || '/'
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
-      if (data.user) navigate('/addres', { replace: true }) // já logado? manda pra /addres
+      if (data.user) navigate('/', { replace: true }) // já logado? manda pra /addres
     })
   }, [navigate])
 

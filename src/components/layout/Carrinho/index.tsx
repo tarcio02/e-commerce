@@ -1,6 +1,6 @@
-import { selectCartItems, selectCartSubtotal, useAppSelector } from '../../../app/store'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import * as S from './styles'
 
@@ -10,6 +10,12 @@ import raviole from '../../../assets/images/ravioli.png'
 import CardCarrinho from '../CardCarrinho'
 import { formatPrice } from '../../../utils/formatPrice'
 
+// ⬇️ importe seus seletores
+import {
+  selectCartLineItemsForRender,
+  selectCartTotals,
+} from '../../../features/cart/cart.selectors' // ajuste o caminho
+
 type PropCarriho = {
   carrinhoAberto: boolean
   fechar: () => void
@@ -17,9 +23,10 @@ type PropCarriho = {
 
 const Carrinho = ({ carrinhoAberto, fechar }: PropCarriho) => {
   const navigate = useNavigate()
-  const items = useAppSelector(selectCartItems)
 
-  const subtotal = useAppSelector(selectCartSubtotal)
+  // ⬇️ Consumo dos seletores
+  const itens = useSelector(selectCartLineItemsForRender)
+  const { subtotal } = useSelector(selectCartTotals)
 
   const itemVariants = {
     hidden: { opacity: 0, y: -8, scale: 0.98 },
@@ -35,13 +42,14 @@ const Carrinho = ({ carrinhoAberto, fechar }: PropCarriho) => {
           <img src={close} alt="Ícone de fechar" />
         </S.BtnFechar>
       </S.Top>
+
       <S.Body>
-        {items.length ? (
+        {itens.length ? (
           <AnimatePresence initial={false}>
-            {items.map((item) => (
+            {itens.map((item) => (
               <motion.div
-                key={item.id} // importante pra animar remover
-                layout // anima reflow dos cards quando lista muda
+                key={item.id}
+                layout
                 variants={itemVariants}
                 initial="hidden"
                 animate="visible"
@@ -49,10 +57,10 @@ const Carrinho = ({ carrinhoAberto, fechar }: PropCarriho) => {
               >
                 <CardCarrinho
                   id={item.id}
-                  image={item.image ?? raviole}
+                  image={item.imagem ?? raviole} // mapeando imagem -> image (fallback)
                   nome={item.nome}
                   preco={item.preco}
-                  quantidade={item.qty ?? 1}
+                  quantidade={item.quantidade}
                 />
               </motion.div>
             ))}
@@ -61,22 +69,22 @@ const Carrinho = ({ carrinhoAberto, fechar }: PropCarriho) => {
           <p style={{ padding: 16, opacity: 0.7 }}>Seu carrinho está vazio.</p>
         )}
       </S.Body>
+
       <S.Bottom>
         <S.Container>
+          {/* A ShippingBar espera o subtotal em string */}
           <ShippingBar total={subtotal} />
           <S.SubTotal>
             <h3>Subtotal:</h3>
             <h3>{formatPrice(subtotal)}</h3>
           </S.SubTotal>
         </S.Container>
+
         <S.Container>
           <S.BtnFinalizar
             onClick={() => {
-              navigate('/addres', {
-                state: {
-                  cameFromCart: true,
-                  intended: '/addres',
-                },
+              navigate('/preview-pedido', {
+                state: { cameFromCart: true, intended: '/addres' },
               })
               fechar()
             }}
