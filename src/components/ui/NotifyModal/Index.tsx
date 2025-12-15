@@ -18,19 +18,19 @@ import { useNavigate } from 'react-router-dom'
 export type NotifyVariant = 'success' | 'error' | 'warning' | 'info'
 
 export type NotifyShowOptions = {
-  /** Título principal */
+  // Título principal
   title?: string
-  /** Mensagem curta (uma linha) */
+  // Mensagem curta (uma linha)
   message?: string
-  /** Lista de erros de campos (ex.: ["Nome é obrigatório", "Email inválido"]) */
+  // Lista de erros de campos (ex.: ["Nome é obrigatório", "Email inválido"])
   fieldErrors?: string[]
-  /** Variante visual */
+  // Variante visual
   variant?: NotifyVariant
-  /** Fecha automaticamente em ms (0 = não fecha automaticamente) */
+  // Fecha automaticamente em ms (0 = não fecha automaticamente)
   durationMs?: number
-  /** Mostrar botão de fechar (X) */
+  // Mostrar botão de fechar (X)
   dismissible?: boolean
-  /** Conteúdo custom (substitui body padrão) */
+  // Conteúdo custom (substitui body padrão)
   content?: React.ReactNode
 }
 
@@ -82,8 +82,8 @@ function useEscToClose(onClose: () => void, enabled: boolean) {
   }, [enabled, onClose])
 }
 
-const NotifyModal = React.forwardRef<NotifyModalRef, { zIndexBase?: number }>(
-  ({ zIndexBase = 1000 }, ref) => {
+const NotifyModal = React.forwardRef<NotifyModalRef, { zIndexBase?: number; redirectTo?: string }>(
+  ({ zIndexBase = 1000, redirectTo }, ref) => {
     const navigate = useNavigate()
     const [state, setState] = React.useState<InternalState>(defaultState)
     const timerRef = React.useRef<number | null>(null)
@@ -98,9 +98,12 @@ const NotifyModal = React.forwardRef<NotifyModalRef, { zIndexBase?: number }>(
 
     const hide = React.useCallback(() => {
       clearTimer()
+
       setState((s) => ({ ...s, open: false }))
-      navigate('/addres')
-    }, [clearTimer, navigate])
+      if (redirectTo) {
+        navigate(redirectTo)
+      }
+    }, [clearTimer, navigate, redirectTo])
 
     const show = React.useCallback(
       (opts: NotifyShowOptions) => {

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CartService } from "../../services/cart.thunks";
+import { CartService } from "../../services/cart.api";
 import { applyDelta, setCartId, setItems } from "./cart.slices";
 import { mapRpcItemToCartItem } from "./cart.mapper";
 import { type RootState } from "../../app/root-reducer";

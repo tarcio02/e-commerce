@@ -19,8 +19,31 @@ export const addressApi = createApi({
         }
         return { data: data ?? [] };
       },
+      providesTags: (result) =>
+        result && result.length > 0
+          ? [
+              // uma tag por item
+              ...result.map(({ id }) => ({ type: 'Address' as const, id })),
+              // tag "LIST" pra invalidar a lista toda
+              { type: 'Address' as const, id: 'LIST' },
+            ]
+          : [{ type: 'Address' as const, id: 'LIST' }],
+    }),
+    deleteAddress: builder.mutation({
+      async queryFn(id) {
+        const { error } = await supabase
+          .from("enderecos")
+          .delete()
+          .eq("id", id)
+
+        if (error) return { error }
+        return { data: true }
+      },
+      invalidatesTags: (_result, _error, id) => [
+        { type: 'Address', id },
+        { type: 'Address', id: 'LIST' },],
     }),
   })
 })
 
-export const { useGetAddressQuery } = addressApi
+export const { useGetAddressQuery, useDeleteAddressMutation } = addressApi

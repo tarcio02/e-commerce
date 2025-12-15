@@ -4,8 +4,12 @@ import AddressCard from '../../components/layout/AddressCard'
 import Button from '../../components/ui/Button/Index'
 import { useNavigate } from 'react-router-dom'
 import * as S from './styles'
-import { useGetAddressQuery } from '../../services/address.api'
-// import { supabase } from '../../services/supabaseClient'
+import { useGetAddressQuery, useDeleteAddressMutation } from '../../services/address.api'
+import {
+  setOrderEnderecoId,
+  setOrderEnderecoView,
+} from '../../features/orderPreview/orderPreview.slice'
+import { useAppDispatch } from '../../app/hooks'
 
 export interface Address {
   id: string
@@ -20,8 +24,9 @@ export interface Address {
 
 const AddressSelector = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
-  const [selectedAddressId, setSelectedAddressId] = useState<string>()
+  const [selectedAddressId, setSelectedAddressId] = useState<string>('')
 
   const {
     data: addresses,
@@ -31,6 +36,8 @@ const AddressSelector = () => {
     refetchOnMountOrArgChange: true,
   })
 
+  const [deleteAddress, { isLoading: isDeleting }] = useDeleteAddressMutation()
+
   if (isLoading) return <p>Carregando...</p>
   if (error) return <p>Erro: {String(error)}</p>
 
@@ -38,26 +45,30 @@ const AddressSelector = () => {
     setSelectedAddressId(id)
   }
 
-  const handleRemoveAddress = () => {
-    // setAddresses((prev) => prev?.filter((addr) => addr.id !== id))
-    // if (selectedAddressId === id) {
-    //   setSelectedAddressId(addresses?[0]?.id || '') id: string = parâmetro
-    // }
+  const handleRemoveAddress = async (id: string) => {
+    try {
+      await deleteAddress(id).unwrap()
+
+      if (selectedAddressId === id) {
+        const remaining = addresses?.filter((addr) => addr.id !== id) ?? []
+        setSelectedAddressId(remaining[0]?.id)
+      }
+    } catch (err) {
+      console.error('Erro ao remover endereço:', err)
+    }
   }
 
-  // const handleAddress = async () => {
-  //   try {
-  //     const {
-  //       data: { user },
-  //       error: sessErr,
-  //     } = await supabase.auth.getUser()
-  //     if (sessErr || !user)
-  //       throw new Error('É necessário estar autenticado para salvar o endereço.')
+  const handleAddress = async (addr_id: string) => {
+    const address = addresses?.find((addr) => addr.id === addr_id)
 
-  //   } catch {
-  //   } finally {
-  //   }
-  // }
+    dispatch(setOrderEnderecoId(address?.id ?? null))
+    dispatch(
+      setOrderEnderecoView(
+        `Rua ${address?.street}, ${address?.number} - ${address?.complement} - ${address?.neighborhood} `,
+      ),
+    )
+    navigate('/preview-pedido')
+  }
 
   return (
     <S.Container>
@@ -94,7 +105,7 @@ const AddressSelector = () => {
                   address={address}
                   isSelected={selectedAddressId === address.id}
                   onSelect={handleSelectAddress}
-                  onRemove={handleRemoveAddress}
+                  onRemove={() => handleRemoveAddress(address.id)}
                 />
               ))}
             </S.AddressList>
@@ -110,11 +121,12 @@ const AddressSelector = () => {
                 Adicionar Novo Endereço
               </Button>
               <Button
-                onClick={() => navigate('/pedido')}
+                onClick={() => handleAddress(selectedAddressId)}
                 variant="primary"
                 size="md"
                 fullWidth
                 leftIcon={<CircleCheckBig size={20} />}
+                disabled={!selectedAddressId || isDeleting}
               >
                 Realizar Pedido
               </Button>

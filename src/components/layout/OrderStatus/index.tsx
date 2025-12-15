@@ -4,9 +4,9 @@ import { Package } from 'lucide-react'
 import { CardHeaderContent, CardTitleWrapper, StyledCardTitle } from './styles'
 
 interface OrderStatusProps {
-  status: string
-  getStatusLabel: (status: string) => string
-  getStatusVariant: (status: string) => 'secondary' | 'default'
+  status: string | null
+  getStatusLabel: (status: string | null) => string | null
+  getStatusVariant: (status: string | null) => 'secondary' | 'default'
 }
 
 export const OrderStatus = ({ status, getStatusLabel, getStatusVariant }: OrderStatusProps) => {

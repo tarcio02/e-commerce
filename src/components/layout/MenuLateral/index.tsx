@@ -1,13 +1,15 @@
 import * as S from './styles'
-
 import close from '../../../assets/icons/close.png'
-
-import produtos from '../../../assets/icons/produtos-icon.png'
-import receita from '../../../assets/icons/receita-icon.png'
-import empresa from '../../../assets/icons/empresa-icon.png'
-import politicas from '../../../assets/icons/politicas-icon.png'
-import termos from '../../../assets/icons/termos-icon.png'
-import perfil from '../../../assets/icons/perfil-icon.png'
+import {
+  Building2,
+  Handshake,
+  House,
+  NotebookText,
+  PackageSearch,
+  ReceiptText,
+  ShoppingBasket,
+  User,
+} from 'lucide-react'
 
 type PropsTypes = {
   aberto: boolean
@@ -21,58 +23,84 @@ const MenuLateral = ({ aberto, fechar }: PropsTypes) => {
         <img src={close} alt="Ícone de fechar" />
       </S.btn>
       <S.Lista>
-        <S.LinkNav to="/catalogo"
+        <S.LinkNav
+          to="/"
           className="item"
           onClick={() => {
             fechar()
           }}
         >
-          <img src={produtos} alt="ìcone de caixa" />
+          <House size={16} />
+          Home
+        </S.LinkNav>
+        <S.LinkNav
+          to="/catalogo"
+          className="item"
+          onClick={() => {
+            fechar()
+          }}
+        >
+          <ShoppingBasket />
           Produtos
         </S.LinkNav>
-        <S.LinkNav to="/receitas"
+        <S.LinkNav
+          to="/checkout/history"
           className="item"
           onClick={() => {
             fechar()
           }}
         >
-          <img src={receita} alt="ìcone de receita" />
+          <PackageSearch />
+          Meus Pedidos
+        </S.LinkNav>
+        <S.LinkNav
+          to="/receitas"
+          className="item"
+          onClick={() => {
+            fechar()
+          }}
+        >
+          <NotebookText />
           Receitas
         </S.LinkNav>
-        <S.LinkNav to="/sobre"
+        <S.LinkNav
+          to="/sobre"
           className="item"
           onClick={() => {
             fechar()
           }}
         >
-          <img src={empresa} alt="ìcone de grupo de pessoas" />
+          <Building2 />
           Quem Somos?
         </S.LinkNav>
-        <S.LinkNav to="/politicas-de-privacidade"
+        <S.LinkNav
+          to="/politicas-de-privacidade"
           className="item"
           onClick={() => {
             fechar()
           }}
         >
-          <img src={politicas} alt="ìcone de políticas" />
+          <ReceiptText />
           Políticas de Privacidade
         </S.LinkNav>
-        <S.LinkNav to="/termos-de-uso"
+        <S.LinkNav
+          to="/termos-de-uso"
           className="item"
           onClick={() => {
             fechar()
           }}
         >
-          <img src={termos} alt="ìcone de termos" />
+          <Handshake />
           Termos de Uso
         </S.LinkNav>
-        <S.LinkNav to="/perfil"
+        <S.LinkNav
+          to="/perfil"
           className="item"
           onClick={() => {
             fechar()
           }}
         >
-          <img src={perfil} alt="ìcone de usuário" />
+          <User />
           Minha Conta
         </S.LinkNav>
       </S.Lista>

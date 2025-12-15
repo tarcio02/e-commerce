@@ -33,10 +33,6 @@ const computePrecoTotal = (item: CartItem): number => {
   return toFiniteNumber(item.preco) * toFiniteNumber(item.quantidade);
 };
 
-/* ===========================
- * Seletores básicos existentes
- * =========================== */
-
 // Retorna o id do carrinho
 export const selectCartId = (state: RootState): string | null =>
   (state.cart as CartState).id_carrinho;

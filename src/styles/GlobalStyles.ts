@@ -1,14 +1,30 @@
 import { createGlobalStyle } from "styled-components";
 // import { createGlobalStyle, css, keyframes } from "styled-components";
 
-export const GlobalStyles = createGlobalStyle`
-  *{
+export const GlobalStyles = createGlobalStyle<{ $isLoading: boolean }>`
+  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Inter", sans-serif;
   }
-`
+
+  body {
+    position: relative;
+    overflow: ${({ $isLoading }) => ($isLoading ? "hidden" : "auto")};
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    pointer-events: ${({ $isLoading }) => ($isLoading ? "all" : "none")};
+    opacity: ${({ $isLoading }) => ($isLoading ? 1 : 0)};
+    transition: opacity 0.3s ease;
+  }
+`;
 
 // const logoSpin = keyframes`
 //   from { transform: rotate(0deg); }

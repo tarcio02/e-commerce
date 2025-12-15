@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Drawer = styled.div<{ $aberto: boolean }>`
@@ -23,11 +23,18 @@ export const Lista = styled.ul`
   justify-content: center;
   align-items: start;
   list-style: none;
-  gap: 24px;
+  gap: 16px;
   margin-top: 30px;
+
+  .active {
+    background-color: rgba(245, 159, 10, 0.1);
+    color: #f59f0a;
+    border: 1px solid rgba(245, 159, 10, 0.3);
+    border-radius: 16px;
+  }
 `
 
-export const LinkNav = styled(Link)`
+export const LinkNav = styled(NavLink)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,8 +43,9 @@ export const LinkNav = styled(Link)`
   color: white;
   font-weight: bold;
   text-decoration: none;
+  padding: 2px 8px;
 
-  img {
+  svg {
     width: 28px;
   }
 

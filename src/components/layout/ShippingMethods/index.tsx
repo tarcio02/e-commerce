@@ -18,7 +18,7 @@ interface ShippingMethodProps {
   setShippingMethod: (method: 'pickup' | 'delivery') => void
   selectedAddress: string | null
   onAddressClick: () => void
-  orderStatus: string
+  orderStatus: string | null
 }
 
 export const ShippingMethod = ({
@@ -59,10 +59,7 @@ export const ShippingMethod = ({
           <div style={{ marginTop: '1rem' }}>
             <Separator style={{ marginBottom: '0.75rem' }} />
             <AddressSection>
-              <MapPin
-                className="h-5 w-5"
-                style={{ color: 'hsl(var(--muted-foreground))', marginTop: '0.25rem' }}
-              />
+              <MapPin className="h-5 w-5" />
               <AddressContent>
                 {selectedAddress ? (
                   <div>
@@ -70,7 +67,7 @@ export const ShippingMethod = ({
                     <AddressText>{selectedAddress}</AddressText>
                   </div>
                 ) : (
-                  <AddressText>Nenhum endereço selecionado</AddressText>
+                  <p>Adicione um endereço para entrega</p>
                 )}
               </AddressContent>
             </AddressSection>

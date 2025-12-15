@@ -19,7 +19,7 @@ export const RadioWrapper = styled.div`
 
 export const AddressSection = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.75rem;
 `;
 

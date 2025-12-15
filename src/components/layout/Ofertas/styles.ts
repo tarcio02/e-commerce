@@ -16,6 +16,7 @@ export const Oferta = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
+  color: black;
 
   img {
     width: 16px;

@@ -1,6 +1,11 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
+import { selectCartId } from '../../../features/cart/cart.selectors'
+import {
+  setOrderCarrinhId,
+  setOrderStatus,
+} from '../../../features/orderPreview/orderPreview.slice'
 
 import * as S from './styles'
 
@@ -9,6 +14,8 @@ import ShippingBar from '../ShippingBar'
 import raviole from '../../../assets/images/ravioli.png'
 import CardCarrinho from '../CardCarrinho'
 import { formatPrice } from '../../../utils/formatPrice'
+import ModalCart, { type ModalCartRef } from '../ModalCart'
+import { useRef } from 'react'
 
 // ⬇️ importe seus seletores
 import {
@@ -23,15 +30,37 @@ type PropCarriho = {
 
 const Carrinho = ({ carrinhoAberto, fechar }: PropCarriho) => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const modalRef = useRef<ModalCartRef>(null)
 
   // ⬇️ Consumo dos seletores
-  const itens = useSelector(selectCartLineItemsForRender)
-  const { subtotal } = useSelector(selectCartTotals)
+  const itens = useAppSelector(selectCartLineItemsForRender)
+  const { subtotal } = useAppSelector(selectCartTotals)
+  const cartId = useAppSelector(selectCartId)
 
   const itemVariants = {
     hidden: { opacity: 0, y: -8, scale: 0.98 },
     visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.18 } },
     removed: { opacity: 0, y: 8, scale: 0.98, transition: { duration: 0.18 } },
+  }
+
+  const handleCart = () => {
+    if (!itens || itens.length === 0) {
+      modalRef.current?.show({
+        variant: 'warning',
+        title: 'Carrinho Vazio!',
+        message: 'Adicione alguns items no carrinho primeiro.',
+        durationMs: 5000,
+      })
+      return
+    }
+    dispatch(setOrderCarrinhId(cartId))
+    dispatch(setOrderStatus('pending'))
+    navigate('/preview-pedido', {
+      state: { cameFromCart: true, intended: '/addres' },
+    })
+    fechar()
   }
 
   return (
@@ -57,7 +86,7 @@ const Carrinho = ({ carrinhoAberto, fechar }: PropCarriho) => {
               >
                 <CardCarrinho
                   id={item.id}
-                  image={item.imagem ?? raviole} // mapeando imagem -> image (fallback)
+                  image={item.imagem ?? raviole}
                   nome={item.nome}
                   preco={item.preco}
                   quantidade={item.quantidade}
@@ -81,18 +110,10 @@ const Carrinho = ({ carrinhoAberto, fechar }: PropCarriho) => {
         </S.Container>
 
         <S.Container>
-          <S.BtnFinalizar
-            onClick={() => {
-              navigate('/preview-pedido', {
-                state: { cameFromCart: true, intended: '/addres' },
-              })
-              fechar()
-            }}
-          >
-            Finaliza Compra
-          </S.BtnFinalizar>
+          <S.BtnFinalizar onClick={handleCart}>Finalizar Compra</S.BtnFinalizar>
         </S.Container>
       </S.Bottom>
+      <ModalCart ref={modalRef} offsetPx={120} enterMs={300} exitMs={300} />
     </S.StylesCarrinho>
   )
 }

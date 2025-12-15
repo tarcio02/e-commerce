@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+  <body>
+    <button id="btn">Testar mp-checkout</button>
+    <pre id="out"></pre>
+
+    <script>
+      const url = 'https://atxamhzrnguvdnkdixuj.functions.supabase.co/mp-checkout'
+
+      // Cole aqui o anon key do Supabase (Settings > API > anon public)
+      const ANON_KEY =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0eGFtaHpybmd1dmRua2RpeHVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3NzMyMDIsImV4cCI6MjA3NTM0OTIwMn0.Vq9V1y8fCFYZpq6_T5rmeALynmQJkuozW6Zpao1hs8Q'
+
+      const headers = {
+        'Content-Type': 'application/json',
+        apikey: ANON_KEY,
+        Authorization: `Bearer ${ANON_KEY}`,
+      }
+
+      document.getElementById('btn').onclick = async () => {
+        const body = {
+          title: 'Produto teste',
+          quantity: 2,
+          unit_price: 49.9,
+        }
+
+        try {
+          const res = await fetch(url, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(body),
+          })
+
+          const text = await res.text()
+          document.getElementById('out').textContent = 'Status: ' + res.status + '\n\n' + text
+        } catch (err) {
+          document.getElementById('out').textContent = err.toString()
+        }
+      }
+    </script>
+  </body>
+</html>

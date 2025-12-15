@@ -5,34 +5,10 @@ import Receitas from './Receitas'
 import Qualidades from './Qualidades'
 import Form from './Form'
 import { useGetProductsQuery } from '../services/products.api'
-
-import preparo from '../assets/images/preparo-pastel.png'
+import { Star, Truck } from 'lucide-react'
 
 const Home = () => {
   const { data: produtos, isLoading, error } = useGetProductsQuery()
-
-  const receitas = [
-    {
-      id: 1,
-      imagem: preparo,
-      receita: 'Pastel de queijo',
-    },
-    {
-      id: 2,
-      imagem: preparo,
-      receita: 'Pastel de frango',
-    },
-    {
-      id: 3,
-      imagem: preparo,
-      receita: 'Pastel de carne',
-    },
-    {
-      id: 3,
-      imagem: preparo,
-      receita: 'Pastel de carne',
-    },
-  ]
 
   if (isLoading) return <p>Carregando...</p>
   if (error) return <p>Erro: {String(error)}</p>
@@ -40,10 +16,20 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <Catalogo data={produtos ?? []} titulo="Mais vendidos:" />
+      <Catalogo
+        data={produtos ?? []}
+        badge="Estrelas do site"
+        icon={Star}
+        titulo="Produtos em destaques"
+      />
       <Sobre />
-      <Catalogo data={produtos ?? []} titulo="Com Frete Grátis:" />
-      <Receitas data={receitas} titulo="Melhores Receitas" />
+      <Catalogo
+        data={produtos ?? []}
+        badge="Não pague envio"
+        icon={Truck}
+        titulo="Com Frete Grátis"
+      />
+      <Receitas />
       <Qualidades />
       <Form />
     </>

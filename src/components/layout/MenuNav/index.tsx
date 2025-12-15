@@ -1,11 +1,25 @@
 import * as S from './styles'
+import type React from 'react'
 
-const MenuNav = () => {
+type LinkItem = {
+  name: string
+  icon: React.ReactElement
+  route: string
+}
+
+type LinksProps = {
+  links: LinkItem[]
+}
+
+const MenuNav = ({ links }: LinksProps) => {
   return (
     <S.StylesMenuNav>
-      <S.Item to="/catalogo">Produtos</S.Item>
-      <S.Item to="/receitas">Receitas</S.Item>
-      <S.Item to="/sobre">Quem Somos?</S.Item>
+      {links.map((link) => (
+        <S.Item to={link.route}>
+          {link.icon}
+          {link.name}
+        </S.Item>
+      ))}
     </S.StylesMenuNav>
   )
 }

@@ -8,11 +8,15 @@ import Header from '../Header'
 import MenuLateral from '../MenuLateral'
 import Carrinho from '../Carrinho'
 import Footer from '../Footer'
+import { selectIsLoading } from '../../../features/orderPreview/orderPreview.selectors'
+import { useAppSelector } from '../../../app/hooks'
 
 const RootLayout = () => {
   const [menuAberto, setMenuAberto] = useState(false)
   const [carrinhoAberto, setCarrinhoAberto] = useState(false)
   const [stateHeader, setStateHeader] = useState(false)
+
+  const isLoading = useAppSelector(selectIsLoading)
 
   const toggleUi = (tipo: 'menu' | 'carrinho') => {
     if (tipo === 'menu') {
@@ -81,8 +85,7 @@ const RootLayout = () => {
 
   return (
     <>
-      <GlobalStyles />
-      {/* <Ofertas /> */}
+      <GlobalStyles $isLoading={isLoading} />
       <Header
         menuAberto={menuAberto}
         toggleMenu={() => toggleUi('menu')}

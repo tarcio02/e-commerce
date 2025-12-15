@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 export const Badge = styled.div<{ variant: string }>`
   display: inline-flex;
   align-items: center;
+  text-align: center;
   border-radius: 9999px;
   border: 1px solid #e5e7eb;
   padding: 8px;

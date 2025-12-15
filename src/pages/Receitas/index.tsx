@@ -1,28 +1,63 @@
+import { ArrowRight, ChefHat } from 'lucide-react'
 import * as S from './styes'
+import pastel from '../../assets/images/receitas/pastel.png'
+import macarrao from '../../assets/images/receitas/fettuccine.jpg'
 
-import CardReceita from '../../components/layout/CardReceitas'
-
-type Itens = {
-  id: number
-  imagem: string
-  receita: string
+type Category = {
+  name: string
+  image: string
+  link: string
 }
 
-type ListProps = {
-  data: Itens[]
-  titulo: string
-}
+const Receitas = () => {
+  const categories: Category[] = [
+    {
+      name: 'Macarrão e Espaguetes',
+      image: macarrao,
+      link: '/recipes/macarrao',
+    },
+    {
+      name: 'Pasteis',
+      image: pastel,
+      link: '/recipes/pastel',
+    },
+  ]
 
-const Receitas: React.FC<ListProps> = ({ data, titulo }) => {
   return (
-    <S.StylesReceitas>
-      <S.Titulo>{titulo}:</S.Titulo>
-      <S.Container>
-        {data.map((item) => (
-          <CardReceita id={item.id} image={item.imagem} receita={item.receita} />
+    <S.CategoriesSection>
+      <S.Badge>
+        Receitas para casa
+        <ChefHat />
+      </S.Badge>
+      <S.SectionHeader>
+        Inpire-se em <S.HighlightText>Nossas Receitas</S.HighlightText>
+      </S.SectionHeader>
+      <S.SectionDescription>
+        Explore receitas selecionadas de macarrão e pastel para fazer sozinha ou acompanhada. Cada
+        prato reflete um momento de tradição e sabor.
+      </S.SectionDescription>
+
+      <S.CategoriesGrid>
+        {categories.map((category, index) => (
+          <S.CategoryCard
+            to={category.link}
+            key={category.name}
+            delay={index * 100}
+            aria-label={`Ver coleção ${category.name}`}
+          >
+            <S.CategoryImage src={category.image} alt={category.name} />
+            <S.GradientOverlay />
+            <S.CategoryInfo>
+              <S.CategoryTitle>{category.name}</S.CategoryTitle>
+              <S.CategoryAction>
+                <span>Ver coleção</span>
+                <ArrowRight />
+              </S.CategoryAction>
+            </S.CategoryInfo>
+          </S.CategoryCard>
         ))}
-      </S.Container>
-    </S.StylesReceitas>
+      </S.CategoriesGrid>
+    </S.CategoriesSection>
   )
 }
 

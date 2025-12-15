@@ -5,33 +5,45 @@ import { OrderStatus } from '../../components/layout/OrderStatus'
 import { OrderItems } from '../../components/layout/OrderItems'
 import { ShippingMethod } from '../../components/layout/ShippingMethods'
 import { OrderSummary } from '../../components/layout/OrderSummary'
-import { MainContent, ContentGrid, LeftColumn, RightColumn } from './styles'
+import { MainContent, ContentGrid, LeftColumn, RightColumn, StylesOrderPreview } from './styles'
+import { useAppSelector, useAppDispatch } from '../../app/hooks'
+import {
+  selectOrderStatus,
+  selectEnderecoView,
+} from '../../features/orderPreview/orderPreview.selectors'
+import { selectCartLineItemsForRender, selectCartTotals } from '../../features/cart/cart.selectors'
+import { setOrderMetodoEnvio } from '../../features/orderPreview/orderPreview.slice'
 
 // Mock data - você substituirá isso com dados reais
-const mockOrderItems = [
-  { id: 1, name: 'Produto Example 1', quantity: 2, price: 99.9 },
-  { id: 2, name: 'Produto Example 2', quantity: 1, price: 149.9 },
-  { id: 3, name: 'Produto Example 3', quantity: 3, price: 49.9 },
-]
 
 const OrderPreview = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const mockOrderItems = useAppSelector(selectCartLineItemsForRender)
+
   const [shippingMethod, setShippingMethod] = useState<'pickup' | 'delivery'>('delivery')
 
   const [selectedAddress, setSelectedAddress] = useState<string | null>(null)
 
+  const address = useAppSelector(selectEnderecoView)
+
   useEffect(() => {
-    setSelectedAddress('rua ana pires - residencial olivia - apto 101')
-  }, [])
+    setSelectedAddress(address)
+  }, [address])
+
+  useEffect(() => {
+    dispatch(setOrderMetodoEnvio(shippingMethod))
+  }, [dispatch, shippingMethod])
 
   const [couponCode, setCouponCode] = useState('')
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null)
 
-  const orderStatus = 'shipped' // pending, confirmed, shipped, delivered
-  const shippingCost = shippingMethod === 'delivery' ? 15.0 : 0
+  const orderStatus = useAppSelector(selectOrderStatus)
+  const shippingCost = shippingMethod === 'delivery' ? 10.0 : 0
   const discount = appliedCoupon ? 20.0 : 0
 
-  const subtotal = mockOrderItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  const { subtotal } = useAppSelector(selectCartTotals)
   const total = subtotal + shippingCost - discount
 
   // const handleApplyCoupon = () => {
@@ -41,7 +53,7 @@ const OrderPreview = () => {
   //   }
   // }
 
-  const getStatusLabel = (status: string) => {
+  const getStatusLabel = (status: string | null) => {
     const labels = {
       pending: 'Pagamento Pendente',
       confirmed: 'Em Preparação',
@@ -51,7 +63,7 @@ const OrderPreview = () => {
     return labels[status as keyof typeof labels] || status
   }
 
-  const getStatusVariant = (status: string) => {
+  const getStatusVariant = (status: string | null) => {
     const variants = {
       pending: 'secondary' as const,
       confirmed: 'default' as const,
@@ -62,7 +74,7 @@ const OrderPreview = () => {
   }
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: 'hsl(var(--background))' }}>
+    <StylesOrderPreview>
       <OrderHeader title="Preview do Pedido" />
 
       <MainContent>
@@ -101,7 +113,7 @@ const OrderPreview = () => {
           </RightColumn>
         </ContentGrid>
       </MainContent>
-    </div>
+    </StylesOrderPreview>
   )
 }
 

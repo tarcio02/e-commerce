@@ -24,7 +24,7 @@ const pulse = keyframes`
 
 export const StyledButton = styled.button<StyledButtonProps>`
   position: relative;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;

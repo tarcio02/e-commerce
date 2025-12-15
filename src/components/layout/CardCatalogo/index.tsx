@@ -5,18 +5,29 @@ import { type RootState } from '../../../app/root-reducer'
 import { formatPrice } from '../../../utils/formatPrice'
 import * as S from './styles'
 import ModalCart, { type ModalCartRef } from '../ModalCart'
-
-import { addToCartAndSync } from '../../../features/cart/cart.thunks'
+import { addToCartAndSync, apllyDeltaAndSync } from '../../../features/cart/cart.thunks'
+import { Minus, Plus, ShoppingCart, Star, Truck } from 'lucide-react'
 
 type CardProps = {
-  id: string
-  image: string
-  nome: string
-  descricao: string
-  preco: number
+  idItem: string //
+  image: string //
+  nome: string //
+  descricao?: string //
+  preco: number //
+  oldPrice?: number //
+  avaliacao: number
+  desconto?: number //
 }
 
-const CardCatalogo = ({ id, image, nome, descricao, preco }: CardProps) => {
+const CardCatalogo = ({
+  idItem,
+  image,
+  nome,
+  descricao,
+  preco,
+  oldPrice,
+  avaliacao,
+}: CardProps) => {
   const dispatch = useDispatch<AppDispatch>()
 
   // Itens do carrinho para checar se já existe
@@ -26,9 +37,10 @@ const CardCatalogo = ({ id, image, nome, descricao, preco }: CardProps) => {
   const addedModalRef = useRef<ModalCartRef>(null)
   const existsModalRef = useRef<ModalCartRef>(null)
 
-  const handleAddToCart = useCallback(async () => {
-    const alreadyInCart = items?.some((it: { id: string }) => it.id === id)
+  const alreadyInCart = items?.some((it: { id: string }) => it.id === idItem)
+  const quantidade = items.find((item) => item.id === idItem)?.quantidade ?? 0
 
+  const handleAddToCart = useCallback(async () => {
     if (alreadyInCart) {
       existsModalRef.current?.show({
         variant: 'warning',
@@ -42,7 +54,7 @@ const CardCatalogo = ({ id, image, nome, descricao, preco }: CardProps) => {
     try {
       await dispatch(
         addToCartAndSync({
-          id,
+          id: idItem,
           nome,
           preco,
           imagem: image,
@@ -75,31 +87,99 @@ const CardCatalogo = ({ id, image, nome, descricao, preco }: CardProps) => {
       })
       console.error(err)
     }
-  }, [dispatch, id, image, nome, preco, items])
+  }, [alreadyInCart, dispatch, idItem, nome, preco, image])
+
+  const handleIncrement = useCallback(() => {
+    dispatch(apllyDeltaAndSync({ productId: idItem, delta: +1 }))
+  }, [dispatch, idItem])
+
+  const handleDecrement = useCallback(() => {
+    dispatch(apllyDeltaAndSync({ productId: idItem, delta: -1 }))
+  }, [dispatch, idItem])
+
+  const renderStars = () => {
+    return Array.from({ length: 5 }).map((_, index) => (
+      <Star
+        key={index}
+        fill={index < Math.floor(avaliacao) ? '#ffa801' : 'none'}
+        stroke={index < Math.floor(avaliacao) ? '#ffa801' : '#ddd'}
+      />
+    ))
+  }
+
+  function calcularDescontoPercentual(preco?: number | null, oldPrice?: number | null): number {
+    if (!preco || !oldPrice || oldPrice <= 0 || preco >= oldPrice) {
+      return 0
+    }
+
+    const desconto = ((oldPrice - preco) / oldPrice) * 100
+
+    return Math.round(desconto)
+  }
 
   return (
-    <S.StylesCardCatalogo>
-      <S.Image>
-        <img src={image} alt="Foto do produto" />
-      </S.Image>
+    <S.CardContainer>
+      <S.ImageWrapper>
+        <S.ProductImage src={image} alt={nome} />
+        {oldPrice !== 0 ? (
+          <S.Badge>{`-${calcularDescontoPercentual(preco, oldPrice)}% OFF`}</S.Badge>
+        ) : (
+          <S.Badge>
+            <Truck size={18} />
+          </S.Badge>
+        )}
+        {/* <FavoriteButton
+          onClick={handleFavorite}
+          className={isFavorite ? 'active' : ''}
+          aria-label={isFavorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+        >
+          <Heart fill={isFavorite ? '#A80707' : 'none'} />
+        </FavoriteButton> */}
+      </S.ImageWrapper>
+      <S.CardContent>
+        <S.Text>
+          {/* {category && <Category>{category}</Category>} */}
+          <S.ProductName>{nome}</S.ProductName>
+          {descricao && <S.Description>{descricao}</S.Description>}
 
-      <S.Container>
-        <S.Title>
-          <h3>{nome}</h3>
-          <p>{descricao}</p>
-        </S.Title>
+          {avaliacao > 0 && <S.RatingWrapper>{renderStars()}</S.RatingWrapper>}
+        </S.Text>
 
-        <S.preco>{formatPrice(preco)}</S.preco>
+        <S.Values>
+          <S.PriceWrapper>
+            {oldPrice !== 0 ? (
+              <S.OldPrice>{formatPrice(oldPrice ?? 0)}</S.OldPrice>
+            ) : (
+              <S.Frete>Frete Grátis</S.Frete>
+            )}
+            <S.Price>{formatPrice(preco)}</S.Price>
+          </S.PriceWrapper>
 
-        <S.Button onClick={handleAddToCart}>Adicionar ao carrinho</S.Button>
-      </S.Container>
-
+          {!alreadyInCart ? (
+            <S.AddToCartButton onClick={handleAddToCart}>
+              <ShoppingCart />
+              Adicionar
+            </S.AddToCartButton>
+          ) : (
+            <S.QuantityWrapper>
+              <S.QuantityControl>
+                <S.QuantityButton onClick={handleDecrement} aria-label="Diminuir quantidade">
+                  <Minus />
+                </S.QuantityButton>
+                <S.QuantityValue>{quantidade}</S.QuantityValue>
+                <S.QuantityButton onClick={handleIncrement} aria-label="Aumentar quantidade">
+                  <Plus />
+                </S.QuantityButton>
+              </S.QuantityControl>
+            </S.QuantityWrapper>
+          )}
+        </S.Values>
+      </S.CardContent>
       {/* Modal de sucesso/erro */}
       <ModalCart ref={addedModalRef} offsetPx={120} enterMs={300} exitMs={300} />
-
       {/* Modal exclusivo para "já existe" */}
       <ModalCart ref={existsModalRef} offsetPx={170} enterMs={300} exitMs={300} />
-    </S.StylesCardCatalogo>
+    </S.CardContainer>
   )
 }
 

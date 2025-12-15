@@ -17,6 +17,17 @@ import {
 } from './styles'
 import ModalCart, { type ModalCartRef } from '../ModalCart'
 import { useRef } from 'react'
+import { useAppSelector, useAppDispatch } from '../../../app/hooks'
+import {
+  selectEnderecoId,
+  selectMetodoEnvio,
+  selectCarrinhoId,
+  selectIsLoading,
+} from '../../../features/orderPreview/orderPreview.selectors'
+import { setOrderIsLoading } from '../../../features/orderPreview/orderPreview.slice'
+import { paymentPreference } from '../../../services/paymentPreference'
+import { formatPrice } from '../../../utils/formatPrice'
+import { useNavigate } from 'react-router-dom'
 
 interface OrderSummaryProps {
   couponCode: string
@@ -43,7 +54,10 @@ export const OrderSummary = ({
   total,
   // handleApplyCoupon,
 }: OrderSummaryProps) => {
+  const navigate = useNavigate()
   const modalRef = useRef<ModalCartRef>(null)
+  const dispatch = useAppDispatch()
+  const isLoading = useAppSelector(selectIsLoading)
 
   const handleApplyCoupon = () => {
     modalRef.current?.show({
@@ -54,6 +68,58 @@ export const OrderSummary = ({
     })
     setCouponCode('')
     return
+  }
+
+  const endereco_id = useAppSelector(selectEnderecoId)
+  const metodo_envio = useAppSelector(selectMetodoEnvio)
+  const carrinho_id = useAppSelector(selectCarrinhoId)
+
+  const handleOrder = async () => {
+    if (metodo_envio === 'delivery') {
+      if (!endereco_id) {
+        modalRef.current?.show({
+          variant: 'warning',
+          title: 'Endereço vazio!',
+          message: 'Selecione um Endereço de entrega.',
+          durationMs: 5000,
+        })
+        return
+      }
+    }
+
+    // Chama edge function de preferência de pagamento
+    try {
+      dispatch(setOrderIsLoading(true))
+      const resp = await paymentPreference({
+        carrinho_id,
+        metodo_envio,
+        endereco_id,
+      })
+
+      const url = resp.initPoint ?? resp.checkoutUrl
+      if (url) {
+        window.open(url, '_blank', 'noopener,noreferrer')
+      }
+
+      navigate('/checkout/history', {
+        state: {
+          fromPreview: true,
+        },
+      })
+
+      dispatch(setOrderIsLoading(false))
+    } catch (e: unknown) {
+      dispatch(setOrderIsLoading(false))
+      console.log('Erro:' + e)
+      alert('Não foi possível iniciar o pagamento.')
+
+      modalRef.current?.show({
+        variant: 'warning',
+        title: 'Erro em gerar Pagamento!',
+        message: 'Não foi possível iniciar o pagamento.',
+        durationMs: 5000,
+      })
+    }
   }
 
   return (
@@ -96,28 +162,30 @@ export const OrderSummary = ({
         <div>
           <PricingRow>
             <PricingLabel>Subtotal</PricingLabel>
-            <PricingValue>R$ {subtotal.toFixed(2)}</PricingValue>
+            <PricingValue>{formatPrice(subtotal)}</PricingValue>
           </PricingRow>
           <PricingRow>
             <PricingLabel>Frete</PricingLabel>
             <PricingValue>
-              {shippingMethod === 'pickup' ? 'Grátis' : `R$ ${shippingCost.toFixed(2)}`}
+              {shippingMethod === 'pickup' ? 'Grátis' : `${formatPrice(shippingCost)}`}
             </PricingValue>
           </PricingRow>
           {appliedCoupon && (
             <DiscountRow>
               <span>Desconto</span>
-              <span>- R$ {discount.toFixed(2)}</span>
+              <span>- R$ {formatPrice(discount)}</span>
             </DiscountRow>
           )}
           <Separator />
           <TotalRow>
             <span>Total</span>
-            <span>R$ {total.toFixed(2)}</span>
+            <span>{formatPrice(total)}</span>
           </TotalRow>
         </div>
 
-        <Button variant="primary">Finalizar Pedido</Button>
+        <Button variant="primary" onClick={handleOrder}>
+          {isLoading ? 'Gerando Pagamento' : 'Gerar Pedido'}
+        </Button>
         <ModalCart ref={modalRef} offsetPx={120} enterMs={300} exitMs={300} />
       </CardContent>
     </Card>

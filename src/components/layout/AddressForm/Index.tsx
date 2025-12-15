@@ -212,7 +212,7 @@ const AddressForm = () => {
         </S.Form>
       </S.Container>
 
-      <NotifyModal ref={notifyRef} />
+      <NotifyModal ref={notifyRef} redirectTo="/address" />
     </>
   )
 }

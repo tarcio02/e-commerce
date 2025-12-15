@@ -3,7 +3,7 @@ import { supabase } from "../services/supabaseClient";
 import type { User, Session } from "@supabase/supabase-js";
 import { initCartForAuthenticatedUser } from "../features/cart/cart.thunks";
 import { clearCart } from "../features/cart/cart.slices";
-import { setUserSlice } from "../features/cart/user.slice";
+import { setUserSlice } from "../features/user/user.slice";
 import { useAppDispatch } from "../app/hooks";
 
 interface UseAuthReturn {
@@ -26,7 +26,7 @@ export function useAuth(): UseAuthReturn {
 
     const initAuth = async () => {
       try {
-        // 1️⃣ Tenta recuperar sessão ativa ao montar o app
+        // Tenta recuperar sessão ativa ao montar o app
         const { data, error } = await supabase.auth.getSession();
         if (error) throw error;
 
@@ -34,7 +34,7 @@ export function useAuth(): UseAuthReturn {
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
 
-        // 2️⃣ Se já tem usuário, inicializa carrinho
+        // Se já tem usuário, inicializa carrinho
         if (currentSession?.user) {
           ranForUserId = currentSession.user.id;
           dispatch(setUserSlice(currentSession.user));
@@ -49,7 +49,7 @@ export function useAuth(): UseAuthReturn {
 
     initAuth();
 
-    // 3️⃣ Escuta eventos de login/logout em tempo real
+    // Escuta eventos de login/logout em tempo real
     const { data: listener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         try {

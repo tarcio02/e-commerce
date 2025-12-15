@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 export const StylesHeader = styled.div`
@@ -17,7 +18,13 @@ export const Container = styled.div<{ $downScroll: boolean, $isRoute: boolean }>
   left: 0;
   right: 0;
   top: ${({ $downScroll }) => ($downScroll ? '0' : '32px')};
-  background-color: ${({ $downScroll, $isRoute }) => ($downScroll || $isRoute ? 'rgb(168, 7, 7)' : 'transparent')};
+  background: ${({ $downScroll, $isRoute }) =>
+  $downScroll || $isRoute
+    ? 'rgb(168, 7, 7)'
+    : 'transparent'
+};
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 
   transition:
     top 220ms cubic-bezier(0.22, 0.61, 0.36, 1),
@@ -35,17 +42,16 @@ export const Container = styled.div<{ $downScroll: boolean, $isRoute: boolean }>
   @media (prefers-reduced-motion: reduce) {
     transition: none;
   }
-
 `
 
-export const Logo = styled.div`
+export const Logo = styled(Link)`
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 
   img {
     display: block;
-    max-width: 100%;
+    max-width: 6rem;
     height: auto;
   }
 `
@@ -54,29 +60,41 @@ export const Icons = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
 `
 
-export const BtnCarrinho = styled.button`
+export const NavButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   background-color: transparent;
   border: none;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: relative;
 
-  img {
-    width: 26px;
+  svg {
+    width: 20px;
+    color: white;
   }
 `
-export const BtnPerfil = styled.div`
-  display: none;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
 
-  img {
-    width: 26px;
-  }
-
-  @media (min-width: 769px) {
-    display: block;
-  }
+export const Notification = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
+  background-color: #f59f0a;
+  color: black;
+  border-radius: 50%;
 `
+

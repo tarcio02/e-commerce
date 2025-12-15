@@ -2,6 +2,10 @@ import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 import RequireAuth from '../components/auth/RequireAuth'
+import RequireItemsCart from '../components/auth/RequireItemsCart'
+import PaymentStatus from '../pages/PaymentStatus'
+import OrdersList from '../pages/OrdersList'
+import RecipesSection from '../pages/RecipesSection'
 
 const NotFound = lazy(() => import('../pages/NotFound'))
 const Home = lazy(() => import('../pages/Home'))
@@ -29,7 +33,7 @@ const AppRoutes = () => {
 
           {/* Rota protegida para selecionar endereço de entrega */}
           <Route
-            path="/addres"
+            path="/address"
             element={
               <RequireAuth>
                 <AddressSelector />
@@ -41,9 +45,9 @@ const AppRoutes = () => {
           <Route
             path="/preview-pedido"
             element={
-              <RequireAuth>
+              <RequireItemsCart>
                 <OrderPreview />
-              </RequireAuth>
+              </RequireItemsCart>
             }
           />
 
@@ -56,6 +60,28 @@ const AppRoutes = () => {
               </RequireAuth>
             }
           />
+
+          {/* Rota protegida para cadastrar endereço de entrega */}
+          <Route
+            path="/checkout/status"
+            element={
+              <RequireAuth>
+                <PaymentStatus />
+              </RequireAuth>
+            }
+          />
+
+          {/* Rota protegida para cadastrar endereço de entrega */}
+          <Route
+            path="/checkout/history"
+            element={
+              <RequireAuth>
+                <OrdersList />
+              </RequireAuth>
+            }
+          />
+
+          <Route path="/recipes/:type" element={<RecipesSection />} />
 
           {/* Rota para  Catálogo*/}
           <Route path="/catalogo" element={<Aviso />} />

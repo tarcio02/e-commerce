@@ -6,7 +6,7 @@ interface AddressCardProps {
   address: Address
   isSelected: boolean
   onSelect: (id: string) => void
-  onRemove: (id: string) => void
+  onRemove: () => void
 }
 
 const AddressCard = ({ address, isSelected, onSelect, onRemove }: AddressCardProps) => {
@@ -44,12 +44,7 @@ const AddressCard = ({ address, isSelected, onSelect, onRemove }: AddressCardPro
           )}
         </S.AddressInfo>
 
-        <S.DeleteButton
-          onClick={(e) => {
-            e.stopPropagation()
-            onRemove(address.id)
-          }}
-        >
+        <S.DeleteButton onClick={onRemove}>
           <Trash2 size={20} />
         </S.DeleteButton>
       </S.CardContent>

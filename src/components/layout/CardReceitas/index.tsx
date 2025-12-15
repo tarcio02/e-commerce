@@ -1,23 +1,46 @@
+import { ChefHat, Clock, Users } from 'lucide-react'
 import * as S from './styles'
 
-type CardProps = {
-  id: number
+interface RecipeCardProps {
+  title: string
+  description: string
   image: string
-  receita: string
+  time: string
+  servings: number
+  dificult: string
 }
 
-const CardReceita = ({ id, image, receita }: CardProps) => {
+const CardReceitas = ({ title, description, image, time, servings, dificult }: RecipeCardProps) => {
   return (
-    <S.StylesCardReceita>
-      <S.image>
-        <img src={image} alt="Foto de receita" />
-      </S.image>
-      <S.Container>
-        <S.Titulo>{receita}</S.Titulo>
-        <S.Link> Veja Receita {id}</S.Link>
-      </S.Container>
-    </S.StylesCardReceita>
+    <S.Card>
+      <S.ImageContainer>
+        <S.Image src={image} alt={title} />
+        <S.ImageOverlay />
+        <S.DificultBadge>
+          <ChefHat />
+          {dificult}
+        </S.DificultBadge>
+      </S.ImageContainer>
+
+      <S.Content>
+        <S.Title>{title}</S.Title>
+        <S.Description>{description}</S.Description>
+
+        <S.MetaInfo>
+          <S.MetaItem>
+            <Clock size={16} />
+            <span>{time}</span>
+          </S.MetaItem>
+          <S.MetaItem>
+            <Users size={16} />
+            <span>{servings} porções</span>
+          </S.MetaItem>
+        </S.MetaInfo>
+
+        <S.Button>Ver Receita Completa</S.Button>
+      </S.Content>
+    </S.Card>
   )
 }
 
-export default CardReceita
+export default CardReceitas
