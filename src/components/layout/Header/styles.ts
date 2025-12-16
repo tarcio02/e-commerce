@@ -14,7 +14,7 @@ export const Container = styled.div<{ $downScroll: boolean, $isRoute: boolean }>
   width: 100%;
   height: 92px;
 
-  position: ${({ $isRoute }) => ($isRoute ? '' : 'fixed')};
+  position:fixed;
   left: 0;
   right: 0;
   top: ${({ $downScroll }) => ($downScroll ? '0' : '32px')};

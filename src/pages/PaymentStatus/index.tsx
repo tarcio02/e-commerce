@@ -2,7 +2,7 @@ import * as S from './styles'
 import { OrderStatus } from '../../components/layout/OrderStatus'
 import { OrderItems } from '../../components/layout/OrderItems'
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card'
-import { MapPin, Truck } from 'lucide-react'
+import { DollarSign, Truck } from 'lucide-react'
 import { Separator } from '../../components/ui/Separator'
 import { useGetOrderStatusQuery } from '../../services/OrderStatus.api'
 import { formatPrice } from '../../utils/formatPrice'
@@ -70,7 +70,7 @@ const PaymentStatus = () => {
         <Card>
           <CardHeader>
             <S.CardTitleWrapper>
-              <MapPin className="h-5 w-5" />
+              <Truck className="h-5 w-5" />
               <CardTitle>Informações de Envio</CardTitle>
             </S.CardTitleWrapper>
           </CardHeader>
@@ -100,7 +100,7 @@ const PaymentStatus = () => {
         <Card>
           <CardHeader>
             <S.CardTitleWrapper>
-              <Truck className="h-5 w-5" />
+              <DollarSign className="h-5 w-5" />
               <CardTitle>Informações do Pagamento</CardTitle>
             </S.CardTitleWrapper>
           </CardHeader>

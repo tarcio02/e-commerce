@@ -26,7 +26,7 @@ const Receitas = () => {
   return (
     <S.CategoriesSection>
       <S.Badge>
-        Receitas para casa
+        Para Fazer em Casa
         <ChefHat />
       </S.Badge>
       <S.SectionHeader>

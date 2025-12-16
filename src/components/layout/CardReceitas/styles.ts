@@ -50,13 +50,17 @@ export const DificultBadge = styled.span`
   top: 1rem;
   left: 1rem;
   padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   background-color: hsl(0, 93%, 34%);
   color: white;
   border-radius: 9999px;
+
+  svg {
+    width: 18px;
+  }
 `;
 
 export const Content = styled.div`
@@ -64,8 +68,7 @@ export const Content = styled.div`
 `;
 
 export const Title = styled.h3`
-  font-family: "Playfair Display", serif;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 600;
   color: hsl(0, 0%, 9%);
   margin-bottom: 0.5rem;
@@ -73,6 +76,10 @@ export const Title = styled.h3`
 
   ${Card}:hover & {
     color: hsl(0, 93%, 34%);
+  }
+
+  @media (min-width: 601px) {
+    font-size: 1.5rem;
   }
 `;
 
@@ -111,7 +118,7 @@ export const Button = styled.button`
   padding: 0.75rem 1.5rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: hsl(0, 93%, 34%);
+  color: black;
   background-color: hsl(40, 100%, 51%);
   border: none;
   border-radius: 0.5rem;

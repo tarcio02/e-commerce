@@ -16,6 +16,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  margin-top: 90px;
 
   /* @media (min-width: 1024px) {
     grid-template-columns: 2fr 1fr;
@@ -40,7 +41,7 @@ export const RightColumn = styled.div`
 
 export const CardTitleWrapper = styled.div`
   display: flex;
-  align-items: center;
+  align-items: start;
   gap: 0.5rem;
 `;
 

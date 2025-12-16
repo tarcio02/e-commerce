@@ -12,10 +12,31 @@ const fadeBg = keyframes`
 `
 
 export const StylesHero = styled.div`
+  display: flex;
   position: relative;
-  height: 97vh;
+  height: 40vh;
   overflow: hidden;
+
+  @media (min-width: 601px) {
+    height: 70vh;
+  }
 `
+
+export const MainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+
+  position: relative;
+  z-index: 10;
+  max-width: 80rem;
+  padding: 2.5rem;
+  
+  @media (min-width: 1024px) {
+    
+  }
+`;
+
 
 export const BackgroundImage = styled.div<{ $bgImage: string }>`
   position: absolute;
@@ -39,37 +60,26 @@ export const GradientOverlay = styled.div`
   z-index: 1;
   background: linear-gradient(
     to top,
-  hsla(0, 93%, 34%, 1) 20%, 
+  rgba(0, 0, 0, 0.7) 20%, 
   hsla(0, 93%, 34%, 0) 75%,  
   hsla(0, 93%, 34%, 0) 100%  
   );
   pointer-events: none; /* opcional: pra não bloquear clique nos botões */
 
   @media (min-width: 601px) {
-     background: linear-gradient(
+  background: linear-gradient(
     to right,
-  hsla(0, 93%, 34%, 1) 20%, 
-  hsla(0, 93%, 34%, 0) 75%,  
-  hsla(0, 93%, 34%, 0) 100%  
+    rgba(0, 0, 0, 0.7) 20%,
+    rgba(0, 0, 0, 0) 75%,
+    rgba(0, 0, 0, 0) 100%
   );
   }
 `;
 
-export const MainContent = styled.div`
-  position: relative;
-  z-index: 10;
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 8rem 1.5rem 8rem;
-  
-  @media (min-width: 1024px) {
-    padding: 10rem 3rem 8rem;
-  }
-`;
 
 
 export const Section = styled.section`
-  padding: 5rem 0;
+  padding-bottom: 5rem;
   background-color: hsl(0, 0%, 98%);
 `;
 
@@ -88,21 +98,22 @@ export const Header = styled.div`
 export const Badge = styled.span`
   display: inline-block;
   padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
-  font-size: 8px;
+  margin-bottom: .5rem;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: hsl(0, 93%, 34%);
-  background-color: rgba(168, 7, 7, 0.1);
+  background-color: rgba(168, 7, 7, 0.3);
   border-radius: 9999px;
+  width: fit-content;
 `;
 
 export const Title = styled.h2`
   font-size: 1.875rem;
   font-weight: 700;
-  color: hsl(0, 0%, 9%);
-  margin-bottom: 1rem;
+  color: white;
+  margin-bottom: .5rem;
 
   @media (min-width: 768px) {
     font-size: 2.25rem;
@@ -118,9 +129,10 @@ export const Highlight = styled.span`
 `;
 
 export const Description = styled.p`
-  color: hsl(0, 0%, 45%);
+  color: hsl(0, 0%, 60%);
   font-family: "Lato", sans-serif;
   font-size: 1.125rem;
+  max-width: 28rem;
 `;
 
 export const Grid = styled.div`
@@ -163,7 +175,7 @@ export const FiltersWrapper = styled.div`
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 0;
 `;
 
 export const BadgeFilter = styled.div`

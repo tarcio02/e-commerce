@@ -12,6 +12,9 @@ export type Itens = {
   preco: number
   old_price: number
   desconto: number
+  categoria: string
+  frete_gratis: boolean
+  destaque: boolean
 }
 
 type ListProps = {

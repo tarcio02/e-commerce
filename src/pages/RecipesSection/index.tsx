@@ -11,6 +11,8 @@ import Button from '../../components/ui/Button/Index'
 import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import banner from '../../assets/images/banner-receitas.png'
+
 type FilterType = 'macarrao' | 'pastel'
 
 const recipes = [
@@ -84,7 +86,7 @@ const RecipesSection = () => {
   const isFilterType = (v?: string): v is FilterType => v === 'pastel' || v === 'macarrao'
 
   useEffect(() => {
-    setActiveFilter(isFilterType(type) ? type : 'pastel') // default
+    setActiveFilter(isFilterType(type) ? type : 'pastel')
   }, [type])
 
   const filteredRecipes = useMemo(() => {
@@ -98,20 +100,21 @@ const RecipesSection = () => {
 
   return (
     <S.Section id="receitas">
+      <S.StylesHero>
+        <S.BackgroundImage $bgImage={banner} />
+        <S.GradientOverlay />
+        <S.MainContent>
+          <S.Badge>Nossas Receitas</S.Badge>
+          <S.Title>
+            Sabores que <S.Highlight>Inspiram</S.Highlight>
+          </S.Title>
+          <S.Description>
+            Explore nossas receitas cuidadosamente selecionadas de macarrão e pastel. Cada prato
+            conta uma história de tradição e sabor.
+          </S.Description>
+        </S.MainContent>
+      </S.StylesHero>
       <S.Container>
-        <S.StylesHero>
-          <S.MainContent>
-            <S.Badge>Nossas Receitas</S.Badge>
-            <S.Title>
-              Sabores que <S.Highlight>Inspiram</S.Highlight>
-            </S.Title>
-            <S.Description>
-              Explore nossas receitas cuidadosamente selecionadas de macarrão e pastel. Cada prato
-              conta uma história de tradição e sabor.
-            </S.Description>
-          </S.MainContent>
-        </S.StylesHero>
-
         <S.FiltersWrapper>
           <S.BadgeFilter>
             <Filter className="h-4 w-4 mr-2" />

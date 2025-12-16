@@ -27,10 +27,11 @@ export const Lista = styled.ul`
   margin-top: 30px;
 
   .active {
-    background-color: rgba(245, 159, 10, 0.1);
-    color: #f59f0a;
-    border: 1px solid rgba(245, 159, 10, 0.3);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 16px;
+    font-weight: bold;
   }
 `
 
@@ -41,12 +42,11 @@ export const LinkNav = styled(NavLink)`
   gap: 8px;
   font-size: 20px;
   color: white;
-  font-weight: bold;
   text-decoration: none;
   padding: 2px 8px;
 
   svg {
-    width: 28px;
+    width: 22px;
   }
 
   &:active {

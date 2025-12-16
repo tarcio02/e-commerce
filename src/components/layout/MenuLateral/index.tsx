@@ -1,15 +1,6 @@
 import * as S from './styles'
 import close from '../../../assets/icons/close.png'
-import {
-  Building2,
-  Handshake,
-  House,
-  NotebookText,
-  PackageSearch,
-  ReceiptText,
-  ShoppingBasket,
-  User,
-} from 'lucide-react'
+import { House, NotebookText, PackageSearch, ShoppingBasket, User } from 'lucide-react'
 
 type PropsTypes = {
   aberto: boolean
@@ -30,7 +21,7 @@ const MenuLateral = ({ aberto, fechar }: PropsTypes) => {
             fechar()
           }}
         >
-          <House size={16} />
+          <House />
           Home
         </S.LinkNav>
         <S.LinkNav
@@ -62,36 +53,6 @@ const MenuLateral = ({ aberto, fechar }: PropsTypes) => {
         >
           <NotebookText />
           Receitas
-        </S.LinkNav>
-        <S.LinkNav
-          to="/sobre"
-          className="item"
-          onClick={() => {
-            fechar()
-          }}
-        >
-          <Building2 />
-          Quem Somos?
-        </S.LinkNav>
-        <S.LinkNav
-          to="/politicas-de-privacidade"
-          className="item"
-          onClick={() => {
-            fechar()
-          }}
-        >
-          <ReceiptText />
-          Políticas de Privacidade
-        </S.LinkNav>
-        <S.LinkNav
-          to="/termos-de-uso"
-          className="item"
-          onClick={() => {
-            fechar()
-          }}
-        >
-          <Handshake />
-          Termos de Uso
         </S.LinkNav>
         <S.LinkNav
           to="/perfil"

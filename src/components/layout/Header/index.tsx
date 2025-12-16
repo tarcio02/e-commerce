@@ -1,5 +1,4 @@
 import { useLocation } from 'react-router-dom'
-import { useMemo } from 'react'
 import * as S from './styles'
 import MenuNav from '../MenuNav'
 import MenuHamburguer from '../../ui/MenuHamburguer'
@@ -25,7 +24,24 @@ type TypeProps = {
 
 const Header = ({ menuAberto, toogleHeader, toggleMenu, stateHeader }: TypeProps) => {
   const location = useLocation()
-  const isNotRoot = useMemo(() => location.pathname !== '/', [location.pathname])
+
+  const BLOCKED_ROUTES = [
+    '/preview-pedido',
+    '/checkout/history',
+    '/perfil',
+    '/login',
+    '/cadastros',
+    '/address',
+    '/address/novo',
+    '/termos-de-uso',
+    '/politicas-de-privacidade',
+  ]
+
+  const isBlockedRoute =
+    BLOCKED_ROUTES.includes(location.pathname) || location.pathname.startsWith('/checkout')
+
+  const isAllowedRoute = isBlockedRoute
+
   const qntItems = useAppSelector(selectCartItems).reduce((acc, item) => {
     return acc + item.quantidade
   }, 0)
@@ -59,7 +75,7 @@ const Header = ({ menuAberto, toogleHeader, toggleMenu, stateHeader }: TypeProps
   return (
     <S.StylesHeader>
       <Ofertas />
-      <S.Container $downScroll={stateHeader} $isRoute={isNotRoot}>
+      <S.Container $downScroll={stateHeader} $isRoute={isAllowedRoute}>
         <MenuNav links={navLeft} />
         <MenuHamburguer menuAberto={menuAberto} toggleMenu={toggleMenu} />
         <S.Logo to="/">

@@ -6,6 +6,7 @@ import RequireItemsCart from '../components/auth/RequireItemsCart'
 import PaymentStatus from '../pages/PaymentStatus'
 import OrdersList from '../pages/OrdersList'
 import RecipesSection from '../pages/RecipesSection'
+import Produtos from '../pages/Produtos'
 
 const NotFound = lazy(() => import('../pages/NotFound'))
 const Home = lazy(() => import('../pages/Home'))
@@ -84,7 +85,7 @@ const AppRoutes = () => {
           <Route path="/recipes/:type" element={<RecipesSection />} />
 
           {/* Rota para  Catálogo*/}
-          <Route path="/catalogo" element={<Aviso />} />
+          <Route path="/catalogo" element={<Produtos />} />
 
           {/* Página sobre */}
           <Route path="/sobre" element={<Aviso />} />
@@ -97,12 +98,6 @@ const AppRoutes = () => {
 
           {/* Rota para informações de perfil */}
           <Route path="/perfil" element={<Aviso />} />
-
-          {/* Dados de envio */}
-          <Route path="/envio" element={<Aviso />} />
-
-          {/* Checkout */}
-          <Route path="/checkout" element={<Aviso />} />
 
           {/* Termos de uso*/}
           <Route path="/termos-de-uso" element={<Aviso />} />
