@@ -3,8 +3,8 @@ import banner from '../../assets/images/banner-produtos.png'
 import { useMemo, useState } from 'react'
 import { ChefHat, Filter, Star, Truck } from 'lucide-react'
 import Button from '../../components/ui/Button/Index'
-import Catalogo from '../../components/layout/Catalogo'
 import { useGetProductsQuery } from '../../services/products.api'
+import CardCatalogo from '../../components/layout/CardCatalogo'
 
 type FilterType = 'all' | 'frete_gratis' | 'destaques' | 'pasteis' | 'macarrao'
 
@@ -18,30 +18,35 @@ const Produtos = () => {
       badge: 'As Melhores Massas',
       titulo: 'Todas Nossas',
       highlight: 'Massas',
+      description: 'Explore o melhor das massas de pasteis e espaguetes.',
       icon: ChefHat,
     },
     frete_gratis: {
       badge: 'Não Pague Pelo Envio',
       titulo: 'Aproveite o frete grátis',
       highlight: 'Massas',
+      description: 'Peça qualquer coisa e não pague a entrega.',
       icon: Truck,
     },
     destaques: {
       badge: 'Os Populares',
       titulo: 'Produtos Destaques',
       highlight: 'Massas',
+      description: 'Veja os produtos mais desejados do site. Aproveita as ofertas',
       icon: Star,
     },
     pasteis: {
       badge: 'Crocrantes e sequinhos',
       titulo: 'Os Melhores Pasteis',
       highlight: 'Massas',
+      description: 'Saboreie os pasteis mais crocantes e sequinhos que já viu.',
       icon: Star,
     },
     macarrao: {
       badge: 'A Melhor Massa',
       titulo: 'Macarrão e Espaguetes',
       highlight: 'Massas',
+      description: 'O veradadeiro espaguete italiano, feito com amor e carinho.',
       icon: Star,
     },
   }
@@ -69,12 +74,12 @@ const Produtos = () => {
         <S.BackgroundImage $bgImage={banner} />
         <S.GradientOverlay />
         <S.MainContent>
-          <S.Badge>QUALIDADE E COMPROMISSO</S.Badge>
+          <S.Badge>{catalagoProps.badge}</S.Badge>
           <S.Title>
-            NOSSOS<S.Highlight>PRODUTOS</S.Highlight>
+            {catalagoProps.titulo}<S.Highlight>{catalagoProps.highlight}</S.Highlight>
           </S.Title>
           <S.Description>
-            Explore nossos produtos. As melhores massas para pasteis e macarrão estão aqui.
+            {catalagoProps.description}
           </S.Description>
         </S.MainContent>
       </S.StylesHero>
@@ -128,13 +133,20 @@ const Produtos = () => {
       </S.FiltersWrapper>
 
       {/* Catálogo */}
-      {filtereProducts ? (
-        <Catalogo
-          badge={catalagoProps.badge}
-          data={filtereProducts}
-          icon={catalagoProps.icon}
-          titulo={catalagoProps.titulo}
-        />
+      {filtereProducts.length !== 0 ? (
+        <S.Grid>
+        {filtereProducts.map((product, index) => (
+          <CardCatalogo  avaliacao={4} 
+            idItem={product.id}
+            image={product.imagem}
+            nome={product.nome}
+            preco={product.preco}
+            desconto={product.desconto}
+            descricao={product.descricao}
+            key={index}
+          />
+        ))}
+        </S.Grid>
       ) : (
         <S.NoProducts>
           <h2>Nenhum Produto Encontrado.</h2>
