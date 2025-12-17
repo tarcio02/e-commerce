@@ -35,6 +35,7 @@ const Catalogo: React.FC<ListProps> = ({ data, titulo, badge, icon: Icon }) => {
       <S.Container>
         {data.map((item) => (
           <CardCatalogo
+            frete_gratis={item.frete_gratis}
             key={item.id}
             idItem={item.id}
             image={item.imagem}

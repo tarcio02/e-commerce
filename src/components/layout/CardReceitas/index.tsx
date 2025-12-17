@@ -2,15 +2,29 @@ import { ChefHat, Clock, Users } from 'lucide-react'
 import * as S from './styles'
 
 interface RecipeCardProps {
+  id: string
   title: string
   description: string
   image: string
   time: string
   servings: number
   dificult: string
+  preparing: string[]
+  selectRecipe: (id: string) => void
+  showModal: () => void
 }
 
-const CardReceitas = ({ title, description, image, time, servings, dificult }: RecipeCardProps) => {
+const CardReceitas = ({
+  id,
+  title,
+  description,
+  image,
+  time,
+  servings,
+  dificult,
+  selectRecipe,
+  showModal,
+}: RecipeCardProps) => {
   return (
     <S.Card>
       <S.ImageContainer>
@@ -37,7 +51,14 @@ const CardReceitas = ({ title, description, image, time, servings, dificult }: R
           </S.MetaItem>
         </S.MetaInfo>
 
-        <S.Button>Ver Receita Completa</S.Button>
+        <S.Button
+          onClick={() => {
+            selectRecipe(id)
+            showModal()
+          }}
+        >
+          Ver Receita Completa
+        </S.Button>
       </S.Content>
     </S.Card>
   )

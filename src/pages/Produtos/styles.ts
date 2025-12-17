@@ -120,12 +120,18 @@ export const Description = styled.p`
   max-width: 28rem;
 `;
 
+export const Main = styled.div`
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+`
+
 export const FiltersWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 0;
 `;
 
 export const BadgeFilter = styled.div`
@@ -147,17 +153,16 @@ export const NoProducts = styled.div`
   align-items: center;
   text-align: center;
 `
-
-export const Grid = styled.div`
+export const ProductGridContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
 
   @media (min-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(4, 1fr);
   }
 `;

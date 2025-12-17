@@ -34,12 +34,15 @@ export const ProductImage = styled.img`
 `;
 
 export const Badge = styled.span`
+display: flex;
+align-items: center;
   position: absolute;
   top: 12px;
+  gap: 6px;
   left: 12px;
   padding: 4px 8px;
   border-radius: 20px;
-  font-size: 0.75rem;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -47,6 +50,10 @@ export const Badge = styled.span`
   color: #16a249;
   background-color: rgba(22, 162, 73, 0.1);
   border: 1px solid rgba(22, 162, 73, 0.3);
+
+  svg{
+    width: 14px;
+  }
 `;
 
 export const FavoriteButton = styled.button`

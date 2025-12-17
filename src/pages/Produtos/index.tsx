@@ -23,29 +23,29 @@ const Produtos = () => {
     },
     frete_gratis: {
       badge: 'Não Pague Pelo Envio',
-      titulo: 'Aproveite o frete grátis',
-      highlight: 'Massas',
+      titulo: 'Aproveite o ',
+      highlight: 'frete grátis',
       description: 'Peça qualquer coisa e não pague a entrega.',
       icon: Truck,
     },
     destaques: {
       badge: 'Os Populares',
-      titulo: 'Produtos Destaques',
-      highlight: 'Massas',
+      titulo: 'Produtos ',
+      highlight: 'Destaques',
       description: 'Veja os produtos mais desejados do site. Aproveita as ofertas',
       icon: Star,
     },
     pasteis: {
       badge: 'Crocrantes e sequinhos',
-      titulo: 'Os Melhores Pasteis',
-      highlight: 'Massas',
+      titulo: 'Os Melhores ',
+      highlight: 'Pasteis',
       description: 'Saboreie os pasteis mais crocantes e sequinhos que já viu.',
       icon: Star,
     },
     macarrao: {
       badge: 'A Melhor Massa',
-      titulo: 'Macarrão e Espaguetes',
-      highlight: 'Massas',
+      titulo: 'Macarrão e ',
+      highlight: 'Espaguetes',
       description: 'O veradadeiro espaguete italiano, feito com amor e carinho.',
       icon: Star,
     },
@@ -67,6 +67,7 @@ const Produtos = () => {
 
   if (isLoading) return <p>Carregando...</p>
   if (error) return <p>Erro: {String(error)}</p>
+
   return (
     <S.Section>
       {/* Hero */}
@@ -76,82 +77,88 @@ const Produtos = () => {
         <S.MainContent>
           <S.Badge>{catalagoProps.badge}</S.Badge>
           <S.Title>
-            {catalagoProps.titulo}<S.Highlight>{catalagoProps.highlight}</S.Highlight>
+            {catalagoProps.titulo}
+            <S.Highlight> {catalagoProps.highlight}</S.Highlight>
           </S.Title>
-          <S.Description>
-            {catalagoProps.description}
-          </S.Description>
+          <S.Description>{catalagoProps.description}</S.Description>
         </S.MainContent>
       </S.StylesHero>
+      <S.Main>
+        {/* Filtro */}
+        <S.FiltersWrapper>
+          <S.BadgeFilter>
+            <Filter className="h-4 w-4 mr-2" />
+            Filtrar por:
+          </S.BadgeFilter>
+          <Button
+            variant={activeFilter === 'all' ? 'outline' : 'ghost'}
+            size="sm"
+            className={
+              activeFilter === 'all'
+                ? 'border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground'
+                : ''
+            }
+            onClick={() => setActiveFilter('all')}
+          >
+            Todos
+          </Button>
+          <Button
+            variant={activeFilter === 'frete_gratis' ? 'outline' : 'ghost'}
+            size="sm"
+            onClick={() => setActiveFilter('frete_gratis')}
+          >
+            Frete Grátis
+          </Button>
+          <Button
+            variant={activeFilter === 'destaques' ? 'outline' : 'ghost'}
+            size="sm"
+            onClick={() => setActiveFilter('destaques')}
+          >
+            Em Destaque
+          </Button>
+          <Button
+            variant={activeFilter === 'pasteis' ? 'outline' : 'ghost'}
+            size="sm"
+            onClick={() => setActiveFilter('pasteis')}
+          >
+            Pasteis
+          </Button>
+          <Button
+            variant={activeFilter === 'macarrao' ? 'outline' : 'ghost'}
+            size="sm"
+            onClick={() => setActiveFilter('macarrao')}
+          >
+            Macarrão
+          </Button>
+        </S.FiltersWrapper>
 
-      {/* Filtro */}
-      <S.FiltersWrapper>
-        <S.BadgeFilter>
-          <Filter className="h-4 w-4 mr-2" />
-          Filtrar por:
-        </S.BadgeFilter>
-        <Button
-          variant={activeFilter === 'all' ? 'outline' : 'ghost'}
-          size="sm"
-          className={
-            activeFilter === 'all'
-              ? 'border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground'
-              : ''
-          }
-          onClick={() => setActiveFilter('all')}
-        >
-          Todos
-        </Button>
-        <Button
-          variant={activeFilter === 'frete_gratis' ? 'outline' : 'ghost'}
-          size="sm"
-          onClick={() => setActiveFilter('frete_gratis')}
-        >
-          Frete Grátis
-        </Button>
-        <Button
-          variant={activeFilter === 'destaques' ? 'outline' : 'ghost'}
-          size="sm"
-          onClick={() => setActiveFilter('destaques')}
-        >
-          Em Destaque
-        </Button>
-        <Button
-          variant={activeFilter === 'pasteis' ? 'outline' : 'ghost'}
-          size="sm"
-          onClick={() => setActiveFilter('pasteis')}
-        >
-          Pasteis
-        </Button>
-        <Button
-          variant={activeFilter === 'macarrao' ? 'outline' : 'ghost'}
-          size="sm"
-          onClick={() => setActiveFilter('macarrao')}
-        >
-          Macarrão
-        </Button>
-      </S.FiltersWrapper>
-
-      {/* Catálogo */}
-      {filtereProducts.length !== 0 ? (
-        <S.Grid>
-        {filtereProducts.map((product, index) => (
-          <CardCatalogo  avaliacao={4} 
-            idItem={product.id}
-            image={product.imagem}
-            nome={product.nome}
-            preco={product.preco}
-            desconto={product.desconto}
-            descricao={product.descricao}
-            key={index}
-          />
-        ))}
-        </S.Grid>
-      ) : (
-        <S.NoProducts>
-          <h2>Nenhum Produto Encontrado.</h2>
-        </S.NoProducts>
-      )}
+        {/* Catálogo */}
+        {filtereProducts.length !== 0 ? (
+          <S.ProductGridContainer>
+            {filtereProducts.map((product, index) => (
+              <>
+                {console.log(product.old_price)}
+                <CardCatalogo
+                  frete_gratis={product.frete_gratis}
+                  oldPrice={product.old_price}
+                  avaliacao={5}
+                  idItem={product.id}
+                  image={product.imagem}
+                  nome={product.nome}
+                  preco={product.preco}
+                  desconto={product.desconto}
+                  descricao={product.descricao}
+                  key={index}
+                />
+              </>
+            ))}
+          </S.ProductGridContainer>
+        ) : (
+          <S.NoProducts>
+            <h2>Nenhum Produto Encontrado.</h2>
+          </S.NoProducts>
+        )}
+      </S.Main>
     </S.Section>
   )
 }

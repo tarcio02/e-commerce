@@ -12,11 +12,13 @@ import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import banner from '../../assets/images/banner-receitas.png'
+import ModalRecipes from '../../components/layout/ModalRecipes'
 
 type FilterType = 'macarrao' | 'pastel'
 
 const recipes = [
   {
+    id: '1',
     title: 'Espaguete ao Sugo',
     description:
       'Clássico macarrão com molho de tomate caseiro, manjericão fresco e queijo parmesão ralado.',
@@ -24,9 +26,17 @@ const recipes = [
     time: '30 min',
     servings: 4,
     categories: 'macarrao',
+    preparing: [
+      'Modo de Preparo',
+      'Aqui está o passo a passo da receita',
+      'você irá conseguir desfrutar do melhor sabor',
+      'Faça as melhores receitas',
+      'Só com as massas sabor da feiras',
+    ],
     dificult: 'Fácil',
   },
   {
+    id: '2',
     title: 'Pastel de Carne',
     description:
       'Massa crocante recheada com carne moída temperada, um clássico irresistível da culinária brasileira.',
@@ -34,9 +44,17 @@ const recipes = [
     time: '45 min',
     servings: 8,
     categories: 'pastel',
+    preparing: [
+      'Modo de Preparo',
+      'Aqui está o passo a passo da receita',
+      'você irá conseguir desfrutar do melhor sabor',
+      'Faça as melhores receitas',
+      'Só com as massas sabor da feiras',
+    ],
     dificult: 'Intermediário',
   },
   {
+    id: '3',
     title: 'Fettuccine Alfredo',
     description:
       'Massa fresca com cremoso molho de queijo parmesão, manteiga e uma pitada de noz-moscada.',
@@ -44,9 +62,17 @@ const recipes = [
     time: '25 min',
     servings: 4,
     categories: 'espaguete',
+    preparing: [
+      'Modo de Preparo',
+      'Aqui está o passo a passo da receita',
+      'você irá conseguir desfrutar do melhor sabor',
+      'Faça as melhores receitas',
+      'Só com as massas sabor da feiras',
+    ],
     dificult: 'Intermediário',
   },
   {
+    id: '4',
     title: 'Penne à Bolonhesa',
     description:
       'Macarrão penne com rico molho de carne moída, tomates frescos e ervas aromáticas.',
@@ -54,9 +80,17 @@ const recipes = [
     time: '50 min',
     servings: 6,
     categories: 'macarrao',
+    preparing: [
+      'Modo de Preparo',
+      'Aqui está o passo a passo da receita',
+      'você irá conseguir desfrutar do melhor sabor',
+      'Faça as melhores receitas',
+      'Só com as massas sabor da feiras',
+    ],
     dificult: 'Difícil',
   },
   {
+    id: '5',
     title: 'Lasanha Tradicional',
     description:
       'Camadas de massa, molho bolonhesa, bechamel e queijo gratinado no forno até dourar.',
@@ -64,9 +98,17 @@ const recipes = [
     time: '1h 30min',
     servings: 8,
     categories: 'macarrao',
+    preparing: [
+      'Modo de Preparo',
+      'Aqui está o passo a passo da receita',
+      'você irá conseguir desfrutar do melhor sabor',
+      'Faça as melhores receitas',
+      'Só com as massas sabor da feiras',
+    ],
     dificult: 'Fácil',
   },
   {
+    id: '6',
     title: 'Pastel de Queijo',
     description:
       'Massa fininha e crocante com recheio de queijo derretido que puxa. Sabor irresistível!',
@@ -74,16 +116,33 @@ const recipes = [
     time: '40 min',
     servings: 10,
     categories: 'pastel',
+    preparing: [
+      'Modo de Preparo',
+      'Aqui está o passo a passo da receita',
+      'você irá conseguir desfrutar do melhor sabor',
+      'Faça as melhores receitas',
+      'Só com as massas sabor da feiras',
+    ],
     dificult: 'Intermediário',
   },
 ]
 
 const RecipesSection = () => {
   const [activeFilter, setActiveFilter] = useState<FilterType>('pastel')
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const [selectedRecipe, setSelectedRecipe] = useState<string>()
 
+  const ModalItem = recipes.find((i) => i.id === selectedRecipe)
   const { type } = useParams<{ type?: string }>()
-
   const isFilterType = (v?: string): v is FilterType => v === 'pastel' || v === 'macarrao'
+
+  const handleModal = () => {
+    setShowModal((prev) => !prev)
+  }
+
+  const handleSelectRecipe = (id: string) => {
+    setSelectedRecipe(id)
+  }
 
   useEffect(() => {
     setActiveFilter(isFilterType(type) ? type : 'pastel')
@@ -140,7 +199,11 @@ const RecipesSection = () => {
           {filteredRecipes.map((recipe, index) => (
             <S.CardWrapper key={recipe.title} $delay={index * 100}>
               <CardReceitas
+                showModal={handleModal}
+                id={recipe.id}
+                selectRecipe={handleSelectRecipe}
                 description={recipe.description}
+                preparing={recipe.preparing}
                 dificult={recipe.dificult}
                 image={recipe.image}
                 servings={recipe.servings}
@@ -151,6 +214,7 @@ const RecipesSection = () => {
           ))}
         </S.Grid>
       </S.Container>
+      <ModalRecipes ModalItem={ModalItem} onClose={handleModal} show={showModal} />
     </S.Section>
   )
 }

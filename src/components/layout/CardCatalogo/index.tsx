@@ -12,11 +12,12 @@ type CardProps = {
   idItem: string //
   image: string //
   nome: string //
-  descricao?: string //
+  descricao: string //
   preco: number //
-  oldPrice?: number //
+  oldPrice: number //
   avaliacao: number
-  desconto?: number //
+  desconto: number //
+  frete_gratis: boolean
 }
 
 const CardCatalogo = ({
@@ -27,6 +28,7 @@ const CardCatalogo = ({
   preco,
   oldPrice,
   avaliacao,
+  frete_gratis,
 }: CardProps) => {
   const dispatch = useDispatch<AppDispatch>()
 
@@ -121,12 +123,12 @@ const CardCatalogo = ({
     <S.CardContainer>
       <S.ImageWrapper>
         <S.ProductImage src={image} alt={nome} />
-        {oldPrice !== 0 ? (
-          <S.Badge>{`-${calcularDescontoPercentual(preco, oldPrice)}% OFF`}</S.Badge>
-        ) : (
+        {frete_gratis ? (
           <S.Badge>
-            <Truck size={18} />
+            <Truck />
           </S.Badge>
+        ) : (
+          oldPrice > 0 && <S.Badge>-{calcularDescontoPercentual(preco, oldPrice)}% OFF</S.Badge>
         )}
         {/* <FavoriteButton
           onClick={handleFavorite}
@@ -147,10 +149,10 @@ const CardCatalogo = ({
 
         <S.Values>
           <S.PriceWrapper>
-            {oldPrice !== 0 ? (
+            {oldPrice > 0 ? (
               <S.OldPrice>{formatPrice(oldPrice ?? 0)}</S.OldPrice>
             ) : (
-              <S.Frete>Frete Grátis</S.Frete>
+              <S.Frete>Últimas Unidades</S.Frete>
             )}
             <S.Price>{formatPrice(preco)}</S.Price>
           </S.PriceWrapper>
