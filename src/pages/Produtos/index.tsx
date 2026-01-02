@@ -1,17 +1,40 @@
 import * as S from './styles'
 import banner from '../../assets/images/banner-produtos.png'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ChefHat, Filter, Star, Truck } from 'lucide-react'
 import Button from '../../components/ui/Button/Index'
 import { useGetProductsQuery } from '../../services/products.api'
 import CardCatalogo from '../../components/layout/CardCatalogo'
+import ModalProduct from '../../components/layout/ModalProduct'
+import { useParams } from 'react-router-dom'
 
 type FilterType = 'all' | 'frete_gratis' | 'destaques' | 'pasteis' | 'macarrao'
 
 const Produtos = () => {
   const [activeFilter, setActiveFilter] = useState<FilterType>('all')
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const [selectedProduct, setSelectedProduct] = useState<string | undefined>('')
 
-  const { data: products, isLoading, error } = useGetProductsQuery()
+  const { data: products = [], isLoading, error } = useGetProductsQuery()
+  const modalItem = products.find((i) => i.id === selectedProduct)
+  const { type } = useParams<{ type?: FilterType }>()
+
+  useEffect(() => {
+    if (type) {
+      setActiveFilter(type)
+    } else {
+      setActiveFilter('all')
+    }
+  }, [type])
+
+  const handleModal = (id?: string) => {
+    setShowModal((prev) => !prev)
+    if (id) {
+      setSelectedProduct(id)
+    } else {
+      setSelectedProduct('all')
+    }
+  }
 
   const configSection = {
     all: {
@@ -139,6 +162,7 @@ const Produtos = () => {
               <>
                 {console.log(product.old_price)}
                 <CardCatalogo
+                  handleModal={handleModal}
                   frete_gratis={product.frete_gratis}
                   oldPrice={product.old_price}
                   avaliacao={5}
@@ -159,6 +183,7 @@ const Produtos = () => {
           </S.NoProducts>
         )}
       </S.Main>
+      <ModalProduct onClose={handleModal} show={showModal} modalItem={modalItem} />
     </S.Section>
   )
 }

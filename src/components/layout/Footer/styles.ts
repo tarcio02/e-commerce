@@ -67,9 +67,16 @@ export const Links = styled.div`
 `
 
 export const LinksNav = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-weight: bold;
   color: #4f4f4f;
   text-decoration: none;
+
+  svg {
+    width: 18px;
+  }
 `
 
 export const Copy = styled.div`

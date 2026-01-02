@@ -7,6 +7,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   /* gap: 24px; */
+  margin-top: 92px;
 `;
 
 export const Header = styled.header`
@@ -42,6 +43,10 @@ export const Content = styled.div`
 `;
 
 export const EmptyState = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
   text-align: center;
   padding: 3rem 0;
 `;

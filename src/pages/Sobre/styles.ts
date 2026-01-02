@@ -1,89 +1,74 @@
 import styled from 'styled-components'
-import { theme } from '../../styles/theme'
 
-import industria from '../../assets/images/industria.png'
-import { Link } from 'react-router-dom'
+export const Wrapper = styled.div`
+min-height: 80vh;
+display: flex;
+flex-direction: column;
+`;
 
-export const StylesSobre = styled.div`
+export const AboutSection = styled.section`
+padding-top: 5rem;
+`;
+
+export const Badge = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-  position: relative;
-  background-image: url(${industria});
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-  width: 100%;
-  height: 70vh;
-  padding: ${theme.spaces.paddingMobile};
+  gap: 6px;
+  font-size: 1rem;
+  color: #A80707;
+  background-color: rgba(168, 7, 7, 0.1);
+  border-radius: 16px;
+  padding: 8px 16px;
+  width: fit-content;
+  margin: 16px auto;
 
-  &::after {
-    position: absolute;
-    content: '';
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 1;
-  }
-
-  @media (min-width: 601px) {
-    justify-content: start;
-    padding: ${theme.spaces.paddingDesktop};
+  svg {
+    width: 1.2rem;
   }
 `
 
-export const Container = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  z-index: 2;
-  width: 100%;
-  color: white;
-  gap: 16px;
+export const AboutContent = styled.div`
+text-align: center;
+max-width: 48rem;
+margin-left: auto;
+margin-right: auto;
+padding-left: 1rem;
+padding-right: 1rem;
 
-  @media (min-width: 601px) {
-    width: 592px;
-  }
-`
+h2 {
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: 700;
+    color: black;
+    margin-bottom: 1.5rem;
+}
 
-export const Titulo = styled.h3`
-  font-size: 28px;
-  font-family: serif;
-  letter-spacing: 1px;
-  color: white;
-`
+p {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 1.125rem; /* text-lg */
+    line-height: 1.75rem; /* leading-relaxed */
+    margin-bottom: 2rem;
+}
 
-export const Paragrafo = styled.div`
-  font-size: 20px;
-  font-family: serif;
-  letter-spacing: 1px;
-  color: white;
-`
+.highlight {
+  color: #a80707;
+}
+`;
 
-export const Button = styled(Link)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 12px 20px;
-  font-size: 18px;
-  gap: 8px;
-  font-weight: bold;
-  background-color: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  color: white;
-  border-radius: 24px;
-  text-decoration: none;
-  cursor: pointer;
+export const StatsGrid = styled.div`
+margin-top: 3rem; /* mt-12 */
+display: grid;
+gap: 2rem; /* gap-8 */
+grid-template-columns: 1fr;
 
-  transform: translateZ(0);
-  transition:
-    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 220ms cubic-bezier(0.22, 1, 0.36, 1);
+@media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr); /* md:grid-cols-3 */
+}
+`;
 
-  &:hover {
-    transform: scale(1.06);
-  }
-`
+export const StatItem = styled.div`
+.value {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700;
+    color: #a80707;
+    margin-bottom: 0.5rem;
+}`

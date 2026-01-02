@@ -18,6 +18,7 @@ type CardProps = {
   avaliacao: number
   desconto: number //
   frete_gratis: boolean
+  handleModal: (id?: string) => void
 }
 
 const CardCatalogo = ({
@@ -29,6 +30,7 @@ const CardCatalogo = ({
   oldPrice,
   avaliacao,
   frete_gratis,
+  handleModal,
 }: CardProps) => {
   const dispatch = useDispatch<AppDispatch>()
 
@@ -120,7 +122,7 @@ const CardCatalogo = ({
   }
 
   return (
-    <S.CardContainer>
+    <S.CardContainer onClick={() => handleModal(idItem)}>
       <S.ImageWrapper>
         <S.ProductImage src={image} alt={nome} />
         {frete_gratis ? (
@@ -158,18 +160,35 @@ const CardCatalogo = ({
           </S.PriceWrapper>
 
           {!alreadyInCart ? (
-            <S.AddToCartButton onClick={handleAddToCart}>
+            <S.AddToCartButton
+              onClick={(e) => {
+                e.stopPropagation()
+                handleAddToCart()
+              }}
+            >
               <ShoppingCart />
               Adicionar
             </S.AddToCartButton>
           ) : (
-            <S.QuantityWrapper>
+            <S.QuantityWrapper onClick={(e) => e.stopPropagation()}>
               <S.QuantityControl>
-                <S.QuantityButton onClick={handleDecrement} aria-label="Diminuir quantidade">
+                <S.QuantityButton
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleDecrement()
+                  }}
+                  aria-label="Diminuir quantidade"
+                >
                   <Minus />
                 </S.QuantityButton>
                 <S.QuantityValue>{quantidade}</S.QuantityValue>
-                <S.QuantityButton onClick={handleIncrement} aria-label="Aumentar quantidade">
+                <S.QuantityButton
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleIncrement()
+                  }}
+                  aria-label="Aumentar quantidade"
+                >
                   <Plus />
                 </S.QuantityButton>
               </S.QuantityControl>

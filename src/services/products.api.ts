@@ -17,7 +17,7 @@ export const productsApi = createApi({
         if (error) {
           return { error: { status: error.code, data: error } as unknown };
         }
-        return { data: data ?? [] };
+        return { data: data };
       },
     }),
 

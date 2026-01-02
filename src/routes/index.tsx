@@ -7,10 +7,12 @@ import PaymentStatus from '../pages/PaymentStatus'
 import OrdersList from '../pages/OrdersList'
 import RecipesSection from '../pages/RecipesSection'
 import Produtos from '../pages/Produtos'
+import TermosDeUso from '../pages/Termos'
+import PoliticaDePrivacidade from '../pages/Politicas'
+import ConfigProfile from '../pages/ConfigProfiles'
 
 const NotFound = lazy(() => import('../pages/NotFound'))
 const Home = lazy(() => import('../pages/Home'))
-const Aviso = lazy(() => import('../pages/Aviso'))
 const RootLayout = lazy(() => import('../components/layout/RootLayout/RootLayout'))
 const Login = lazy(() => import('../pages/Login'))
 const AddressSelector = lazy(() => import('../pages/AddressSelector'))
@@ -83,27 +85,20 @@ const AppRoutes = () => {
           />
 
           <Route path="/recipes/:type" element={<RecipesSection />} />
+          <Route path="/recipes" element={<RecipesSection />} />
 
           {/* Rota para  Catálogo*/}
+          <Route path="/catalogo/:type" element={<Produtos />} />
           <Route path="/catalogo" element={<Produtos />} />
 
-          {/* Página sobre */}
-          <Route path="/sobre" element={<Aviso />} />
-
-          {/* Informações de qualidade */}
-          <Route path="/qualidade" element={<Aviso />} />
-
-          {/* Receitas */}
-          <Route path="/receitas" element={<Aviso />} />
-
           {/* Rota para informações de perfil */}
-          <Route path="/perfil" element={<Aviso />} />
+          <Route path="/perfil" element={<ConfigProfile />} />
 
           {/* Termos de uso*/}
-          <Route path="/termos-de-uso" element={<Aviso />} />
+          <Route path="/termos-de-uso" element={<TermosDeUso />} />
 
           {/* Políticas de privacidade */}
-          <Route path="/politicas-de-privacidade" element={<Aviso />} />
+          <Route path="/politicas-de-privacidade" element={<PoliticaDePrivacidade />} />
 
           {/* Rota para caminhos desconhecidos */}
           <Route path="/*" element={<NotFound />} />

@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import * as S from './styles'
 import MenuNav from '../MenuNav'
 import MenuHamburguer from '../../ui/MenuHamburguer'
@@ -23,14 +23,19 @@ type TypeProps = {
 }
 
 const Header = ({ menuAberto, toogleHeader, toggleMenu, stateHeader }: TypeProps) => {
+  const navigate = useNavigate()
   const location = useLocation()
+
+  const handleProfile = () => {
+    navigate('/perfil')
+  }
 
   const BLOCKED_ROUTES = [
     '/preview-pedido',
     '/checkout/history',
     '/perfil',
     '/login',
-    '/cadastros',
+    '/cadastro',
     '/address',
     '/address/novo',
     '/termos-de-uso',
@@ -68,7 +73,7 @@ const Header = ({ menuAberto, toogleHeader, toggleMenu, stateHeader }: TypeProps
     {
       name: 'Receitas',
       icon: <NotebookText />,
-      route: '/receitas',
+      route: '/recipes',
     },
   ]
 
@@ -83,7 +88,7 @@ const Header = ({ menuAberto, toogleHeader, toggleMenu, stateHeader }: TypeProps
         </S.Logo>
         <S.Icons>
           <MenuNav links={navRight} />
-          <S.NavButton>
+          <S.NavButton onClick={handleProfile}>
             <User />
           </S.NavButton>
           <S.NavButton onClick={toogleHeader}>

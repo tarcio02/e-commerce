@@ -34,8 +34,8 @@ export const ProductImage = styled.img`
 `;
 
 export const Badge = styled.span`
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
   position: absolute;
   top: 12px;
   gap: 6px;

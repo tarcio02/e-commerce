@@ -7,6 +7,7 @@ export const StylesCadastro = styled.div`
   justify-content: center;
   align-items: center;
   padding: ${theme.spaces.paddingMobile};
+  margin-top: 92px;
 `
 
 export const Form = styled.form`
@@ -39,6 +40,10 @@ export const Form = styled.form`
     }
   }
 
+  .erro{
+    border: 2px solid #ffa801;
+  }
+
     .input {
       outline: none;
       border: 1px solid white;
@@ -62,6 +67,8 @@ export const Form = styled.form`
       display: flex;
       padding: 6px;
       align-items: start;
+      border-radius: 8px;
+      margin-bottom: 4px;
 
       input {
         margin-right: 6px;
@@ -79,6 +86,9 @@ export const InputSenha = styled.div`
     font-size: 14px;
     margin-top: 4px;
   }
+`
+export const HighlightLink = styled(Link)`
+  color: #ffa801;
 `
 
 export const Button = styled.button`
@@ -124,4 +134,19 @@ export const ToLogin = styled(Link)`
   &:hover {
     transform: scale(1.06);
   }
+`
+
+export const LinkTo = styled(Link)`
+color: #ffa801;
+padding-top:8px;
+margin: 0 auto;
+display: flex;
+align-items: center;
+width: fit-content;
+border-bottom: 1px solid #ffa801;
+text-decoration: none;
+
+svg{
+  width: 16px;
+}
 `

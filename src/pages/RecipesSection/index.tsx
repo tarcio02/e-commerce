@@ -138,6 +138,7 @@ const RecipesSection = () => {
 
   const handleModal = () => {
     setShowModal((prev) => !prev)
+    setSelectedRecipe('')
   }
 
   const handleSelectRecipe = (id: string) => {

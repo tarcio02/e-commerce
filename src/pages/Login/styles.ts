@@ -6,6 +6,7 @@ export const StylesLogin = styled.div`
   justify-content: center;
   align-items: center;
   height: calc(100vh - 92px);
+  margin-top: 92px;
 ` 
 
 export const Form = styled.form`
@@ -82,9 +83,15 @@ export const Titulo = styled.h2`
 `
 
 export const ToCadastro = styled(Link)`
-  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   color: white;
+  color: #ffa801;
+  text-decoration: none;
+  border-bottom: 1px solid #ffa801;
+  width: fit-content;
 
   transform: translateZ(0);
   transition:
@@ -94,5 +101,9 @@ export const ToCadastro = styled(Link)`
 
   &:hover {
     transform: scale(1.06);
+  }
+
+  svg{
+    width: 18px;
   }
 `

@@ -1,7 +1,9 @@
-import { type FormEvent, useEffect, useState } from 'react'
+import { type FormEvent, useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import * as S from './styles'
 import { supabase } from '../../services/supabaseClient'
+import { ExternalLink } from 'lucide-react'
+import NotifyModal, { type NotifyModalRef } from '../../components/ui/NotifyModal/Index'
 
 const Login = () => {
   const [email, setEmail] = useState(() => localStorage.getItem('remember_email') || '')
@@ -13,6 +15,8 @@ const Login = () => {
 
   const navigate = useNavigate()
   const location = useLocation()
+
+  const notifyRef = useRef<NotifyModalRef>(null)
 
   const { cameFromCart, intended } = (location.state || {}) as {
     cameFromCart?: boolean
@@ -26,6 +30,14 @@ const Login = () => {
       if (data.user) navigate('/', { replace: true }) // já logado? manda pra /addres
     })
   }, [navigate])
+
+  if (errorMsg) {
+    notifyRef.current?.show({
+      variant: 'warning',
+      message: errorMsg,
+      dismissible: true,
+    })
+  }
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -112,10 +124,14 @@ const Login = () => {
           />
           <label htmlFor="lembrar-senha">Lembrar a senha</label>
         </div>
-        <S.ToCadastro to="/cadastro">Não tenho uma conta!</S.ToCadastro>
-        {errorMsg && <p style={{ color: 'crimson', marginTop: 8 }}>{errorMsg}</p>}
+        <S.ToCadastro to="/cadastro">
+          {' '}
+          <ExternalLink />
+          Não tenho uma conta!
+        </S.ToCadastro>
         {successMsg && <p style={{ color: 'green', marginTop: 8 }}>{successMsg}</p>}
       </S.Form>
+      <NotifyModal ref={notifyRef} />
     </S.StylesLogin>
   )
 }

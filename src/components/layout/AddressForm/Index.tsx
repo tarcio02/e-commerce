@@ -16,7 +16,6 @@ export type TypeAddressForm = {
 }
 
 const AddressForm = () => {
-  // const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const notifyRef = useRef<NotifyModalRef>(null)
 

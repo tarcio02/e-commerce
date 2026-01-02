@@ -17,17 +17,21 @@ const Home = () => {
     <>
       <Hero />
       <Catalogo
+        route="catalogo/destaques"
         data={produtos ?? []}
         badge="Estrelas do site"
         icon={Star}
-        titulo="Produtos em destaques"
+        titulo="Produtos em"
+        highlight=" destaques"
       />
       <Sobre />
       <Catalogo
+        route="catalogo/frete_gratis"
         data={produtos ?? []}
         badge="Não pague envio"
         icon={Truck}
-        titulo="Com Frete Grátis"
+        titulo="Com Frete"
+        highlight=" Grátis"
       />
       <Receitas />
       <Qualidades />
