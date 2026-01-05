@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
+import RequireAdmin from '../components/auth/RequireAdmin'
 import RequireAuth from '../components/auth/RequireAuth'
 import RequireItemsCart from '../components/auth/RequireItemsCart'
 import PaymentStatus from '../pages/PaymentStatus'
@@ -10,6 +11,7 @@ import Produtos from '../pages/Produtos'
 import TermosDeUso from '../pages/Termos'
 import PoliticaDePrivacidade from '../pages/Politicas'
 import ConfigProfile from '../pages/ConfigProfiles'
+import AdminLayout from '../components/AdminLayout'
 
 const NotFound = lazy(() => import('../pages/NotFound'))
 const Home = lazy(() => import('../pages/Home'))
@@ -24,6 +26,7 @@ const AppRoutes = () => {
   return (
     <Suspense fallback={<div>Carregando...</div>}>
       <Routes>
+        {/* Usuários */}
         <Route element={<RootLayout />}>
           {/* Rota principal */}
           <Route path="/" element={<Home />} />
@@ -92,7 +95,11 @@ const AppRoutes = () => {
           <Route path="/catalogo" element={<Produtos />} />
 
           {/* Rota para informações de perfil */}
-          <Route path="/perfil" element={<ConfigProfile />} />
+          <Route path="/perfil" element={
+            <RequireAuth>
+            <ConfigProfile />
+            </RequireAuth>
+            } />
 
           {/* Termos de uso*/}
           <Route path="/termos-de-uso" element={<TermosDeUso />} />
@@ -103,6 +110,14 @@ const AppRoutes = () => {
           {/* Rota para caminhos desconhecidos */}
           <Route path="/*" element={<NotFound />} />
         </Route>
+
+        {/* Administrador */}
+          <Route path='/admin' element={
+            <RequireAdmin>
+              <AdminLayout />
+            </RequireAdmin>}>
+            
+          </Route>
       </Routes>
     </Suspense>
   )

@@ -86,6 +86,7 @@ const RootLayout = () => {
   return (
     <>
       <GlobalStyles $isLoading={isLoading} />
+      <Toaster richColors position="top-right" />
       <Header
         menuAberto={menuAberto}
         toggleMenu={() => toggleUi('menu')}
