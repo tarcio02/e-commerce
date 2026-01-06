@@ -98,6 +98,7 @@ const AddressSelector = () => {
           </S.EmptyState>
         ) : (
           <>
+            <div></div>
             <S.AddressList>
               {addresses?.map((address) => (
                 <AddressCard

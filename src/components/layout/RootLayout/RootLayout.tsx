@@ -10,6 +10,7 @@ import Carrinho from '../Carrinho'
 import Footer from '../Footer'
 import { selectIsLoading } from '../../../features/orderPreview/orderPreview.selectors'
 import { useAppSelector } from '../../../app/hooks'
+import { Toaster } from 'sonner'
 
 const RootLayout = () => {
   const [menuAberto, setMenuAberto] = useState(false)

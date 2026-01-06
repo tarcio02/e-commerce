@@ -12,6 +12,8 @@ import TermosDeUso from '../pages/Termos'
 import PoliticaDePrivacidade from '../pages/Politicas'
 import ConfigProfile from '../pages/ConfigProfiles'
 import AdminLayout from '../components/AdminLayout'
+import AdminVisaoGeral from '../pages/AdminVisaoGeral'
+import AdminPedidos from '../pages/AdminPedidos'
 
 const NotFound = lazy(() => import('../pages/NotFound'))
 const Home = lazy(() => import('../pages/Home'))
@@ -95,11 +97,14 @@ const AppRoutes = () => {
           <Route path="/catalogo" element={<Produtos />} />
 
           {/* Rota para informações de perfil */}
-          <Route path="/perfil" element={
-            <RequireAuth>
-            <ConfigProfile />
-            </RequireAuth>
-            } />
+          <Route
+            path="/perfil"
+            element={
+              <RequireAuth>
+                <ConfigProfile />
+              </RequireAuth>
+            }
+          />
 
           {/* Termos de uso*/}
           <Route path="/termos-de-uso" element={<TermosDeUso />} />
@@ -112,12 +117,18 @@ const AppRoutes = () => {
         </Route>
 
         {/* Administrador */}
-          <Route path='/admin' element={
+        <Route
+          path="/admin"
+          element={
             <RequireAdmin>
               <AdminLayout />
-            </RequireAdmin>}>
-            
-          </Route>
+            </RequireAdmin>
+          }
+        >
+          <Route path="/admin" element={<AdminVisaoGeral />} />
+
+          <Route path="/admin/pedidos-vendas" element={<AdminPedidos />} />
+        </Route>
       </Routes>
     </Suspense>
   )
