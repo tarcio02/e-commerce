@@ -37,7 +37,7 @@ margin-bottom: 0.75rem;
 export const Label = styled.span`
 font-size: 0.875rem;
 font-weight: 500;
-color: hsl(0, 0%, 100%);
+color: hsl(0, 0%, 45%);
 text-transform: uppercase;
 letter-spacing: 0.05em;
 `;

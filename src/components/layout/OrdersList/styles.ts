@@ -150,9 +150,17 @@ cancelled: css`
     background-color: hsla(0, 84%, 60%, 0.1);
     color: hsl(0, 84%, 60%);
 `,
+shipped: css`
+  background-color: rgba(13, 162, 231, 0.1);
+  color:#0da2e7;
+`,
+delivered: css`
+  background-color: hsla(142, 76%, 36%, 0.1);
+  color: hsl(142, 76%, 36%);
+`,
 };
 
-export const StatusBadge = styled.span<{ $status: 'paid' | 'pending' | 'cancelled' }>`
+export const StatusBadge = styled.span<{ $status: 'paid' | 'pending' | 'cancelled' | 'shipped' | 'delivered' }>`
 display: inline-flex;
 align-items: center;
 gap: 0.375rem;
@@ -165,7 +173,7 @@ font-weight: 500;
 ${({ $status }) => statusStyles[$status]}
 `;
 
-export const StatusDot = styled.span<{ $status: 'paid' | 'pending' | 'cancelled' }>`
+export const StatusDot = styled.span<{ $status: 'paid' | 'pending' | 'cancelled' | 'shipped' | 'delivered' }>`
 width: 6px;
 height: 6px;
 border-radius: 50%;
@@ -177,7 +185,7 @@ display: flex;
 gap: 0.5rem;
 `;
 
-export const ActionButton = styled.button<{ $variant?: 'primary' | 'success' | 'danger' | 'default' }>`
+export const ActionButton = styled.button<{ $variant?: 'primary' | 'success' | 'danger' | 'default' | 'disable'}>`
 display: inline-flex;
 align-items: center;
 justify-content: center;
@@ -217,6 +225,12 @@ ${({ $variant }) => {
             background-color: hsla(0, 84%, 50%, 1);
         }
         `;
+    case 'disable':
+      return css`
+        background-color: hsl(0, 0%, 85%);
+        color: hsl(0, 0%, 45%);
+        cursor: default;
+      `;
     default:
         return css`
         background-color: hsl(0, 0%, 94%);

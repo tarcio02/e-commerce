@@ -120,7 +120,7 @@ display: flex;
 align-items: flex-end;
 justify-content: space-around;
 padding: 0 0.5rem;
-gap: 0.25rem;
+gap: 0.50rem;
 `;
 
 export const BarWrapper = styled.div`
@@ -133,7 +133,7 @@ justify-content: center;
 
 export const Bar = styled.div<{ $height: number; $delay?: number }>`
 width: 100%;
-max-width: 2rem;
+max-width: 5rem;
 height: ${({ $height }) => Math.max($height, 2)}%;
 background-color: hsl(40, 100%, 50%);
 border-radius: 0.5rem 0.5rem 0 0;

@@ -14,8 +14,6 @@ import {
 import { selectCartLineItemsForRender, selectCartTotals } from '../../features/cart/cart.selectors'
 import { setOrderMetodoEnvio } from '../../features/orderPreview/orderPreview.slice'
 
-// Mock data - você substituirá isso com dados reais
-
 const OrderPreview = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()

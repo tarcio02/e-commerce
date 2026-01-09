@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { GlobalStyles } from '../../../styles/GlobalStyles'
 import { Overlay } from './styles'
 
 // import Ofertas from '../Ofertas'
@@ -8,16 +7,12 @@ import Header from '../Header'
 import MenuLateral from '../MenuLateral'
 import Carrinho from '../Carrinho'
 import Footer from '../Footer'
-import { selectIsLoading } from '../../../features/orderPreview/orderPreview.selectors'
-import { useAppSelector } from '../../../app/hooks'
 import { Toaster } from 'sonner'
 
 const RootLayout = () => {
   const [menuAberto, setMenuAberto] = useState(false)
   const [carrinhoAberto, setCarrinhoAberto] = useState(false)
   const [stateHeader, setStateHeader] = useState(false)
-
-  const isLoading = useAppSelector(selectIsLoading)
 
   const toggleUi = (tipo: 'menu' | 'carrinho') => {
     if (tipo === 'menu') {
@@ -86,7 +81,6 @@ const RootLayout = () => {
 
   return (
     <>
-      <GlobalStyles $isLoading={isLoading} />
       <Toaster richColors position="top-right" />
       <Header
         menuAberto={menuAberto}

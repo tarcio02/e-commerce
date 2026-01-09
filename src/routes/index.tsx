@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
-import RequireAdmin from '../components/auth/RequireAdmin'
+// import RequireAdmin from '../components/auth/RequireAdmi~n'
 import RequireAuth from '../components/auth/RequireAuth'
 import RequireItemsCart from '../components/auth/RequireItemsCart'
 import PaymentStatus from '../pages/PaymentStatus'
@@ -11,7 +11,7 @@ import Produtos from '../pages/Produtos'
 import TermosDeUso from '../pages/Termos'
 import PoliticaDePrivacidade from '../pages/Politicas'
 import ConfigProfile from '../pages/ConfigProfiles'
-import AdminLayout from '../components/AdminLayout'
+import AdminLayout from '../components/layout/AdminLayout'
 import AdminVisaoGeral from '../pages/AdminVisaoGeral'
 import AdminPedidos from '../pages/AdminPedidos'
 
@@ -120,9 +120,9 @@ const AppRoutes = () => {
         <Route
           path="/admin"
           element={
-            <RequireAdmin>
-              <AdminLayout />
-            </RequireAdmin>
+            // <RequireAdmin>
+            <AdminLayout />
+            // {/* </RequireAdmin> */}
           }
         >
           <Route path="/admin" element={<AdminVisaoGeral />} />

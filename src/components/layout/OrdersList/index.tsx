@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Eye, Send, MessageCircle, X, Truck } from 'lucide-react'
+import { Eye, MessageCircle, X, Truck, DollarSign } from 'lucide-react'
 import { OrderDetailsModal } from '../../layout/OrderDetailsModal'
 import * as S from './styles'
 
@@ -15,7 +15,7 @@ interface Order {
   time: string
   customerName: string
   customerPhone: string
-  status: 'paid' | 'pending' | 'cancelled'
+  status: 'paid' | 'pending' | 'cancelled' | 'shipped' | 'delivered'
   items: OrderItem[]
   total: number
   paymentMethod?: string
@@ -51,6 +51,8 @@ export function OrdersList({
     paid: 'Pago',
     pending: 'Aguardando',
     cancelled: 'Cancelado',
+    shipped: 'Enviado',
+    delivered: 'Entregue',
   }
 
   const handleWhatsAppClick = (phone: string, customerName: string) => {
@@ -117,16 +119,17 @@ export function OrdersList({
                     </S.TableCell>
                     <S.TableCell>
                       <S.ActionsContainer>
-                        {order.status === 'pending' && (
-                          <S.ActionButton
-                            $variant="primary"
-                            onClick={() => onResendPaymentLink?.(order.id)}
-                            title="Reenviar link de pagamento"
-                          >
-                            <Send size={14} />
-                            Link
-                          </S.ActionButton>
-                        )}
+                        <S.ActionButton
+                          $variant={order.status === 'pending' ? 'primary' : 'disable'}
+                          onClick={() => onResendPaymentLink?.(order.id)}
+                          title={
+                            order.status !== 'pending'
+                              ? 'Reenviar link de pagamento'
+                              : 'Esta ação não pode ser mais realizada'
+                          }
+                        >
+                          <DollarSign size={14} />
+                        </S.ActionButton>
                         <S.ActionButton
                           $variant="success"
                           onClick={() =>
@@ -135,34 +138,34 @@ export function OrdersList({
                           title="Chamar no WhatsApp"
                         >
                           <MessageCircle size={14} />
-                          WhatsApp
                         </S.ActionButton>
                       </S.ActionsContainer>
                     </S.TableCell>
                     <S.TableCell>
                       <S.ActionsContainer>
-                        {order.status !== 'cancelled' && (
-                          <>
-                            {order.status === 'paid' && !order.shipped && (
-                              <S.ActionButton
-                                $variant="primary"
-                                onClick={() => onMarkAsShipped?.(order.id)}
-                                title="Marcar como enviado"
-                              >
-                                <Truck size={14} />
-                                Enviado
-                              </S.ActionButton>
-                            )}
-                            <S.ActionButton
-                              $variant="danger"
-                              onClick={() => onCancelOrder?.(order.id)}
-                              title="Cancelar pedido"
-                            >
-                              <X size={14} />
-                              Cancelar
-                            </S.ActionButton>
-                          </>
-                        )}
+                        <S.ActionButton
+                          $variant={
+                            ['cancelled', 'shipped', 'delivered', 'pending'].includes(order.status)
+                              ? 'disable'
+                              : 'primary'
+                          }
+                          onClick={() => onMarkAsShipped?.(order.id)}
+                          title="Marcar como enviado"
+                        >
+                          <Truck size={14} />
+                        </S.ActionButton>
+
+                        <S.ActionButton
+                          $variant={
+                            ['cancelled', 'shipped', 'delivered'].includes(order.status)
+                              ? 'disable'
+                              : 'danger'
+                          }
+                          onClick={() => onCancelOrder?.(order.id)}
+                          title="Cancelar pedido"
+                        >
+                          <X size={14} />
+                        </S.ActionButton>
                       </S.ActionsContainer>
                     </S.TableCell>
                   </S.TableRow>
