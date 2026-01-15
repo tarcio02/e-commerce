@@ -77,6 +77,9 @@ text-transform: uppercase;
 letter-spacing: 0.05em;
 color: hsl(0, 0%, 45%);
 margin-bottom: 0.75rem;
+display: flex;
+align-items: center;
+gap: 4px;
 `;
 
 export const InfoGrid = styled.div`
@@ -124,7 +127,23 @@ margin-bottom: 0.5rem;
 }
 `;
 
+export const ItemImage = styled.div`
+  width: 60px;
+
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`
+
 export const ItemInfo = styled.div`
+display: flex;
+align-items: center;
+gap: 8px;
+`
+
+export const ItemText = styled.div`
 display: flex;
 flex-direction: column;
 gap: 0.125rem;
@@ -171,4 +190,20 @@ font-family: 'Space Grotesk', sans-serif;
 font-size: 1.25rem;
 font-weight: 700;
 color: hsl(40, 100%, 50%);
+`;
+
+
+export const Observacao = styled.div`
+  background: linear-gradient(135deg, rgba(168, 7, 7, 0.08) 0%, rgba(255, 168, 1, 0.08) 100%);
+  border: 1px solid rgba(168, 7, 7, 0.2);
+  border-radius: 16px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+`
+export const ObservacaoText = styled.p`
+  font-size: 0.938rem;
+  color: hsl(0, 0%, 25%);
+  line-height: 1.6;
+  margin-bottom: 1rem;
 `;

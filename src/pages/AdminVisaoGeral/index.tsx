@@ -53,14 +53,14 @@ function AdminVisaoGeral() {
 
       <InsightIA insight={insight} />
       <S.StatsGrid>
-        <BusinessStatus status={mockData.status} message={mockData.statusMessage} delay={350} />
+        <BusinessStatus status={mockData.status} message={mockData.statusMessage} delay={150} />
 
         <StatCard
           title="Faturamento do Dia"
           value={mockData.pedidos.value}
           comparison={mockData.pedidos.comparison}
           icon={<DollarSign size={20} />}
-          delay={150}
+          delay={200}
         />
 
         <StatCard
@@ -76,7 +76,7 @@ function AdminVisaoGeral() {
           value={mockData.pedidos.value}
           comparison={mockData.pedidos.comparison}
           icon={<ShoppingBag size={20} />}
-          delay={150}
+          delay={300}
         />
 
         <StatCard
@@ -84,7 +84,7 @@ function AdminVisaoGeral() {
           value={mockData.ticketMedio.value}
           comparison={mockData.ticketMedio.comparison}
           icon={<TrendingUp size={20} />}
-          delay={200}
+          delay={350}
         />
 
         <StatCard
@@ -92,7 +92,7 @@ function AdminVisaoGeral() {
           value={mockData.clientesAtivos.value}
           comparison={mockData.clientesAtivos.comparison}
           icon={<Users size={20} />}
-          delay={300}
+          delay={400}
         />
       </S.StatsGrid>
 

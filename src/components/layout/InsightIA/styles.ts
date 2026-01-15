@@ -43,12 +43,12 @@ export const AIIconWrapper = styled.div`
 export const AITitle = styled.h3`
   font-size: 1rem;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.foreground};
+  color: hsl(0, 0%, 12%);
 `;
 
 export const AIInsightText = styled.p`
   font-size: 0.938rem;
-  color: ${({ theme }) => theme.colors.mutedForeground};
+  color: hsl(0, 0%, 45%);
   line-height: 1.6;
   margin-bottom: 1rem;
 `;

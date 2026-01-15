@@ -4,8 +4,24 @@ import * as S from './styles'
 import InsightIA from '../../components/layout/InsightIA'
 import { Filter } from 'lucide-react'
 import { useMemo, useState } from 'react'
+import BackdropModal from '../../components/layout/BackdropModal'
+import ModalMessage from '../../components/layout/ModalMenssage'
+import ModalConfirm from '../../components/ui/ModalConfrm'
 
 type FilterType = 'hoje' | 'ontem' | '7d' | '30d'
+type ModalWpp = {
+  showModal: boolean
+  idCustomer: string
+  customerName: string
+  customerPhone: string
+  titulo: string
+}
+
+type ModalControlerOrders = {
+  showModal: boolean
+  label?: 'shipped' | 'canceled' | ''
+  orderId?: string
+}
 
 // Dados mockados de pedidos
 const mockOrders = [
@@ -120,17 +136,40 @@ const mockOrders = [
 
 function AdminPedidos() {
   const [activeFilter, setActiveFilter] = useState<FilterType>('hoje')
+  const [modalWpp, setModalWpp] = useState<ModalWpp>({
+    showModal: false,
+    idCustomer: '',
+    customerName: '',
+    customerPhone: '',
+    titulo: '',
+  })
+  const [modalControlOrders, setModalControlOrders] = useState<ModalControlerOrders>({
+    showModal: false,
+    label: '',
+  })
 
-  const handleResendPaymentLink = (orderId: string) => {
-    toast.success(`Link de pagamento reenviado para o pedido #${orderId}`)
+  const handleCancelOrder = (orderId?: string) => {
+    toast.error(`Pedido #${orderId} cancelado`)
   }
 
-  const handleCancelOrder = (orderId: string) => {
-    toast.info(`Pedido #${orderId} cancelado`)
-  }
-
-  const handleMarkAsShipped = (orderId: string) => {
+  const handleMarkAsShipped = (orderId?: string) => {
     toast.success(`Pedido #${orderId} marcado como enviado`)
+  }
+
+  const handleControlOrders = (orderId?: string, label?: 'shipped' | 'canceled' | '') => {
+    setModalControlOrders({ showModal: false })
+    if (label === 'shipped') return handleMarkAsShipped(orderId)
+    else if (label === 'canceled') return handleCancelOrder(orderId)
+  }
+
+  const clearMenssage = () => {
+    setModalWpp({
+      showModal: false,
+      idCustomer: '',
+      customerName: '',
+      customerPhone: '',
+      titulo: '',
+    })
   }
 
   const filteredOrders = useMemo(() => {
@@ -182,9 +221,7 @@ function AdminPedidos() {
         <S.Title>Pedidos e Vendas</S.Title>
         <S.Subtitle>Acompanhe seus pedidos em tempo real</S.Subtitle>
       </S.Header>
-
       <InsightIA insight="Atente-se a análise da IA, pois ela sabe o que melhor indicar no momento atual para melhorar seus pedidos." />
-
       <S.FiltersWrapper>
         <S.BadgeFilter>
           <Filter className="h-4 w-4 mr-2" />
@@ -206,14 +243,28 @@ function AdminPedidos() {
           Últimos 30 Dias
         </S.ButtonFilter>
       </S.FiltersWrapper>
-
       <OrdersList
         orders={filteredOrders}
         delay={100}
-        onResendPaymentLink={handleResendPaymentLink}
-        onCancelOrder={handleCancelOrder}
-        onMarkAsShipped={handleMarkAsShipped}
+        onContactWhatsApp={(idCustomer, customerName, customerPhone, titulo) =>
+          setModalWpp({ showModal: true, idCustomer, customerName, customerPhone, titulo })
+        }
+        onControl={(orderId, label) => setModalControlOrders({ showModal: true, label, orderId })}
       />
+      <BackdropModal isActive={modalWpp.showModal} onClose={() => clearMenssage}>
+        <ModalMessage customer={modalWpp} />
+      </BackdropModal>
+      <BackdropModal
+        isActive={modalControlOrders.showModal}
+        onClose={() => setModalControlOrders({ showModal: false })}
+      >
+        <ModalConfirm
+          onClose={() => setModalControlOrders({ showModal: false })}
+          label={modalControlOrders.label}
+          orderId={modalControlOrders.orderId}
+          onConfirm={handleControlOrders}
+        />
+      </BackdropModal>
     </S.Content>
   )
 }

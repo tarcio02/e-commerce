@@ -17,7 +17,7 @@ border-radius: 1rem;
 box-shadow: 0 4px 20px -2px hsla(0, 0%, 0%, 0.08);
 padding: 1.5rem;
 opacity: 0;
-animation: ${fadeIn} 0.5s ease-out forwards;
+animation: ${fadeIn} 0.6s ease-out forwards;
 animation-delay: ${({ $delay }) => $delay || 0}ms;
 `;
 

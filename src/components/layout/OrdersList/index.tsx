@@ -21,31 +21,31 @@ interface Order {
   paymentMethod?: string
   address?: string
   shipped?: boolean
+  createdAt: string
 }
 
 interface OrdersListProps {
   orders: Order[]
   delay?: number
-  onResendPaymentLink?: (orderId: string) => void
-  onContactWhatsApp?: (phone: string, customerName: string) => void
-  onCancelOrder?: (orderId: string) => void
-  onMarkAsShipped?: (orderId: string) => void
+  onContactWhatsApp?: (
+    idCustomer: string,
+    customerPhone: string,
+    customerName: string,
+    titulo: string,
+  ) => void
+  onControl?: (orderId: string, label: 'shipped' | 'canceled') => void
 }
 
-export function OrdersList({
-  orders,
-  delay = 0,
-  onResendPaymentLink,
-  onContactWhatsApp,
-  onCancelOrder,
-  onMarkAsShipped,
-}: OrdersListProps) {
+export function OrdersList({ orders, delay = 0, onContactWhatsApp, onControl }: OrdersListProps) {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
-
+  const LabelBlockAction = 'Este botão está desabilitado.'
   const totalOrders = orders.length
   const cancelledOrders = orders.filter((o) => o.status === 'cancelled').length
   const cancellationRate =
     totalOrders > 0 ? ((cancelledOrders / totalOrders) * 100).toFixed(1) : '0'
+
+  const isButtonBlocked = (status: string) =>
+    ['cancelled', 'shipped', 'delivered', 'pending'].includes(status)
 
   const statusLabels = {
     paid: 'Pago',
@@ -55,14 +55,27 @@ export function OrdersList({
     delivered: 'Entregue',
   }
 
-  const handleWhatsAppClick = (phone: string, customerName: string) => {
-    if (onContactWhatsApp) {
-      onContactWhatsApp(phone, customerName)
-    } else {
-      const cleanPhone = phone.replace(/\D/g, '')
-      const message = encodeURIComponent(`Olá ${customerName}, tudo bem?`)
-      window.open(`https://wa.me/55${cleanPhone}?text=${message}`, '_blank')
-    }
+  const isDateToday = (createdAt: string | Date): boolean => {
+    const date = new Date(createdAt)
+    const now = new Date()
+
+    return (
+      date.getDate() === now.getDate() &&
+      date.getMonth() === now.getMonth() &&
+      date.getFullYear() === now.getFullYear()
+    )
+  }
+
+  const formatDate = (createdAt: string | Date): string => {
+    const date = new Date(createdAt)
+
+    const formatted = date.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'short',
+    })
+
+    // remove ponto do mês (jan.)
+    return formatted.replace('.', '')
   }
 
   return (
@@ -91,7 +104,7 @@ export function OrdersList({
             <S.Table>
               <S.TableHead>
                 <tr>
-                  <S.TableHeadCell>Horário</S.TableHeadCell>
+                  <S.TableHeadCell>Data/Hora</S.TableHeadCell>
                   <S.TableHeadCell>Cliente</S.TableHeadCell>
                   <S.TableHeadCell>Detalhes</S.TableHeadCell>
                   <S.TableHeadCell>Status</S.TableHeadCell>
@@ -102,7 +115,9 @@ export function OrdersList({
               <S.TableBody>
                 {orders.map((order, index) => (
                   <S.TableRow key={order.id} $index={index}>
-                    <S.TimeCell>{order.time}</S.TimeCell>
+                    <S.TimeCell>
+                      {order.time} - {isDateToday(order.createdAt) || formatDate(order.createdAt)}
+                    </S.TimeCell>
                     <S.TableCell>
                       <S.CustomerName>{order.customerName}</S.CustomerName>
                     </S.TableCell>
@@ -121,11 +136,19 @@ export function OrdersList({
                       <S.ActionsContainer>
                         <S.ActionButton
                           $variant={order.status === 'pending' ? 'primary' : 'disable'}
-                          onClick={() => onResendPaymentLink?.(order.id)}
+                          onClick={() =>
+                            order.status === 'pending' &&
+                            onContactWhatsApp?.(
+                              order.id,
+                              order.customerName,
+                              order.customerPhone,
+                              'Resgate de pagamento',
+                            )
+                          }
                           title={
-                            order.status !== 'pending'
+                            order.status === 'pending'
                               ? 'Reenviar link de pagamento'
-                              : 'Esta ação não pode ser mais realizada'
+                              : LabelBlockAction
                           }
                         >
                           <DollarSign size={14} />
@@ -133,7 +156,12 @@ export function OrdersList({
                         <S.ActionButton
                           $variant="success"
                           onClick={() =>
-                            handleWhatsAppClick(order.customerPhone, order.customerName)
+                            onContactWhatsApp?.(
+                              order.id,
+                              order.customerName,
+                              order.customerPhone,
+                              'Contatar Cliente',
+                            )
                           }
                           title="Chamar no WhatsApp"
                         >
@@ -144,25 +172,33 @@ export function OrdersList({
                     <S.TableCell>
                       <S.ActionsContainer>
                         <S.ActionButton
-                          $variant={
-                            ['cancelled', 'shipped', 'delivered', 'pending'].includes(order.status)
-                              ? 'disable'
-                              : 'primary'
+                          $variant={isButtonBlocked(order.status) ? 'disable' : 'primary'}
+                          onClick={() =>
+                            isButtonBlocked(order.status) == false &&
+                            onControl?.(order.id, 'shipped')
                           }
-                          onClick={() => onMarkAsShipped?.(order.id)}
-                          title="Marcar como enviado"
+                          title={
+                            isButtonBlocked(order.status)
+                              ? LabelBlockAction
+                              : 'Marcar como enviado.'
+                          }
                         >
                           <Truck size={14} />
                         </S.ActionButton>
 
                         <S.ActionButton
                           $variant={
-                            ['cancelled', 'shipped', 'delivered'].includes(order.status)
-                              ? 'disable'
-                              : 'danger'
+                            ['pending', 'paid'].includes(order.status) ? 'danger' : 'disable'
                           }
-                          onClick={() => onCancelOrder?.(order.id)}
-                          title="Cancelar pedido"
+                          onClick={() =>
+                            ['pending', 'paid'].includes(order.status) &&
+                            onControl?.(order.id, 'canceled')
+                          }
+                          title={
+                            ['cancelled', 'shipped', 'delivered'].includes(order.status)
+                              ? LabelBlockAction
+                              : 'Cancelar pedido.'
+                          }
                         >
                           <X size={14} />
                         </S.ActionButton>

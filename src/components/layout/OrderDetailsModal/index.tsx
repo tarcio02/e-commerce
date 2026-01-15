@@ -1,4 +1,4 @@
-import { X } from 'lucide-react'
+import { Eye, X, Info, Box } from 'lucide-react'
 import * as S from './styles'
 
 interface OrderItem {
@@ -47,6 +47,8 @@ export function OrderDetailsModal({ order, onClose }: OrderDetailsModalProps) {
     }
   }
 
+  const imageDefault = 'https://cdn.pixabay.com/photo/2025/04/04/06/22/icon-9512606_1280.png'
+
   return (
     <S.Overlay onClick={handleOverlayClick}>
       <S.Modal>
@@ -59,7 +61,10 @@ export function OrderDetailsModal({ order, onClose }: OrderDetailsModalProps) {
 
         <S.Content>
           <S.Section>
-            <S.SectionTitle>Informações do Pedido</S.SectionTitle>
+            <S.SectionTitle>
+              {' '}
+              <Info size={20} /> Informações do Pedido
+            </S.SectionTitle>
             <S.InfoGrid>
               <S.InfoItem>
                 <S.InfoLabel>Horário</S.InfoLabel>
@@ -83,24 +88,47 @@ export function OrderDetailsModal({ order, onClose }: OrderDetailsModalProps) {
                   <S.InfoValue>{order.paymentMethod}</S.InfoValue>
                 </S.InfoItem>
               )}
-              {order.address && (
+              {order.address ? (
                 <S.InfoItem>
                   <S.InfoLabel>Endereço</S.InfoLabel>
                   <S.InfoValue>{order.address}</S.InfoValue>
+                </S.InfoItem>
+              ) : (
+                <S.InfoItem>
+                  <S.InfoLabel>Retirada no Local</S.InfoLabel>
                 </S.InfoItem>
               )}
             </S.InfoGrid>
           </S.Section>
 
           <S.Section>
-            <S.SectionTitle>Itens do Pedido</S.SectionTitle>
+            <S.SectionTitle>
+              <Eye />
+              Observações
+            </S.SectionTitle>
+            <S.Observacao>
+              <S.ObservacaoText>O pedido não possue observações!</S.ObservacaoText>
+            </S.Observacao>
+          </S.Section>
+
+          <S.Section>
+            <S.SectionTitle>
+              <Box />
+              Itens do Pedido
+            </S.SectionTitle>
             <S.ItemsList>
               {order.items.map((item) => (
                 <S.Item key={item.id}>
                   <S.ItemInfo>
-                    <S.ItemName>{item.name}</S.ItemName>
-                    <S.ItemQuantity>Qtd: {item.quantity}</S.ItemQuantity>
+                    <S.ItemImage>
+                      <img src={imageDefault} alt="Foto do produto" />
+                    </S.ItemImage>
+                    <S.ItemText>
+                      <S.ItemName>{item.name}</S.ItemName>
+                      <S.ItemQuantity>Qtd: {item.quantity}</S.ItemQuantity>
+                    </S.ItemText>
                   </S.ItemInfo>
+
                   <S.ItemPrice>{formatCurrency(item.price * item.quantity)}</S.ItemPrice>
                 </S.Item>
               ))}

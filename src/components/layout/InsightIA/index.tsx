@@ -5,16 +5,17 @@ type InsigthProps = {
   isAction?: boolean
   insight: string
   toAction?: string
+  titulo?: string
 }
 
-const InsightIA = ({ insight, isAction, toAction }: InsigthProps) => {
+const InsightIA = ({ insight, isAction, toAction, titulo }: InsigthProps) => {
   return (
     <S.AIInsightsCard>
       <S.AIInsightsHeader>
         <S.AIIconWrapper>
           <Sparkles size={20} />
         </S.AIIconWrapper>
-        <S.AITitle>Insights Geral</S.AITitle>
+        <S.AITitle>{titulo ?? <p>Insights Geral</p>}</S.AITitle>
       </S.AIInsightsHeader>
       <S.AIInsightText>
         {insight && (
@@ -25,7 +26,7 @@ const InsightIA = ({ insight, isAction, toAction }: InsigthProps) => {
           </p>
         )}
       </S.AIInsightText>
-      {isAction ?? (
+      {isAction && (
         <S.AIActionButton to={toAction ?? '/'}>
           <ArrowRight size={16} />
           Executar Ação

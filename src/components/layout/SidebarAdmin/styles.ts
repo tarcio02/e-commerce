@@ -84,7 +84,7 @@ import styled from 'styled-components';
       text-decoration: none;
       color: white;
       font-size: 1rem;
-
+      position: relative;
       height: 48px;          
       box-sizing: border-box;
       overflow: hidden;      
@@ -185,7 +185,27 @@ export const UserText = styled.div<{ $collapsed: boolean }>`
   transition: max-width 220ms ease, opacity 160ms ease, transform 200ms ease;
 `;
 
-    export const UserRole = styled.p`
-      font-size: 0.75rem;
-      color: hsl(0, 0%, 100%)',99;
-    `;
+export const UserRole = styled.p`
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.9);
+`;
+
+
+export const Notification = styled.span`
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  padding: 4px;
+  background-color: rgba(255, 168, 1, 1) ;
+  /* background: linear-gradient(135deg,  rgba(255, 168, 1, 0.8) 100%), rgba(168, 7, 7, 0.8) 0%; */
+  position: absolute;
+  top: 2px;
+  left: 0px;
+
+  svg {
+    color: white;
+  }
+`

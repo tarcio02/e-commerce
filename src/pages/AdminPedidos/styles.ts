@@ -1,14 +1,15 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
-export const Container = styled.div`
-display: flex;
-min-height: 100vh;
-background-color: hsl(0, 0%, 97%);
-`;
 
-export const Main = styled.main`
-flex: 1;
-min-width: 0;
+const slideUp = keyframes`
+from { 
+    opacity: 0;
+    transform: translateY(10px);
+}
+to { 
+    opacity: 1;
+    transform: translateY(0);
+}
 `;
 
 export const Content = styled.div`
@@ -40,6 +41,7 @@ export const FiltersWrapper = styled.div`
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
+  animation: ${slideUp} 0.5s ease-out forwards;
 `;
 
 export const BadgeFilter = styled.div`
@@ -56,7 +58,9 @@ export const ButtonFilter = styled.button<{$isActive: boolean}>`
   padding: 6px 14px;
   border-radius: 8px;
   font-weight: bold;
-  border: 1px solid ${({$isActive}) => $isActive ? "#ffa801" : "#737373"};
+  border: 1px solid ${({$isActive}) => $isActive ? "#ffa801" : "rgba(0, 0, 0, 0.3)"};
   color:  ${({$isActive}) => $isActive ? "#ffa801" : "#737373"};
   background-color: transparent;
+  cursor: pointer;
 `
+export const ModalContent = styled.div``

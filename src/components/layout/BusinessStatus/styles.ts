@@ -12,10 +12,28 @@ to {
 }
 `;
 
-export const Container = styled.div<{ $delay?: number }>`
-background-color: hsl(0, 0%, 100%);
+const getStatusBackground = (status: string, opacity = 1) => {
+  switch (status) {
+    case 'healthy':
+    return `hsla(142, 76%, 36%, ${opacity})`;
+    case 'attention':
+    return `hsla(40, 100%, 50%, ${opacity})`;
+    case 'critical':
+    return `hsla(0, 84%, 60%, ${opacity})`;
+    default:
+    return 'hsl(0, 0%, 92%)';
+  }
+};
+
+export const Container = styled.div<{ $delay?: number, $status: string }>`
+background: ${({$status}) => `
+  linear-gradient(135deg, 
+    ${getStatusBackground($status, 0.08)} 0%,
+    rgba(255, 168, 1, 0.08) 100%)
+`};
+border: 1px solid ${({$status}) => getStatusBackground($status, 0.2)};
 border-radius: 1.25rem;
-padding: 1.25rem;
+padding: 1.2rem;
 transition: $all 0.3s ease;
 box-shadow: 0 4px 20px -2px hsla(0, 0%, 0%, 0.08);
 animation: ${slideUp} 0.4s ease-out forwards;
@@ -29,7 +47,7 @@ opacity: 0;
 `;
 
 export const Label = styled.span`
-font-size: 0.875rem;
+font-size: 0.625rem;
 font-weight: 500;
 color: hsl(0, 0%, 45%);
 text-transform: uppercase;
@@ -40,22 +58,10 @@ interface StatusBoxProps {
 $status: 'healthy' | 'attention' | 'critical';
 }
 
-const getStatusBackground = (status: string) => {
-switch (status) {
-    case 'healthy':
-    return' hsl(142, 76%, 36%)';
-    case 'attention':
-    return 'hsl(40, 100%, 50%)';
-    case 'critical':
-    return 'hsl(0, 84%, 60%)';
-    default:
-    return 'hsl(0, 0%, 92%)';
-}
-};
+
 
 export const StatusBox = styled.div<StatusBoxProps>`
-margin-top: 1rem;
-padding: 1rem;
+padding-top: 1rem;
 border-radius: 1.25rem;
 background-color: ${({ $status }) => getStatusBackground($status)}1a;
 border: 1px solid ${({ $status }) => getStatusBackground($status)}4d;
@@ -68,10 +74,13 @@ gap: 0.75rem;
 `;
 
 export const IconWrapper = styled.div<StatusBoxProps>`
-padding: 0.625rem;
+padding: 6px;
 border-radius: 9999px;
 background-color: ${({ $status }) => getStatusBackground($status)};
 color: hsl(0, 0%, 100%);
+border-radius: 50%;
+height: 32px;
+width: 32px;
 display: flex;
 align-items: center;
 justify-content: center;

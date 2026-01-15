@@ -31,27 +31,54 @@ export const Header = styled.div`
 display: flex;
 align-items: flex-start;
 justify-content: space-between;
-margin-bottom: 0.75rem;
+
+
 `;
 
 export const Label = styled.span`
-font-size: 0.875rem;
+font-size: 0.625rem;
 font-weight: 500;
 color: hsl(0, 0%, 45%);
 text-transform: uppercase;
 letter-spacing: 0.05em;
 `;
 
-export const IconWrapper = styled.div`
-padding: 0.5rem;
+export const IconWrapper = styled.div<TrendBadgeProps>`
+padding: 6px;
 border-radius: 0.75rem;
 background-color: rgba(255, 170, 0, 0.1);
 color: hsl(40, 100%, 50%);
+border-radius: 50%;
+height: 32px;
+width: 32px;
+display: flex;
+align-items: center;
+justify-content: center;
+
+${({ $variant }) => {
+    switch ($variant) {
+    case 'positive':
+        return css`
+        color: hsl(142, 76%, 36%);
+        background-color: rgba(22, 162, 73, 0.1);
+        `;
+    case 'negative':
+        return css`
+        color: hsl(0, 84%, 60%);
+        background-color: rgba(240, 61, 61, 0.1);
+        `;
+    default:
+        return css`
+        color: hsl(0, 0%, 45%);
+        background-color: hsl(0, 0%, 92%);
+        `;
+    }
+}}
 `;
 
 export const Value = styled.div`
 font-family: 'Space Grotesk', sans-serif;
-font-size: 1.875rem;
+font-size: 1.5rem;
 font-weight: 700;
 letter-spacing: -0.025em;
 color: hsl(0, 0%, 12%);
