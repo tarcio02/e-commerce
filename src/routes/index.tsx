@@ -15,6 +15,9 @@ import AdminLayout from '../components/layout/AdminLayout'
 import AdminVisaoGeral from '../pages/AdminVisaoGeral'
 import AdminPedidos from '../pages/AdminPedidos'
 import AdminCustomers from '../pages/AdminCustomers'
+import AdminAtendimentos from '../pages/AdminAtendimentos'
+import AdminCatalogo from '../pages/AdminCatalogo'
+import Marketing from '../pages/Marketing'
 
 const NotFound = lazy(() => import('../pages/NotFound'))
 const Home = lazy(() => import('../pages/Home'))
@@ -131,6 +134,12 @@ const AppRoutes = () => {
           <Route path="/admin/pedidos-vendas" element={<AdminPedidos />} />
 
           <Route path="/admin/customers" element={<AdminCustomers />} />
+
+          <Route path="/admin/atendimentos" element={<AdminAtendimentos />} />
+
+          <Route path="/admin/catalogo" element={<AdminCatalogo />} />
+
+          <Route path="/admin/marketing" element={<Marketing />} />
         </Route>
       </Routes>
     </Suspense>
