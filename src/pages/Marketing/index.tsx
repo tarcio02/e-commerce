@@ -8,8 +8,6 @@ import {
   Rocket,
   MessageCircle,
   Tag,
-  ArrowUpRight,
-  ArrowDownRight,
   X,
   Pencil,
   Pause,
@@ -21,30 +19,35 @@ import {
 } from 'lucide-react'
 import * as S from './styles'
 import InsightIA from '../../components/layout/InsightIA'
+import { StatCard } from '../../components/layout/StatCard'
 
 const metrics = [
   {
     label: 'Pedidos Gerados',
     value: '142',
     comparison: 18,
+    delay: 150,
     icon: ShoppingBag,
   },
   {
     label: 'ROI',
     value: '340%',
     comparison: 25,
+    delay: 200,
     icon: TrendingUp,
   },
   {
     label: 'Clientes Novos',
     value: '38',
     comparison: -5,
+    delay: 250,
     icon: Users,
   },
   {
     label: 'Vendas (R$)',
     value: 'R$ 8.450',
     comparison: 12,
+    delay: 350,
     icon: DollarSign,
   },
 ]
@@ -231,19 +234,13 @@ export default function Marketing() {
 
       <S.MetricsGrid>
         {metrics.map((metric) => (
-          <S.MetricCard key={metric.label}>
-            <S.MetricHeader>
-              <S.MetricLabel>{metric.label}</S.MetricLabel>
-              <S.MetricIconWrapper>
-                <metric.icon size={16} />
-              </S.MetricIconWrapper>
-            </S.MetricHeader>
-            <S.MetricValue>{metric.value}</S.MetricValue>
-            <S.MetricComparison $positive={metric.comparison > 0}>
-              {metric.comparison > 0 ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
-              {Math.abs(metric.comparison)}% vs semana anterior
-            </S.MetricComparison>
-          </S.MetricCard>
+          <StatCard
+            title={metric.label}
+            value={metric.value}
+            comparison={{ value: metric.comparison, label: 'vs. semana passada' }}
+            delay={metric.delay}
+            icon={<metric.icon />}
+          />
         ))}
       </S.MetricsGrid>
 
@@ -253,113 +250,131 @@ export default function Marketing() {
           <Rocket size={18} />
           Impulsionar Vendas
         </S.ActionButton>
-        <S.ActionButton $variant="accent" onClick={() => setShowOfferModal(true)}>
+        <S.ActionButton $variant="primary" onClick={() => setShowOfferModal(true)}>
           <Tag size={18} />
           Criar uma Oferta
         </S.ActionButton>
       </S.ActionsButtonsGrid>
 
-      <S.SectionTitle>Campanhas Ativas</S.SectionTitle>
-      <S.CampaignsGrid>
-        {campaigns.map((campaign) => (
-          <S.CampaignCard key={campaign.id} $paused={campaign.paused}>
-            <S.CampaignHeader>
-              <S.CampaignInfo>
-                <S.CampaignType $type={campaign.type}>
-                  {campaign.type === 'campaign' ? 'Campanha Meta' : 'Disparo WhatsApp'}
-                  {campaign.aiGenerated && (
-                    <S.AIBadge>
-                      <Sparkles size={10} />
-                      IA
-                    </S.AIBadge>
-                  )}
-                </S.CampaignType>
-                <S.CampaignTitle>{campaign.title}</S.CampaignTitle>
-                <S.CampaignObjective>
-                  <Target size={12} style={{ marginRight: 4, display: 'inline' }} />
-                  {campaign.objective}
-                </S.CampaignObjective>
-              </S.CampaignInfo>
-              <S.CampaignActions>
-                <S.StatusBadge $active={!campaign.paused}>
-                  {campaign.paused ? 'Pausada' : 'Ativa'}
-                </S.StatusBadge>
-                <S.CampaignActionBtn $variant="edit">
-                  <Pencil size={14} />
-                </S.CampaignActionBtn>
-                <S.CampaignActionBtn
-                  $variant="pause"
-                  onClick={() => handleTogglePause(campaign.id)}
-                >
-                  {campaign.paused ? <Play size={14} /> : <Pause size={14} />}
-                </S.CampaignActionBtn>
-              </S.CampaignActions>
-            </S.CampaignHeader>
+      <S.ContainerGrid>
+        <S.Header>
+          <S.ContainerHeader>
+            <S.Title>Todas as Campanhas</S.Title>
+            <S.SummaryItem>
+              <S.SummaryLabel>Total Campanhas:</S.SummaryLabel>
+              <S.SummaryValue>{5}</S.SummaryValue>
+            </S.SummaryItem>
+            <S.SummaryItem>
+              <S.SummaryLabel>Campanhas Ativas</S.SummaryLabel>
+              <S.SummaryValue>3</S.SummaryValue>
+            </S.SummaryItem>
+          </S.ContainerHeader>
+        </S.Header>
+        <S.CampaignsGrid>
+          {campaigns.map((campaign) => (
+            <S.CampaignCard key={campaign.id} $paused={campaign.paused}>
+              <S.CampaignHeader>
+                <S.CampaignInfo>
+                  <S.CampaignType $type={campaign.type}>
+                    {campaign.type === 'campaign' ? 'Campanha Meta' : 'Disparo WhatsApp'}
+                    {campaign.aiGenerated && (
+                      <S.AIBadge>
+                        <Sparkles size={10} />
+                        IA
+                      </S.AIBadge>
+                    )}
+                  </S.CampaignType>
+                  <S.CampaignTitle>{campaign.title}</S.CampaignTitle>
+                  <S.CampaignObjective>
+                    <Target size={12} style={{ marginRight: 4, display: 'inline' }} />
+                    {campaign.objective}
+                  </S.CampaignObjective>
+                </S.CampaignInfo>
+                <S.CampaignActions>
+                  <S.StatusBadge $active={!campaign.paused}>
+                    {campaign.paused ? 'Pausada' : 'Ativa'}
+                  </S.StatusBadge>
+                  <S.CampaignActionBtn $variant="edit">
+                    <Pencil size={14} />
+                  </S.CampaignActionBtn>
+                  <S.CampaignActionBtn
+                    $variant="pause"
+                    onClick={() => handleTogglePause(campaign.id)}
+                  >
+                    {campaign.paused ? <Play size={14} /> : <Pause size={14} />}
+                  </S.CampaignActionBtn>
+                </S.CampaignActions>
+              </S.CampaignHeader>
 
-            <S.CampaignDetails>
-              {campaign.type === 'campaign' && campaign.budget && (
-                <S.CampaignDetail>
-                  <S.DetailLabel>Verba</S.DetailLabel>
-                  <S.DetailValue>{campaign.budget}</S.DetailValue>
-                </S.CampaignDetail>
-              )}
-              {campaign.type === 'offer' && (
-                <>
-                  {campaign.targetAudience && (
-                    <S.CampaignDetail>
-                      <S.DetailLabel>Público-alvo</S.DetailLabel>
-                      <S.DetailValue>{getAudienceLabel(campaign.targetAudience)}</S.DetailValue>
-                    </S.CampaignDetail>
-                  )}
-                  {campaign.scheduledDate && campaign.scheduledTime && (
-                    <S.CampaignDetail>
-                      <S.DetailLabel>Agendamento</S.DetailLabel>
-                      <S.DetailValue>
-                        <Clock size={12} style={{ marginRight: 4, display: 'inline' }} />
-                        {campaign.scheduledDate} às {campaign.scheduledTime}
-                      </S.DetailValue>
-                    </S.CampaignDetail>
-                  )}
-                </>
-              )}
-            </S.CampaignDetails>
+              <S.CampaignDetails>
+                {campaign.type === 'campaign' && campaign.budget && (
+                  <S.CampaignDetail>
+                    <S.DetailLabel>Verba</S.DetailLabel>
+                    <S.DetailValue>{campaign.budget}</S.DetailValue>
+                  </S.CampaignDetail>
+                )}
+                {campaign.type === 'offer' && (
+                  <>
+                    {campaign.targetAudience && (
+                      <S.CampaignDetail>
+                        <S.DetailLabel>Público-alvo</S.DetailLabel>
+                        <S.DetailValue>{getAudienceLabel(campaign.targetAudience)}</S.DetailValue>
+                      </S.CampaignDetail>
+                    )}
+                    {campaign.scheduledDate && campaign.scheduledTime && (
+                      <S.CampaignDetail>
+                        <S.DetailLabel>Agendamento</S.DetailLabel>
+                        <S.DetailValue>
+                          <Clock size={12} style={{ marginRight: 4, display: 'inline' }} />
+                          {campaign.scheduledDate} às {campaign.scheduledTime}
+                        </S.DetailValue>
+                      </S.CampaignDetail>
+                    )}
+                  </>
+                )}
+              </S.CampaignDetails>
 
-            <S.CampaignResults>
-              {campaign.type === 'campaign' ? (
-                <>
-                  <S.ResultItem>
-                    <S.ResultLabel>Impressões</S.ResultLabel>
-                    <S.ResultValue>{campaign.results.impressions?.toLocaleString()}</S.ResultValue>
-                  </S.ResultItem>
-                  <S.ResultItem>
-                    <S.ResultLabel>Cliques</S.ResultLabel>
-                    <S.ResultValue>{campaign.results.clicks?.toLocaleString()}</S.ResultValue>
-                  </S.ResultItem>
-                  <S.ResultItem>
-                    <S.ResultLabel>Conversões</S.ResultLabel>
-                    <S.ResultValue>{campaign.results.conversions?.toLocaleString()}</S.ResultValue>
-                  </S.ResultItem>
-                </>
-              ) : (
-                <>
-                  <S.ResultItem>
-                    <S.ResultLabel>Enviadas</S.ResultLabel>
-                    <S.ResultValue>{campaign.results.sent?.toLocaleString()}</S.ResultValue>
-                  </S.ResultItem>
-                  <S.ResultItem>
-                    <S.ResultLabel>Entregues</S.ResultLabel>
-                    <S.ResultValue>{campaign.results.delivered?.toLocaleString()}</S.ResultValue>
-                  </S.ResultItem>
-                  <S.ResultItem>
-                    <S.ResultLabel>Abertas</S.ResultLabel>
-                    <S.ResultValue>{campaign.results.opened?.toLocaleString()}</S.ResultValue>
-                  </S.ResultItem>
-                </>
-              )}
-            </S.CampaignResults>
-          </S.CampaignCard>
-        ))}
-      </S.CampaignsGrid>
+              <S.CampaignResults>
+                {campaign.type === 'campaign' ? (
+                  <>
+                    <S.ResultItem>
+                      <S.ResultLabel>Impressões</S.ResultLabel>
+                      <S.ResultValue>
+                        {campaign.results.impressions?.toLocaleString()}
+                      </S.ResultValue>
+                    </S.ResultItem>
+                    <S.ResultItem>
+                      <S.ResultLabel>Cliques</S.ResultLabel>
+                      <S.ResultValue>{campaign.results.clicks?.toLocaleString()}</S.ResultValue>
+                    </S.ResultItem>
+                    <S.ResultItem>
+                      <S.ResultLabel>Conversões</S.ResultLabel>
+                      <S.ResultValue>
+                        {campaign.results.conversions?.toLocaleString()}
+                      </S.ResultValue>
+                    </S.ResultItem>
+                  </>
+                ) : (
+                  <>
+                    <S.ResultItem>
+                      <S.ResultLabel>Enviadas</S.ResultLabel>
+                      <S.ResultValue>{campaign.results.sent?.toLocaleString()}</S.ResultValue>
+                    </S.ResultItem>
+                    <S.ResultItem>
+                      <S.ResultLabel>Entregues</S.ResultLabel>
+                      <S.ResultValue>{campaign.results.delivered?.toLocaleString()}</S.ResultValue>
+                    </S.ResultItem>
+                    <S.ResultItem>
+                      <S.ResultLabel>Abertas</S.ResultLabel>
+                      <S.ResultValue>{campaign.results.opened?.toLocaleString()}</S.ResultValue>
+                    </S.ResultItem>
+                  </>
+                )}
+              </S.CampaignResults>
+            </S.CampaignCard>
+          ))}
+        </S.CampaignsGrid>
+      </S.ContainerGrid>
 
       {/* Modal Impulsionar Vendas */}
       {showBoostModal && (

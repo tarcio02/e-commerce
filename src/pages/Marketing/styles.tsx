@@ -1,68 +1,61 @@
-import styled from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
+
+const slideUp = keyframes`
+from { 
+    opacity: 0;
+    transform: translateY(10px);
+}
+to { 
+    opacity: 1;
+    transform: translateY(0);
+}
+`
+
+export const Header = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+`
+
+export const Title = styled.h3`
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: hsl(0, 0%, 12%);
+  margin-right: 1rem;
+`
+
+export const ContainerHeader = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+`
+
+export const SummaryItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`
+
+export const SummaryLabel = styled.span`
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: hsl(0, 0%, 45%);
+`
+
+export const SummaryValue = styled.span`
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #16a249;
+`
 
 export const Content = styled.div`
   max-width: 80rem;
   margin: 0 auto;
-`
-
-export const AIInsightsCard = styled.div`
-  background: linear-gradient(135deg, rgba(168, 7, 7, 0.08) 0%, rgba(255, 168, 1, 0.08) 100%);
-  border: 1px solid rgba(168, 7, 7, 0.2);
-  border-radius: 16px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-`
-
-export const AIInsightsHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-`
-
-export const AIIconWrapper = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #a80707 0%, #ffa801 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-`
-
-export const AITitle = styled.h3`
-  font-size: 1rem;
-  font-weight: 600;
-  color: hsl(0, 0%, 12%);
-`
-
-export const AIInsightText = styled.p`
-  font-size: 0.938rem;
-  color: hsl(0, 0%, 45%);
-  line-height: 1.6;
-  margin-bottom: 1rem;
-`
-
-export const AIActionButton = styled.button`
-  background: linear-gradient(135deg, #a80707 0%, #ffa801 100%);
-  color: white;
-  border: none;
-  padding: 0.625rem 1.25rem;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(168, 7, 7, 0.4);
-  }
 `
 
 export const MetricsGrid = styled.div`
@@ -80,60 +73,12 @@ export const MetricsGrid = styled.div`
   }
 `
 
-export const MetricCard = styled.div`
-  background: hsl(0, 0%, 100%);
-  border: 1px solid hsl(0, 0%, 88%);
-  border-radius: 12px;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`
-
-export const MetricHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`
-
-export const MetricLabel = styled.span`
-  font-size: 0.813rem;
-  color: hsl(0, 0%, 45%);
-  font-weight: 500;
-`
-
-export const MetricIconWrapper = styled.div`
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: rgba(255, 168, 1, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffa801;
-`
-
-export const MetricValue = styled.span`
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: hsl(0, 0%, 12%);
-  font-family: 'Space Grotesk', sans-serif;
-`
-
-export const MetricComparison = styled.div<{ $positive: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.75rem;
-  color: ${({ $positive }) => ($positive ? '#22C55E' : '#EF4444')};
-  font-weight: 500;
-`
-
 export const SectionTitle = styled.h2`
   font-size: 1.125rem;
   font-weight: 600;
   color: hsl(0, 0%, 12%);
   margin-bottom: 1rem;
+  animation: ${slideUp} 0.7s ease-out forwards;
 `
 
 export const ActionsButtonsGrid = styled.div`
@@ -141,43 +86,75 @@ export const ActionsButtonsGrid = styled.div`
   gap: 1rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
+  animation: ${slideUp} 0.7s ease-out forwards;
 `
 
 export const ActionButton = styled.button<{ $variant: 'primary' | 'secondary' | 'accent' }>`
   display: flex;
   align-items: center;
-  gap: 0.625rem;
-  padding: 0.875rem 1.5rem;
-  border-radius: 12px;
-  border: none;
-  font-size: 0.938rem;
+  gap: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background: ${({ $variant }) =>
-    $variant === 'primary'
-      ? 'linear-gradient(135deg, #a80707 0%, #c91a1a 100%)'
-      : $variant === 'secondary'
-        ? 'linear-gradient(135deg, #ffa801 0%, #ffbe33 100%)'
-        : 'linear-gradient(135deg, #a80707 0%, #ffa801 100%)'};
-  color: white;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px
-      ${({ $variant }) =>
-        $variant === 'primary'
-          ? 'rgba(168, 7, 7, 0.4)'
-          : $variant === 'secondary'
-            ? 'rgba(255, 168, 1, 0.4)'
-            : 'rgba(168, 7, 7, 0.4)'};
+  padding: 0.625rem 1rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  background-color: transparent;
+  border: none;
+
+  ${({ $variant }) => {
+    switch ($variant) {
+      case 'primary':
+        return css`
+          background: linear-gradient(135deg, rgba(168, 7, 7, 0.8) 0%, rgba(255, 168, 1, 0.8) 100%);
+        `
+      case 'secondary':
+        return css`
+          background-color: transparent;
+          border: 1px solid #ffa801;
+          color: #ffa801;
+        `
+      case 'accent':
+        return css`
+          background: linear-gradient(135deg, #a80707 0%, #c91a1a 100%);
+        `
+      default:
+        return css`
+          color: black;
+          background-color: transparent;
+          border: 1px solid black;
+        `
+    }
+  }}
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
   }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`
+
+export const ContainerGrid = styled.div`
+  background-color: 0 4px 20px -2px hsla(0, 0%, 0%, 0.08);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px -2px hsla(0, 0%, 0%, 0.08);
+  overflow: hidden;
+  animation: ${slideUp} 0.6s ease-out forwards;
 `
 
 export const CampaignsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+  padding: 0 1rem;
+  padding-bottom: 1.5rem;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;

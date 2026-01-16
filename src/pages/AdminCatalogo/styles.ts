@@ -59,23 +59,25 @@ export const AddButton = styled.button<{ $variant?: 'combo' }>`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.625rem 1rem;
-  background: ${({ $variant }) => $variant === 'combo' ? 'transparent' : 'hsl(40, 100%, 50%)'};
-  color: ${({ $variant }) => $variant === 'combo' ? 'hsl(40, 100%, 50%)' : '#000'};
-  border: ${({ $variant }) => $variant === 'combo' ? `2px solid 'hsl(40, 100%, 50%)'` : 'none'};
-  border-radius: 8px;
   font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: ${({ $variant }) => $variant === 'combo' ? 'transparent' : 'linear-gradient(135deg, rgba(168, 7, 7, 0.8) 0%, rgba(255, 168, 1, 0.8) 100%)'};
+  color: ${({ $variant }) => $variant === 'combo' ? 'hsl(40, 100%, 50%)' : 'white'};
+  border: 2px solid ${({$variant}) => $variant === 'combo' ? 'hsl(40, 100%, 50%)' : ''};
+  padding: 0.625rem 1rem;
+  border-radius: 0.75rem;
   cursor: pointer;
-  transition: all 0.2s ease;
-  
-  &:hover {
-    filter: brightness(1.1);
+  transition: all 0.3s ease;
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
     transform: translateY(-1px);
-    ${({ $variant,  }) => $variant === 'combo' && `
-      background: hsl(40, 100%, 50%)15;
-    `}
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 `;
 
