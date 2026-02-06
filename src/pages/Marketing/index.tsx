@@ -246,11 +246,11 @@ export default function Marketing() {
 
       <S.SectionTitle>Ações de Marketing</S.SectionTitle>
       <S.ActionsButtonsGrid>
-        <S.ActionButton $variant="primary" onClick={() => setShowBoostModal(true)}>
+        <S.ActionButton onClick={() => setShowBoostModal(true)}>
           <Rocket size={18} />
           Impulsionar Vendas
         </S.ActionButton>
-        <S.ActionButton $variant="primary" onClick={() => setShowOfferModal(true)}>
+        <S.ActionButton onClick={() => setShowOfferModal(true)}>
           <Tag size={18} />
           Criar uma Oferta
         </S.ActionButton>

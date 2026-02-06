@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 const slideUp = keyframes`
 from { 
@@ -89,7 +89,7 @@ export const ActionsButtonsGrid = styled.div`
   animation: ${slideUp} 0.7s ease-out forwards;
 `
 
-export const ActionButton = styled.button<{ $variant: 'primary' | 'secondary' | 'accent' }>`
+export const ActionButton = styled.button`
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -102,33 +102,8 @@ export const ActionButton = styled.button<{ $variant: 'primary' | 'secondary' | 
   cursor: pointer;
   transition: all 0.3s ease;
   color: white;
-  background-color: transparent;
-  border: none;
-
-  ${({ $variant }) => {
-    switch ($variant) {
-      case 'primary':
-        return css`
-          background: linear-gradient(135deg, rgba(168, 7, 7, 0.8) 0%, rgba(255, 168, 1, 0.8) 100%);
-        `
-      case 'secondary':
-        return css`
-          background-color: transparent;
-          border: 1px solid #ffa801;
-          color: #ffa801;
-        `
-      case 'accent':
-        return css`
-          background: linear-gradient(135deg, #a80707 0%, #c91a1a 100%);
-        `
-      default:
-        return css`
-          color: black;
-          background-color: transparent;
-          border: 1px solid black;
-        `
-    }
-  }}
+  background-color: rgba(255, 168, 1, 1);
+  border: 1px solid #ffa801;
 
   &:hover:not(:disabled) {
     opacity: 0.9;

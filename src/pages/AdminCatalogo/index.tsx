@@ -295,7 +295,7 @@ function AdminCatalogo() {
       </S.Header>
 
       {/* Checkout Configuration Section */}
-      <S.Section>
+      <S.Container>
         <S.SectionHeader>
           <S.SectionTitle>
             <CreditCard size={20} />
@@ -346,10 +346,10 @@ function AdminCatalogo() {
             </S.PaymentOptions>
           </S.CheckoutCard>
         </S.CheckoutGrid>
-      </S.Section>
+      </S.Container>
 
       {/* Products and Combos Section */}
-      <S.Section>
+      <S.Container>
         <S.SectionHeader>
           <S.SectionTitle>
             <Package size={20} />
@@ -360,7 +360,7 @@ function AdminCatalogo() {
               <Plus size={18} />
               Adicionar Produto
             </S.AddButton>
-            <S.AddButton $variant="combo" onClick={() => openComboModal()}>
+            <S.AddButton onClick={() => openComboModal()}>
               <Plus size={18} />
               Adicionar Combo
             </S.AddButton>
@@ -475,7 +475,7 @@ function AdminCatalogo() {
             </S.ProductCard>
           ))}
         </S.ProductsGrid>
-      </S.Section>
+      </S.Container>
 
       {/* Product Modal */}
       <BackDropModal isActive={productModalOpen} onClose={() => setProductModalOpen(false)}>

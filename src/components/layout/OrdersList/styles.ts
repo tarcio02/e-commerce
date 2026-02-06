@@ -12,7 +12,7 @@ to {
 `;
 
 export const Container = styled.section<{ $delay?: number }>`
-background-color: ${({ theme }) => theme.colors.card};
+background-color: hsl(0, 0%, 100%);
 border-radius: 1rem;
 box-shadow: 0 4px 20px -2px hsla(0, 0%, 0%, 0.08);
 padding: 1.5rem;

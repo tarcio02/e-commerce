@@ -1,12 +1,25 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const fadeIn = keyframes`
+from {
+    opacity: 0;
+    transform: translateY(10px);
+}
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+`;
 
 export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   max-width: 80rem;
   margin: 0 auto;
 `;
 
 export const Header = styled.header`
-  margin-bottom: 2rem;
 `;
 
 export const Title = styled.h1`
@@ -23,8 +36,14 @@ export const Subtitle = styled.p`
   color: hsl(0, 0%, 45%);
 `;
 
-export const Section = styled.section`
-  margin-bottom: 2.5rem;
+export const Container = styled.section<{ $delay?: number }>`
+background-color: hsl(0, 0%, 100%);
+border-radius: 1rem;
+box-shadow: 0 4px 20px -2px hsla(0, 0%, 0%, 0.08);
+padding: 1.5rem;
+opacity: 0;
+animation: ${fadeIn} 0.6s ease-out forwards;
+animation-delay: ${({ $delay }) => $delay || 0}ms;
 `;
 
 export const SectionHeader = styled.div`
@@ -55,16 +74,16 @@ export const ButtonGroup = styled.div`
   gap: 0.75rem;
 `;
 
-export const AddButton = styled.button<{ $variant?: 'combo' }>`
+export const AddButton = styled.button`
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-family: 'Inter', sans-serif;
   font-size: 0.8125rem;
   font-weight: 600;
-  background: ${({ $variant }) => $variant === 'combo' ? 'transparent' : 'linear-gradient(135deg, rgba(168, 7, 7, 0.8) 0%, rgba(255, 168, 1, 0.8) 100%)'};
-  color: ${({ $variant }) => $variant === 'combo' ? 'hsl(40, 100%, 50%)' : 'white'};
-  border: 2px solid ${({$variant}) => $variant === 'combo' ? 'hsl(40, 100%, 50%)' : ''};
+  background: rgba(255, 168, 1, 1);
+  color: white;
+  border: 2px solid rgba(255, 168, 1, 1);
   padding: 0.625rem 1rem;
   border-radius: 0.75rem;
   cursor: pointer;
@@ -84,6 +103,7 @@ export const AddButton = styled.button<{ $variant?: 'combo' }>`
 // Filter Section
 export const FilterContainer = styled.div`
   display: flex;
+  align-items: center;
   gap: 0.5rem;
   margin-bottom: 1.25rem;
   padding: 0.5rem;
@@ -91,6 +111,10 @@ export const FilterContainer = styled.div`
   border-radius: 10px;
   border: 1px solid hsl(0, 0%, 88%);
   width: fit-content;
+
+  svg {
+    color: rgba(0, 0, 0, 0.4);
+  }
 `;
 
 export const FilterButton = styled.button<{ $active: boolean }>`
