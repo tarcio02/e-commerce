@@ -20,6 +20,7 @@ export type RpcItem = {
   nome: string | null;
   preco: number | string | null;
   quantidade: number;
+  preco_total?: number | string | null;
 };
 
 export type RpcCartAndItems = {
